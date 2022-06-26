@@ -40,6 +40,10 @@ Tasks
 
 ## Day 8
 
+Tasks
+
+- Complete Documentation
+
 Optional Features
 
 - Generate Suggestions for Collaborations
