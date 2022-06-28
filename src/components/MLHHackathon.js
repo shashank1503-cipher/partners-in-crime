@@ -1,12 +1,11 @@
 import {
-    Alert,
+  Alert,
   AlertDescription,
   AlertIcon,
   AlertTitle,
   Button,
   Flex,
   FormControl,
-  FormLabel,
   IconButton,
   Input,
   InputGroup,
@@ -18,12 +17,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Slider,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderTrack,
   Spinner,
-  Switch,
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
@@ -82,7 +76,7 @@ const MLHHackathon = () => {
         {loading ? (
           <Spinner size={'xl'} />
         ) : error ? (
-            <Alert status="error">
+          <Alert status="error">
             <AlertIcon />
             <AlertTitle>Error! </AlertTitle>
             <AlertDescription>{error.message}</AlertDescription>

@@ -6,7 +6,6 @@ import {
   Button,
   Flex,
   FormControl,
-  FormLabel,
   IconButton,
   Input,
   InputGroup,
@@ -18,12 +17,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Slider,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderTrack,
   Spinner,
-  Switch,
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
