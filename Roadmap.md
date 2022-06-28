@@ -9,7 +9,7 @@ Tasks
   - Integerate firebase Email and Password Sign In
   - Add user to our own database during sign up
 
-- Complete Main Page
+- Complete Main Page - Assigned to Shashank
   - Complete Design
   - Add List of Hackathons fetched from API
 
