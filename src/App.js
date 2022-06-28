@@ -6,6 +6,7 @@ import '@fontsource/roboto/400.css';
 import { Routes, Route } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Signup2 from './pages/Signup2';
+import Main from './pages/Main';
 function App() {
   return (
     <ChakraProvider>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signup2" element={<Signup2 />} />
+        <Route path="/main" element={<Main />} />
       </Routes>
     </ChakraProvider>
   );
