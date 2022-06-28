@@ -20,6 +20,7 @@ import {
   MenuItem,
   MenuList,
 } from '@chakra-ui/react';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import {
   FiHome,
   FiMessageSquare,
@@ -27,6 +28,7 @@ import {
   FiMenu,
   FiBell,
   FiChevronDown,
+  FiPlus,
 } from 'react-icons/fi';
 import { FaUserSecret } from 'react-icons/fa';
 import Name from './Names';
@@ -35,14 +37,15 @@ import Logo from './Logo';
 const LinkItems = [
   { name: 'Home', icon: FiHome },
   { name: 'Find a Partner', icon: FaUserSecret },
+  { name: 'Add a Project', icon: FiPlus },
   { name: 'Messages', icon: FiMessageSquare },
-  { name: 'Notifications', icon: FiBell }
+  { name: 'Notifications', icon: FiBell },
 ];
 
 export default function SidebarWithHeader({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh">
+    <Box>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: 'none', md: 'block' }}
@@ -115,7 +118,7 @@ const NavItem = ({ icon, children, ...rest }) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: 'cyan',
+          bg: 'cyan.700',
           color: 'white',
         }}
         {...rest}
@@ -167,6 +170,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
       </Text>
 
       <HStack spacing={{ base: '0', md: '6' }}>
+        <ColorModeSwitcher />
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton
@@ -197,6 +201,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
             <MenuList borderColor={useColorModeValue('gray.200', 'gray.700')}>
               <MenuItem>Profile</MenuItem>
               <MenuItem>Favourite Hackathons</MenuItem>
+              <MenuItem>My Projects</MenuItem>
               <MenuDivider />
               <MenuItem>Sign out</MenuItem>
             </MenuList>

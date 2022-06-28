@@ -1,10 +1,14 @@
-import React from 'react'
-import SidebarWithHeader from '../components/Sidebar'
+import React from 'react';
+import HackathonCard from '../components/HackathonCard';
+import MainContent from '../components/MainContent';
+import SidebarWithHeader from '../components/Sidebar';
 
 const Main = () => {
   return (
-    <SidebarWithHeader/>
-  )
-}
+    <>
+      <SidebarWithHeader><MainContent/></SidebarWithHeader> 
+    </>
+  );
+};
 
-export default Main
+export default Main;
