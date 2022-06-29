@@ -18,11 +18,13 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { FaFilter, FaSearch } from 'react-icons/fa';
 import HackathonCard from './HackathonCard';
+import Logo from './Logo';
 
 const MLHHackathon = () => {
   const [hackathons, setHackathons] = useState([]);
@@ -74,7 +76,14 @@ const MLHHackathon = () => {
         align={'center'}
       >
         {loading ? (
-          <Spinner size={'xl'} />
+          <Text
+          fontSize="2xl"
+          fontFamily={`'Source Code Pro', sans-serif`}
+          color={'cyan'}
+          fontWeight="bold"
+        >
+          <Logo fontSize = {"4xl"}  />
+        </Text>
         ) : error ? (
           <Alert status="error">
             <AlertIcon />

@@ -24,7 +24,6 @@ import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import {
   FiHome,
   FiMessageSquare,
-  FiSettings,
   FiMenu,
   FiBell,
   FiChevronDown,
@@ -33,13 +32,13 @@ import {
 import { FaUserSecret } from 'react-icons/fa';
 import Name from './Names';
 import Logo from './Logo';
-
+import { Link as NavLink } from 'react-router-dom';
 const LinkItems = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Find a Partner', icon: FaUserSecret },
-  { name: 'Add a Project', icon: FiPlus },
-  { name: 'Messages', icon: FiMessageSquare },
-  { name: 'Notifications', icon: FiBell },
+  { name: 'Home', icon: FiHome,url:'/main' },
+  { name: 'Find a Partner', icon: FaUserSecret,url:'/find' },
+  { name: 'Add a Project', icon: FiPlus,url:'/add' },
+  { name: 'Messages', icon: FiMessageSquare,url:'/messages' },
+  { name: 'Notifications', icon: FiBell ,url:'/notifications'},
 ];
 
 export default function SidebarWithHeader({ children }) {
@@ -84,18 +83,11 @@ const SidebarContent = ({ onClose, ...rest }) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text
-          fontSize="2xl"
-          fontFamily={`'Source Code Pro', sans-serif`}
-          color={useColorModeValue('cyan.600', 'cyan')}
-          fontWeight="bold"
-        >
-          <Logo />
-        </Text>
+        <Logo fontSize="2xl" />
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map(link => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} url={link.url}>
           {link.name}
         </NavItem>
       ))}
@@ -103,39 +95,37 @@ const SidebarContent = ({ onClose, ...rest }) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ url, icon, children, ...rest }) => {
   return (
-    <Link
-      href="#"
-      style={{ textDecoration: 'none' }}
-      _focus={{ boxShadow: 'none' }}
-    >
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: 'cyan.700',
-          color: 'white',
-        }}
-        {...rest}
-      >
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: 'white',
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    </Link>
+    <NavLink to={url}>
+      <Link style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+        <Flex
+          align="center"
+          p="4"
+          mx="4"
+          borderRadius="lg"
+          role="group"
+          cursor="pointer"
+          _hover={{
+            bg: 'cyan.700',
+            color: 'white',
+          }}
+          {...rest}
+        >
+          {icon && (
+            <Icon
+              mr="4"
+              fontSize="16"
+              _groupHover={{
+                color: 'white',
+              }}
+              as={icon}
+            />
+          )}
+          {children}
+        </Flex>
+      </Link>
+    </NavLink>
   );
 };
 

@@ -20,11 +20,13 @@ import {
   ModalOverlay,
   Spinner,
   Switch,
+  Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { FaFilter, FaSearch } from 'react-icons/fa';
 import HackathonCard from './HackathonCard';
+import Logo from './Logo';
 
 const NewHackathons = () => {
   const [hackathons, setHackathons] = useState([]);
@@ -37,7 +39,7 @@ const NewHackathons = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [ongoing, setOnGoing] = useState(false);
   let fetchData = async () => {
-    console.log(perPage)
+    console.log(perPage);
     setLoading(true);
     try {
       const res = await fetch(
@@ -76,14 +78,21 @@ const NewHackathons = () => {
         align={'center'}
       >
         {loading ? (
-          <Spinner size={'xl'} />
+          <Text
+          fontSize="2xl"
+          fontFamily={`'Source Code Pro', sans-serif`}
+          color={'cyan'}
+          fontWeight="bold"
+        >
+          <Logo fontSize = {"4xl"}  />
+        </Text>
         ) : error ? (
           <Flex justifyContent={'center'}>
-          <Alert status="error">
-            <AlertIcon />
-            <AlertTitle>Error! </AlertTitle>
-            <AlertDescription>{error.message}</AlertDescription>
-          </Alert>
+            <Alert status="error">
+              <AlertIcon />
+              <AlertTitle>Error! </AlertTitle>
+              <AlertDescription>{error.message}</AlertDescription>
+            </Alert>
           </Flex>
         ) : (
           hackathons.map(hackathon => (
@@ -107,10 +116,8 @@ const NewHackathons = () => {
           colorScheme={'teal'}
           display={loading ? 'none' : 'flex'}
           onClick={() => {
-            
             setPerPage(more ? 3 : totalRecords);
             setMore(!more);
-            
           }}
         >
           Show {more ? 'less' : 'more'}
@@ -161,7 +168,9 @@ const NewHackathons = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={fetchData} mr={5} colorScheme={'teal'}>Apply</Button>
+            <Button onClick={fetchData} mr={5} colorScheme={'teal'}>
+              Apply
+            </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>

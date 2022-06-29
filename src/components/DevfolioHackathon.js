@@ -23,6 +23,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { FaFilter, FaSearch } from 'react-icons/fa';
 import HackathonCard from './HackathonCard';
+import Logo from './Logo';
 
 const DevfolioHackathon = () => {
   const [hackathons, setHackathons] = useState([]);
@@ -74,7 +75,7 @@ const DevfolioHackathon = () => {
         align={'center'}
       >
         {loading ? (
-          <Spinner size={'xl'} />
+          <Logo fontSize = {"4xl"}  />
         ) : error ? (
           <Alert status="error">
             <AlertIcon />

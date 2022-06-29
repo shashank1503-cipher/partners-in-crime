@@ -104,7 +104,7 @@ export default function HackathonCard(props) {
               onClick={() => setIsInterested(!isInterested)}
             />
             <IconButton
-              variant={isInterested ? 'solid' : 'outline'}
+              variant={'outline'}
               colorScheme="teal"
               aria-label="visit"
               icon={<FaLink />}

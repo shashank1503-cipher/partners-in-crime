@@ -7,7 +7,12 @@ import { Routes, Route } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Signup2 from './pages/Signup2';
 import Main from './pages/Main';
+import FindPartnerPage from './pages/FIndPartnerPage';
+import AddAProjectPage from './pages/AddAProjectPage';
+import MessagesPage from './pages/MessagesPage';
+import NotificationsPage from './pages/NotificationsPage';
 function App() {
+  let user = false;
   return (
     <ChakraProvider>
       <Routes>
@@ -15,6 +20,10 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signup2" element={<Signup2 />} />
         <Route path="/main" element={<Main />} />
+        <Route path="/find" element={<FindPartnerPage />} />
+        <Route path="/add" element={<AddAProjectPage />} />
+        <Route path="/messages" element={<MessagesPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
       </Routes>
     </ChakraProvider>
   );
