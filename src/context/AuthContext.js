@@ -1,5 +1,5 @@
 import React, {createContext, useMemo, useContext, useState, useEffect} from 'react';
-import { GoogleAuthProvider, signInWithPopup,createUserWithEmailAndPassword  ,signInWithCredential, onAuthStateChanged, signOut, signInWithEmailAndPassword } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup , onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 
 const provider = new GoogleAuthProvider()
@@ -30,12 +30,25 @@ export const AuthProvider = ({children}) => {
         if(domain === 'iiitkottayam.ac.in')
         {
             const credentials = GoogleAuthProvider.credentialFromResult(results);
-            const token = credentials.accessToken;
+            const token = credentials.idToken;
+            console.log(token)
             const user = results.user;
             setUser({
                 token,
                 user
             })
+
+            let data = await fetch('http://localhost:8000/auth/verify',{
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`
+                }
+            })
+
+            data = await data.json()
+            console.log(data)
+
         }
         else
             return Promise.reject(); 
