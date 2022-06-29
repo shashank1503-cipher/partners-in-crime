@@ -7,3 +7,4 @@ Just another project
 
 - Created Landing and Signup Page
 - Added Sidebar
+- Main Page Done
