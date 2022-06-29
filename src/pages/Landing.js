@@ -13,10 +13,27 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
-import React from 'react';
+import React, { useState } from 'react';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { Link as NavLink } from 'react-router-dom';
+import useAuth from '../context/AuthContext';
 const Landing = () => {
+
+  const {signInPopup, signInCreds} = useAuth()
+  
+  const [formData, setFormData] = useState({
+    email:"",
+    password:""
+  })
+
+  const updateFormData = (event) => {
+      setFormData({
+        ...formData,
+        [event.target.name]: event.target.value
+      })
+  }
+
+
   return (
     <Flex direction="column">
       <Flex justifyContent={'flex-end'} mt={5} mr={5}>
@@ -65,13 +82,13 @@ const Landing = () => {
             p={8}
           >
             <Stack spacing={4}>
-              <FormControl id="email">
+              <FormControl name="email">
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+                <Input type="email" name="email" onChange={(event) => updateFormData(event)}/>
               </FormControl>
-              <FormControl id="password">
+              <FormControl name="password">
                 <FormLabel>Password</FormLabel>
-                <Input type="password" />
+                <Input type="password" name="password" onChange={(event) => updateFormData(event)}/>
               </FormControl>
               <Stack spacing={5}>
                 <Stack
@@ -86,13 +103,13 @@ const Landing = () => {
                     </Link>
                   </Text>
                 </Stack>
-                <Button colorScheme={'cyan'}>Sign in</Button>
+                <Button onClick={() => signInCreds(formData)} colorScheme={'cyan'}>Sign in</Button>
                 <Flex align="center">
                   <Divider />
                   <Text padding="2">or</Text>
                   <Divider />
                 </Flex>
-                <Button leftIcon={<AiOutlineGoogle />} colorScheme={'cyan'}>
+                <Button leftIcon={<AiOutlineGoogle />} onClick={signInPopup} colorScheme={'cyan'}>
                   Sign in with Google
                 </Button>
               </Stack>

@@ -12,8 +12,8 @@ function App() {
     <ChakraProvider>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signup2" element={<Signup2 />} />
+        {/* <Route path="/signup" element={<Signup />} />
+        <Route path="/signup2" element={<Signup2 />} /> */}
         <Route path="/main" element={<Main />} />
       </Routes>
     </ChakraProvider>
