@@ -13,15 +13,39 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 const FindPartner = () => {
+  const [loading, setloading] = useState(false)
+  const [data, setData] = useState(null)
   let color = useColorModeValue('gray.900', 'gray.50');
   const [isActive, setIsActive] = useState(false);
   const { isOpen, onToggle } = useDisclosure();
   const [query, setQuery] = useState('');
-  console.log(isActive);
+  let fetchdata=async()=>{
+    setloading(true)
+    console.log("check")
+    const res=await fetch(`http://127.0.0.1:8000/suggestions?q=${query}`)
+    if(res.status===200)
+    {
+      const Data=await res.json()
+      console.log(Data)
+      setData(Data.data)
+    }
+    else 
+    {
+      const Data=await res.json()
+      console.log(Data.detail)
+    }
+  setloading(false)
+  }
+  console.log(query)
+  useEffect(() => {
+    console.log("query")
+    fetchdata()
+  }, [query])
+  
   return (
     <Flex justifyContent={'center'} direction={'column'} align={'center'}>
       <Heading fontFamily={`'Source Code Pro',sans-serif`}>
@@ -50,7 +74,7 @@ const FindPartner = () => {
               size={'lg'}
               onFocus={() => setIsActive(true)}
               onBlur={() => setIsActive(false)}
-              F
+              value={query}
               onChange={e => {
                 setQuery(e.target.value);
               }}
@@ -69,21 +93,9 @@ const FindPartner = () => {
           p={4}
           direction={'column'}
         >
-          <Button variant={'ghost'} mt={2}>
-            Search Result
-          </Button>
-          <Button variant={'ghost'} mt={2}>
-            Search Result
-          </Button>
-          <Button variant={'ghost'} mt={2}>
-            Search Result
-          </Button>
-          <Button variant={'ghost'} mt={2}>
-            Search Result
-          </Button>
-          <Button variant={'ghost'} mt={2}>
-            Search Result
-          </Button>
+          {loading?<Text>Loading...</Text>:data?.map(resu=>(<Button>{resu.name}</Button>))}
+          
+          
         </Flex>
       </Collapse>
     </Flex>

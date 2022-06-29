@@ -132,6 +132,7 @@ const MLHHackathon = () => {
           display={loading ? 'none' : 'flex'}
           onClick={() => {
             setPerPage(more ? 3 : 10);
+            setPage(0);
             setMore(!more);
           }}
         >
