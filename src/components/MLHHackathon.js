@@ -4,6 +4,7 @@ import {
   AlertIcon,
   AlertTitle,
   Button,
+  ButtonGroup,
   Flex,
   FormControl,
   IconButton,
@@ -22,7 +23,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { FaFilter, FaSearch } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaFilter, FaSearch } from 'react-icons/fa';
 import HackathonCard from './HackathonCard';
 import Logo from './Logo';
 
@@ -35,13 +36,13 @@ const MLHHackathon = () => {
   const [more, setMore] = useState(false);
   const [query, setQuery] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [page, setPage] = useState(0);
   let fetchData = async () => {
     console.log(perPage);
     setLoading(true);
     try {
       const res = await fetch(
-        `https://hackathon-api-v2.herokuapp.com/mlh?q=${query}&per_page=${perPage}&`
+        `https://hackathon-api-v2.herokuapp.com/mlh?q=${query}&page=${page}&per_page=${perPage}&`
       );
       console.log(res.status);
       if (res.status === 200) {
@@ -63,7 +64,7 @@ const MLHHackathon = () => {
   };
   useEffect(() => {
     fetchData();
-  }, [perPage]);
+  }, [perPage, page]);
   return (
     <>
       <Flex justifyContent={'flex-end'}>
@@ -77,13 +78,13 @@ const MLHHackathon = () => {
       >
         {loading ? (
           <Text
-          fontSize="2xl"
-          fontFamily={`'Source Code Pro', sans-serif`}
-          color={'cyan'}
-          fontWeight="bold"
-        >
-          <Logo fontSize = {"4xl"}  />
-        </Text>
+            fontSize="2xl"
+            fontFamily={`'Source Code Pro', sans-serif`}
+            color={'cyan'}
+            fontWeight="bold"
+          >
+            <Logo fontSize={'4xl'} />
+          </Text>
         ) : error ? (
           <Alert status="error">
             <AlertIcon />
@@ -108,11 +109,29 @@ const MLHHackathon = () => {
         )}
       </Flex>
       <Flex justifyContent={'flex-end'} m={5}>
+        <ButtonGroup display={more ? 'flex' : 'none'} mr={'10'}>
+          <IconButton
+            icon={<FaArrowLeft />}
+            onClick={() => setPage(page - 1)}
+            disabled={page === 0 ? true : false}
+          >
+            Previous
+          </IconButton>
+          <IconButton
+            icon={<FaArrowRight />}
+            disabled={
+              Math.floor(totalRecords / perPage) === page ? true : false
+            }
+            onClick={() => setPage(page + 1)}
+          >
+            Next
+          </IconButton>
+        </ButtonGroup>
         <Button
           colorScheme={'teal'}
           display={loading ? 'none' : 'flex'}
           onClick={() => {
-            setPerPage(more ? 3 : totalRecords);
+            setPerPage(more ? 3 : 10);
             setMore(!more);
           }}
         >
