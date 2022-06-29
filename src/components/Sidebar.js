@@ -19,6 +19,7 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Badge,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import {
@@ -33,12 +34,13 @@ import { FaUserSecret } from 'react-icons/fa';
 import Name from './Names';
 import Logo from './Logo';
 import { Link as NavLink } from 'react-router-dom';
+import StatusIndicator from './StatusIndicator';
 const LinkItems = [
-  { name: 'Home', icon: FiHome,url:'/main' },
-  { name: 'Find a Partner', icon: FaUserSecret,url:'/find' },
-  { name: 'Add a Project', icon: FiPlus,url:'/add' },
-  { name: 'Messages', icon: FiMessageSquare,url:'/messages' },
-  { name: 'Notifications', icon: FiBell ,url:'/notifications'},
+  { name: 'Home', icon: FiHome, url: '/main' },
+  { name: 'Find a Partner', icon: FaUserSecret, url: '/find' },
+  { name: 'Add a Project', icon: FiPlus, url: '/add' },
+  { name: 'Messages', icon: FiMessageSquare, url: '/messages' },
+  { name: 'Notifications', icon: FiBell, url: '/notifications', new: true },
 ];
 
 export default function SidebarWithHeader({ children }) {
@@ -87,15 +89,22 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map(link => (
-        <NavItem key={link.name} icon={link.icon} url={link.url}>
-          {link.name}
-        </NavItem>
+        <>
+          <NavItem
+            key={link.name}
+            icon={link.icon}
+            url={link.url}
+            badge={link.new}
+          >
+            {link.name}
+          </NavItem>
+        </>
       ))}
     </Box>
   );
 };
 
-const NavItem = ({ url, icon, children, ...rest }) => {
+const NavItem = ({ url, icon, badge, children, ...rest }) => {
   return (
     <NavLink to={url}>
       <Link style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
@@ -113,14 +122,17 @@ const NavItem = ({ url, icon, children, ...rest }) => {
           {...rest}
         >
           {icon && (
-            <Icon
-              mr="4"
-              fontSize="16"
-              _groupHover={{
-                color: 'white',
-              }}
-              as={icon}
-            />
+            <>
+              {badge && <StatusIndicator mt={-5} />}
+              <Icon
+                mr="4"
+                fontSize="16"
+                _groupHover={{
+                  color: 'white',
+                }}
+                as={icon}
+              />
+            </>
           )}
           {children}
         </Flex>
