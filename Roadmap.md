@@ -17,7 +17,7 @@ Tasks
 
 Tasks
 
-- Generate Search Algorithm
+- Generate Search Algorithm - Assigned to Harsh and Akarsh
   - Create Autocomplete Component for search
   - Create Search API for Autocomplete
   - Create API to show Relevant Search Results
