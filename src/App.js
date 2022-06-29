@@ -7,13 +7,16 @@ import { Routes, Route } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Signup2 from './pages/Signup2';
 import Main from './pages/Main';
+import Landing2 from './pages/Landing2';
+import Messages from './pages/Messages';
 function App() {
   return (
     <ChakraProvider>
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signup2" element={<Signup2 />} />
+        <Route exact path="/" element={<Landing />} />
+        <Route exact path="/messages" element={<Messages/>}/>
+        {/* <Route path="/signup" element={<Signup />} />
+        <Route path="/signup2" element={<Signup2 />} /> */}
         <Route path="/main" element={<Main />} />
       </Routes>
     </ChakraProvider>
