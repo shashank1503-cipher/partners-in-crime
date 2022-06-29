@@ -4,8 +4,6 @@ import Landing from './pages/Landing';
 import '@fontsource/source-code-pro/700.css';
 import '@fontsource/roboto/400.css';
 import { Routes, Route } from 'react-router-dom';
-import Signup from './pages/Signup';
-import Signup2 from './pages/Signup2';
 import Main from './pages/Main';
 
 import FindPartnerPage from './pages/FIndPartnerPage';
@@ -15,7 +13,9 @@ import NotificationsPage from './pages/NotificationsPage';
 import Landing2 from './pages/Landing2';
 
 function App() {
+
   let user = false;
+  
   return (
     <ChakraProvider>
       <Routes>
