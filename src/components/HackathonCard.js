@@ -14,6 +14,7 @@ import {
 import { useState } from 'react';
 import { FaHeart, FaLink, FaUserSecret } from 'react-icons/fa';
 import { FiHeart } from 'react-icons/fi';
+import { useNavigate } from 'react-router';
 
 export default function HackathonCard(props) {
   const heroImageMap = {
@@ -44,6 +45,7 @@ export default function HackathonCard(props) {
   const bg = useColorModeValue('white', 'gray.900');
   const color = useColorModeValue('gray.700', 'white');
   const [isInterested, setIsInterested] = useState(false);
+  let navigate = useNavigate()
   return (
     <Center py={6} px={6}>
       <Box
@@ -115,6 +117,7 @@ export default function HackathonCard(props) {
               colorScheme="teal"
               aria-label="find-partners"
               icon={<FaUserSecret />}
+              onClick={() => navigate('/find')}
             />
           </Flex>
         </Stack>
