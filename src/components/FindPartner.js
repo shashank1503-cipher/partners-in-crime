@@ -50,7 +50,7 @@ const FindPartner = () => {
               size={'lg'}
               onFocus={() => setIsActive(true)}
               onBlur={() => setIsActive(false)}
-              F
+              
               onChange={e => {
                 setQuery(e.target.value);
               }}
