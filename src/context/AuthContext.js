@@ -32,22 +32,30 @@ export const AuthProvider = ({children}) => {
             const credentials = GoogleAuthProvider.credentialFromResult(results);
             const token = credentials.idToken;
             console.log(token)
-            const user = results.user;
+            const User = results.user;
+            console.log(User)
             setUser({
                 token,
-                user
+                User
             })
 
-            let data = await fetch('http://localhost:8000/auth/verify',{
-                method: 'GET',
+            let data = await fetch('http://localhost:8000/auth/adduser', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     authorization: `Bearer ${token}`
-                }
+                },
+                body: JSON.stringify({
+                    user: {
+                        name: User.displayName,
+                        email: User.email,
+                        photo: User.photoURL,
+                        id: User.uid,
+                    }
+                })
             })
 
-            data = await data.json()
-            console.log(data)
+
 
         }
         else
