@@ -12,8 +12,9 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
+
 export default function Signup2() {
-  const [skills, setSkills] = useState('');
+  const [skills, setSkills] = useState("");
   const defaulskills = [
     { name: 'Frontend', id: 1 },
     { name: 'Backend', id: 2 },
@@ -95,7 +96,7 @@ export default function Signup2() {
                     variant="outline"
                     margin={2}
                     onClick={() => {
-                      setSkills(skills + ' ' + skill.name);
+                      setSkills(skills+" "+skill.name)
                     }}
                   >
                     {skill.name}
