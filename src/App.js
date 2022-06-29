@@ -10,6 +10,7 @@ import AddAProjectPage from './pages/AddAProjectPage';
 import MessagesPage from './pages/MessagesPage';
 import NotificationsPage from './pages/NotificationsPage';
 import Landing from './pages/Landing';
+import Profile from './pages/ProfilePage';
 import useAuth from './context/AuthContext';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/add" element={<AddAProjectPage />} />
         <Route path="/messages" element={<MessagesPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </ChakraProvider>
   );

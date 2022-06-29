@@ -189,7 +189,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               </HStack>
             </MenuButton>
             <MenuList borderColor={useColorModeValue('gray.200', 'gray.700')}>
-              <MenuItem>Profile</MenuItem>
+              <NavLink to = "/profile"><MenuItem>Profile</MenuItem></NavLink>
               <MenuItem>Favourite Hackathons</MenuItem>
               <MenuItem>My Projects</MenuItem>
               <MenuDivider />
