@@ -339,6 +339,23 @@ const Profile = () => {
                     </FormControl>
                 </Flex>
             </Flex>
+
+            <Flex
+                mt={10}
+                bg={useColorModeValue('white', 'gray.900')}
+                boxShadow={'2xl'}
+                rounded={'md'}
+                overflow={'hidden'}
+                p={8}
+                direction={['column', 'row']}
+                w = {'85%'}
+            >
+                <Flex direction = {['column', 'row']} w = {'100%'}>
+                    <FormControl textAlign = {'center'}>
+                        <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Skills</Text>
+                    </FormControl>
+                </Flex>
+            </Flex>
             
             <Flex
                 mt={10}
