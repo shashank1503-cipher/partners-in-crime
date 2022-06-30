@@ -4,6 +4,8 @@ import { auth } from '../firebase';
 
 const provider = new GoogleAuthProvider()
 
+const URL = 'http://localhost:8000';
+
 const AuthContext = createContext({})
 
 export const AuthProvider = ({children}) => {
@@ -31,35 +33,48 @@ export const AuthProvider = ({children}) => {
         {
             const credentials = GoogleAuthProvider.credentialFromResult(results);
             const token = credentials.idToken;
-            console.log(token)
-            const User = results.user;
-            console.log(User)
+            
+            let User = results.user;
+            User = {
+                name: User.displayName,
+                email: User.email,
+                photo: User.photoURL,
+                _id: User.uid,
+                skills: [],
+                batch: "20XX",
+                socials: []
+            }
+            
             setUser({
                 token,
                 User
             })
 
-            let data = await fetch('http://localhost:8000/auth/adduser', {
+            let data = await fetch(`${URL}/auth/adduser`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    user: {
-                        name: User.displayName,
-                        email: User.email,
-                        photo: User.photoURL,
-                        id: User.uid,
-                    }
+                    user: User
                 })
             })
 
+            data = await data.json()
+            console.log(data)
 
+            if(data.code === 2)
+            {
+                setUser({
+                    token,
+                    User: data.data
+                })
+            }
 
         }
         else
-            return Promise.reject(); 
+            return logout()
     })
     .catch(error => {
         setError({
@@ -70,7 +85,7 @@ export const AuthProvider = ({children}) => {
 
     const logout = () => {
         setLoading(true)
-
+        console.log("Logging out...")
         signOut(auth)
         .catch(error => setError(error))
         .finally(() => setLoading(false))
