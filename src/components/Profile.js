@@ -187,6 +187,7 @@ const Profile = () => {
                             <option value = '0'>He/Him</option>
                             <option value = '1'>She/Her</option>
                             <option value = '2'>They/Them</option>
+                            <option value = '3'>Don't want to specify</option>
                         </Select></Flex>
                     </FormControl>
                 </Flex>
