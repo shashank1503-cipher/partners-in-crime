@@ -104,6 +104,7 @@ const Profile = () => {
                 } 
                 finally{
                     setUploading(false);
+                    setImage(null);
                 }
             }
             else{
