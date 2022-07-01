@@ -13,10 +13,16 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 const FindPartner = () => {
+  let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+    let path = "/search"; 
+    navigate(path);
+  }
   const [loading, setloading] = useState(false)
   const [data, setData] = useState(null)
   let color = useColorModeValue('gray.900', 'gray.50');
@@ -68,7 +74,7 @@ const FindPartner = () => {
               children={<FaSearch />}
               size={'lg'}
             />
-            <Input
+           <Input
               type="text"
               placeholder="What/Who are you looking for?"
               size={'lg'}
@@ -79,6 +85,8 @@ const FindPartner = () => {
                 setQuery(e.target.value);
               }}
             />
+            
+            
           </InputGroup>
         </FormControl>
       </Flex>
