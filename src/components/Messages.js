@@ -16,52 +16,74 @@ import {
   useDisclosure,
   Icon
 } from '@chakra-ui/react';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
 import { FaSearch } from 'react-icons/fa';
+import ChatMessage from './ChatMessage';
 
 
 const sampleData = [
   {
+    id:1,
     name: "Bhavya",
     lastMessage: "fdfdkjlelflew",
     photoURL: "../../public/profile.png"
   },
   {
+    id:2,
     name: "Bhavya goyal",
     lastMessage: "fdfdkjlelflew",
     photoURL: "../../public/profile.png"
   },
   {
+    id:3,
     name: "shaw",
     lastMessage: "fdfdkjlelflew",
     photoURL: "../../public/profile.png"
   },
   {
+    id:4,
     name: "ak",
     lastMessage: "fdfdkjlelflew",
     photoURL: "../../public/profile.png"
   },
   {
+    id:5,
     name: "mittal",
     lastMessage: "fdfdkjlelflew",
     photoURL: "../../public/profile.png"
   },
   {
+    id:6,
     name: "mittal",
     lastMessage: "fdfdkjlelflew",
     photoURL: "../../public/profile.png"
   },
   {
+    id:7,
     name: "mittal",
     lastMessage: "fdfdkjlelflew",
     photoURL: "../../public/profile.png"
   },
 ]
 
-const Message = ({name, lastMessage, photoURL}) => {
+const mess = {
+  user: 1,
+  mess: [
+    {
+      
+      mess: "wfewwfwkf",
+      time: "12:06"
+    }
+  ]
 
-    console.log(name)
+}
 
+
+const Message = ({name, lastMessage, photoURL, id, select, setSelected}) => {
+
+    const b = (select === id)
+ 
     return (
       <Flex 
         alignItems={"center"}
@@ -70,22 +92,24 @@ const Message = ({name, lastMessage, photoURL}) => {
         _dark={{
           _hover:{
             background: "gray.700"
-          }
+          },
+          background: b?"gray.700":null
         }}
+        
 
         _light={{
           _hover:{
             background: "gray.100"
-          }
+          },
+          background: b?"gray.100":null
         }}
         pl={5}
         w={250}
         py={3}
         cursor="pointer"
+        
+        onClick={() => setSelected(id)}
       >
-        {/* <Box>
-          <Image src={"../../public/profile.png"}/>
-        </Box> */}
         <Avatar size={"sm"} src={`${photoURL}`}/>
         <Flex direction={"column"}>
           <Box fontSize={18}>{name}</Box>
@@ -100,6 +124,29 @@ const Message = ({name, lastMessage, photoURL}) => {
 }
 
 const Messages = () => {
+
+  const [data, setData] = useState([...sampleData])
+  const [search, setSearch] = useState("")
+
+  const [selected, setSelected] = useState(-1)
+
+  useEffect(() => {
+  
+    if(search.length > 0)
+    {
+        let new_data = []
+        data.map(d => {
+          if(d.name.toLowerCase().includes(search))
+            new_data.push(d)
+        })
+
+        setData([...new_data])
+    }
+    else
+      setData([...sampleData])
+    
+  }, [search])
+
   return (
     
     <Flex
@@ -125,21 +172,16 @@ const Messages = () => {
                 border="none"
                 borderRadius={0}
                 focusBorderColor="none"
+                onChange={(e) => setSearch(e.target.value)}
               />
 
         </Flex>
 
       <Flex 
         direction={"column"}
-        borderRight='1px' 
+        borderRight='1px'
         borderColor={useColorModeValue("gray.200",'gray.700')}
         overflow={"overlay"}
-        css={{
-          // '&::-webkit-scrollbar': {
-            //   width:"20px",
-            //   color: "red"
-            // }
-          }}
           
           sx={{
             '&::-webkit-scrollbar': {
@@ -153,16 +195,22 @@ const Messages = () => {
           }}
           > 
           
-          {sampleData.map(d => 
+          {data.map(d => 
             <Message 
             name={d.name} 
             lastMessage={d.lastMessage} 
-            photoURL={d.photoURL} 
+            photoURL={d.photoURL}
+            id={d.id}
+            select={selected}
+            setSelected = {setSelected}
             />
             )}
 
       </Flex>
       </Flex>
+
+            {/* {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg}/>)} */}
+
     </Flex>
   )
 }

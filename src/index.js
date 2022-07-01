@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 import { AuthProvider } from './context/AuthContext';
+import { AppProvider } from './context/AppContext';
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
@@ -13,8 +14,10 @@ root.render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <ColorModeScript />
-        <App />
+        <AppProvider>
+          <ColorModeScript />
+          <App />
+        </AppProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>

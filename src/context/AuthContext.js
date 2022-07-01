@@ -1,6 +1,8 @@
 import React, {createContext, useMemo, useContext, useState, useEffect} from 'react';
 import { GoogleAuthProvider, signInWithPopup , onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
+import useLocalStorage from "use-local-storage";
+
 
 const provider = new GoogleAuthProvider()
 
@@ -12,19 +14,54 @@ export const AuthProvider = ({children}) => {
     
     const [error, setError] = useState(null)
     const [user, setUser] = useState(null)
+    const [token, setToken] = useLocalStorage("token", "")
 
     const [loadingInitial, setLoadingInitial] = useState(true);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => console.log(user), [user])
-
     useEffect(() => onAuthStateChanged(auth, (user) => {
         if(user)
-            setUser(user)
-        else setUser(null)
-
+            if(token === null)
+                logout()
+            else
+                getUserDataFromMongo(token, user)
+                
+        else logout()
+            
         setLoadingInitial(false)
     }), [])
+
+    const getUserDataFromMongo = async (token, results) => {
+
+        let User = results;
+        User = {
+            name: User.displayName,
+            email: User.email,
+            photo: User.photoURL,
+            g_id: User.uid,
+            skills: [],
+            batch: "20XX",
+            socials: [],
+        }
+
+        let data = await fetch(`${URL}/auth/adduser`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                user: User
+            })
+        })
+
+        data = await data.json()
+
+        if(data.code === 2)
+            setUser(data.data)
+
+        setUser(User)
+    }
 
     const signInPopup = () => signInWithPopup(auth, provider)
     .then(async results => {
@@ -33,45 +70,8 @@ export const AuthProvider = ({children}) => {
         {
             const credentials = GoogleAuthProvider.credentialFromResult(results);
             const token = credentials.idToken;
+            setToken(token)
             
-            let User = results.user;
-            User = {
-                name: User.displayName,
-                email: User.email,
-                photo: User.photoURL,
-                _id: User.uid,
-                skills: [],
-                batch: "20XX",
-                socials: []
-            }
-            
-            setUser({
-                token,
-                User
-            })
-
-            let data = await fetch(`${URL}/auth/adduser`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    user: User
-                })
-            })
-
-            data = await data.json()
-            console.log(data)
-
-            if(data.code === 2)
-            {
-                setUser({
-                    token,
-                    User: data.data
-                })
-            }
-
         }
         else
             return logout()
@@ -92,6 +92,7 @@ export const AuthProvider = ({children}) => {
     }
 
     const memo = useMemo(() => ({
+        token,
         user,
         loading,
         error,
