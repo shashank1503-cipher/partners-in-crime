@@ -21,93 +21,55 @@ const URL = 'http://localhost:8000';
 
 const AuthContext = createContext({});
 
+
 export const AuthProvider = ({ children }) => {
     
-    // let navigate = useNavigate();
-    const [error, setError] = useState(null);
-    const [user, setUser] = useState({});
-    const [token, setToken] = useLocalStorage('token', "");
-
-    // useEffect(() => {
-    //     console.log(user)
-    //     console.log(token)
-    // }, [user, token])
+    const [error, setError] = useState(null)
+    const [user, setUser] = useState(null)
 
     const [loadingInitial, setLoadingInitial] = useState(true);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => onAuthStateChanged(auth, (g_user) => {
-        console.log("G_USER : ", g_user)
-        if(g_user)
-            if(token === "")
-            {
-                console.log(token)
-                logout()
-            }
-            else
-            {
-                getUserDataFromMongo(token, g_user)
-                // navigate('/main');
-            }
-                
-        else 
-        {
-            // console.log(user)
-            logout()
-        }
+    useEffect(() => console.log(user), [user])
+
+    useEffect(() => onAuthStateChanged(auth, (user) => {
+        if(user)
+            setUser(user)
+        else setUser(null)
+
         setLoadingInitial(false)
     }), [])
-    
-    const getUserDataFromMongo = async (token, results) => {
-        let User = results;
-        console.log(User)
-        User = {
-            name: User.displayName,
-            email: User.email,
-            photo: User.photoURL,
-            g_id: User.uid,
-            skills: [],
-            batch: '20XX',
-            socials: [],
-        };
 
-        let data = await fetch(`${URL}/auth/adduser`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                user: User
-            })
-        })
-
-        data = await data.json()
-
-        if(data.code === 2)
-            setUser(data.data)
-        else
-            setUser(User)
-    }
-
-
-  const signInPopup = () =>
-    signInWithPopup(auth, provider)
-      .then(async results => {
-        const domain = results.user.email.split('@')[1];
-        
-        console.log(results)
-        console.log(domain)
-        if (domain === 'iiitkottayam.ac.in') {
+    const signInPopup = () => signInWithPopup(auth, provider)
+    .then(async results => {
+        const domain = results.user.email.split('@')[1]
+        if(domain === 'iiitkottayam.ac.in')
+        {
             const credentials = GoogleAuthProvider.credentialFromResult(results);
             const token = credentials.idToken;
             console.log(token)
-            
-            setToken(token);
-        } 
-        else return logout();
-      })
-      .catch(error => {
+            const user = results.user;
+            setUser({
+                token,
+                user
+            })
+
+            let data = await fetch('http://localhost:8000/auth/verify',{
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${token}`
+                }
+            })
+
+            data = await data.json()
+            console.log(data)
+
+        }
+        else
+            return Promise.reject(); 
+    })
+    .catch(error => {
         setError({
           code: error.code,
           message: error.message,
@@ -115,18 +77,14 @@ export const AuthProvider = ({ children }) => {
       });
 
     const logout = () => {
-        setLoading(true);
-        setUser(null)
-        console.log('Logging out...');
-        setToken("")
+        setLoading(true)
+
         signOut(auth)
         .catch(error => setError(error))
         .finally(() => setLoading(false));
     };
 
-    const memo = useMemo(
-        () => ({
-        token,
+    const memo = useMemo(() => ({
         user,
         loading,
         error,

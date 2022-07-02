@@ -142,27 +142,9 @@ const Message = ({name, lastMessage,timeStamp ,photoURL, id, select, setSelected
 
 const Messages = () => {
 
-  const [data, setData] = useState([...sampleData])
   const [search, setSearch] = useState("")
-
   const [selected, setSelected] = useState(-1)
-
-  useEffect(() => {
-  
-    if(search.length > 0)
-    {
-        let new_data = []
-        data.map(d => {
-          if(d.name.toLowerCase().includes(search))
-            new_data.push(d)
-        })
-
-        setData([...new_data])
-    }
-    else
-      setData([...sampleData])
-    
-  }, [search])
+  const data = sampleData
 
   return (
     

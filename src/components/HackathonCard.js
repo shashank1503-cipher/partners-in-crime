@@ -33,7 +33,6 @@ export default function HackathonCard(props) {
     DEVFOLIO:
       'https://res.cloudinary.com/hackbot/image/upload/v1610594222/Hackbot%20Web/38809367_j6zmw0.png',
   };
-  
   let website = props.website;
   let heroImage = props.heroImage || heroImageMap[website];
   let logo = props.logo || logoImageMap[website];
@@ -47,7 +46,6 @@ export default function HackathonCard(props) {
   const color = useColorModeValue('gray.700', 'white');
   const [isInterested, setIsInterested] = useState(false);
   let navigate = useNavigate()
-
   return (
     <Center py={6} px={6}>
       <Box
