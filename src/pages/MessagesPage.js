@@ -5,7 +5,7 @@ import SidebarWithHeader from '../components/Sidebar';
 const MessagesPage = () => {
   return (
     <SidebarWithHeader>
-      <Messages />
+      <Messages/>
     </SidebarWithHeader>
   );
 };
