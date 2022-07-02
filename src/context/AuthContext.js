@@ -16,17 +16,24 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null)
     const [token, setToken] = useLocalStorage("token", "")
 
+    useEffect(() => {
+        console.log(user)
+        console.log(token)
+    }, [user, token])
+
     const [loadingInitial, setLoadingInitial] = useState(true);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => onAuthStateChanged(auth, (user) => {
         if(user)
-            if(token === null)
+            if(token === "")
                 logout()
             else
                 getUserDataFromMongo(token, user)
                 
         else logout()
+
+        console.log(user)
             
         setLoadingInitial(false)
     }), [])
@@ -71,7 +78,6 @@ export const AuthProvider = ({children}) => {
             const credentials = GoogleAuthProvider.credentialFromResult(results);
             const token = credentials.idToken;
             setToken(token)
-            
         }
         else
             return logout()

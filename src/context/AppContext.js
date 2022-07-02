@@ -15,26 +15,26 @@ export const AppProvider = ({children}) => {
     const [messages, setMessages] = useState([])
     const colRef = collection(db, 'chats')
 
-    let myq;
-    if(user)
-    {
-        myq = query(colRef, where("users", 'array-contains', user?.g_id))
+    // let myq;
+    // if(user)
+    // {
+    //     myq = query(colRef, where("users", 'array-contains', user?.g_id))
         
-    }
+    // }
 
-    useEffect(() => {
-        console.log(messages)
-    }, [messages])
+    // useEffect(() => {
+    //     console.log(messages)
+    // }, [messages])
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if(!user)
-            return;
+    //     if(!user)
+    //         return;
 
         
         
         
-    }, [user])
+    // }, [user])
 
     const memo = useMemo(() => ({
         messages

@@ -16,6 +16,7 @@ import {
   useDisclosure,
   Icon
 } from '@chakra-ui/react';
+import { Timestamp } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 
 import { FaSearch } from 'react-icons/fa';
@@ -27,43 +28,50 @@ const sampleData = [
     id:1,
     name: "Bhavya",
     lastMessage: "fdfdkjlelflew",
-    photoURL: "../../public/profile.png"
+    photoURL: "../../public/profile.png",
+    timeStamp: "35 minutes ago"
   },
   {
     id:2,
     name: "Bhavya goyal",
     lastMessage: "fdfdkjlelflew",
-    photoURL: "../../public/profile.png"
+    photoURL: "../../public/profile.png",
+    timeStamp: "2 days ago"
   },
   {
     id:3,
     name: "shaw",
     lastMessage: "fdfdkjlelflew",
-    photoURL: "../../public/profile.png"
+    photoURL: "../../public/profile.png",
+    timeStamp: "2 days ago"
   },
   {
     id:4,
     name: "ak",
     lastMessage: "fdfdkjlelflew",
-    photoURL: "../../public/profile.png"
+    photoURL: "../../public/profile.png",
+    timeStamp: "5 days ago"
   },
   {
     id:5,
     name: "mittal",
     lastMessage: "fdfdkjlelflew",
-    photoURL: "../../public/profile.png"
+    photoURL: "../../public/profile.png",
+    timeStamp: "2 weeks ago"
   },
   {
     id:6,
     name: "mittal",
     lastMessage: "fdfdkjlelflew",
-    photoURL: "../../public/profile.png"
+    photoURL: "../../public/profile.png",
+    timeStamp: "1 hour ago"
   },
   {
     id:7,
     name: "mittal",
     lastMessage: "fdfdkjlelflew",
-    photoURL: "../../public/profile.png"
+    photoURL: "../../public/profile.png",
+    timeStamp: "12 minutes ago"
   },
 ]
 
@@ -80,7 +88,7 @@ const mess = {
 }
 
 
-const Message = ({name, lastMessage, photoURL, id, select, setSelected}) => {
+const Message = ({name, lastMessage,timeStamp ,photoURL, id, select, setSelected}) => {
 
     const b = (select === id)
  
@@ -88,6 +96,7 @@ const Message = ({name, lastMessage, photoURL, id, select, setSelected}) => {
       <Flex 
         alignItems={"center"}
         gap={5}
+        position={'relative'}
 
         _dark={{
           _hover:{
@@ -118,6 +127,14 @@ const Message = ({name, lastMessage, photoURL, id, select, setSelected}) => {
             color="gray.500"
           >{lastMessage}</Text>
         </Flex>
+
+        <Text 
+          fontSize={12} 
+          position={'absolute'}
+          color={useColorModeValue('gray.400', "gray.500")}
+          right={2}
+          top={2}
+        >{timeStamp}</Text>
       </Flex>
     )
 
@@ -150,7 +167,8 @@ const Messages = () => {
   return (
     
     <Flex
-      height={"82vh"}
+      height={'calc(100vh - 100px)'}
+      position={'relative'}
       overflow={"hidden"}
       marginLeft={-4}
       marginTop={-4}
@@ -198,7 +216,8 @@ const Messages = () => {
           {data.map(d => 
             <Message 
             name={d.name} 
-            lastMessage={d.lastMessage} 
+            lastMessage={d.lastMessage}
+            timeStamp={d.timeStamp}
             photoURL={d.photoURL}
             id={d.id}
             select={selected}
@@ -208,9 +227,7 @@ const Messages = () => {
 
       </Flex>
       </Flex>
-
-            {/* {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg}/>)} */}
-
+        <ChatMessage />
     </Flex>
   )
 }
