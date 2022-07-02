@@ -28,6 +28,7 @@ function App() {
         <Route path="/messages" element={<MessagesPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/search" element={<Searchpage/>}/>
       </Routes>
     </ChakraProvider>
   );

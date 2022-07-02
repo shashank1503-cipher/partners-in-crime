@@ -28,7 +28,7 @@ const Search = () => {
               objectFit="cover"
               boxSize="100%"
               src={
-                'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'
+                'https://images.unsplash.com/photo-1655796947716-8cbc86745b15?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDIzfHRvd0paRnNrcEdnfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
               }
             />
           </Flex>
@@ -40,20 +40,20 @@ const Search = () => {
             p={1}
             pt={2}>
             <Heading fontSize={'2xl'} fontFamily={'body'}>
-              Lindsey James
+              Akarsh Pandey
             </Heading>
             <Text fontWeight={600} color={'gray.500'} size="sm" mb={4}>
-              @lindsey_jam3s
+              @iamakarsh
             </Text>
             <Text
               textAlign={'center'}
               color={useColorModeValue('gray.700', 'gray.400')}
               px={3}>
-              Actress, musician, songwriter and artist. PM for work inquires or
+              80 Haazar ke shoes hai laude, Tera ghar bik jaega isme
               <Link href={'#'} color={'blue.400'}>
-                #tag
+                #SIMP
               </Link>
-              me in your posts
+              Nalla Berozgaar
             </Text>
             <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
               <Badge
@@ -61,14 +61,14 @@ const Search = () => {
                 py={1}
                 bg={useColorModeValue('gray.50', 'gray.800')}
                 fontWeight={'400'}>
-                #art
+                #HEHE
               </Badge>
               <Badge
                 px={2}
                 py={1}
                 bg={useColorModeValue('gray.50', 'gray.800')}
                 fontWeight={'400'}>
-                #photography
+                #pornography
               </Badge>
               <Badge
                 px={2}
