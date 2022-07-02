@@ -15,7 +15,11 @@ import { auth } from '../firebase';
 import useLocalStorage from 'use-local-storage';
 import { useNavigate } from 'react-router';
 
+
 const provider = new GoogleAuthProvider();
+provider.setCustomParameters({
+  hd: 'iiitkottayam.ac.in'
+})
 
 const URL = 'http://localhost:8000';
 
@@ -30,14 +34,19 @@ export const AuthProvider = ({ children }) => {
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  onAuthStateChanged(auth, user => {
+  useEffect(() => onAuthStateChanged(auth, async user => {
     if (user)
       if (token === '') logout();
-      else getUserDataFromMongo(token, user);
+      else 
+      {
+        await getUserDataFromMongo(token, user);
+        navigate('/main');
+      }
     else logout();
 
     setLoadingInitial(false);
-  });
+  }), []);
+
 
   const getUserDataFromMongo = async (token, results) => {
     let User = results;
@@ -64,6 +73,8 @@ export const AuthProvider = ({ children }) => {
 
     data = await data.json();
 
+    console.log("Data fetched")
+
     if (data.code === 2) setUser(data.data);
 
     setUser(User);
@@ -72,13 +83,9 @@ export const AuthProvider = ({ children }) => {
   const signInPopup = () =>
     signInWithPopup(auth, provider)
       .then(async results => {
-        const domain = results.user.email.split('@')[1];
-        if (domain === 'iiitkottayam.ac.in') {
           const credentials = GoogleAuthProvider.credentialFromResult(results);
           const token = credentials.idToken;
           setToken(token);
-          navigate('/main');
-        } else return logout();
       })
       .catch(error => {
         setError({
@@ -88,7 +95,9 @@ export const AuthProvider = ({ children }) => {
       });
 
   const logout = () => {
-    setLoading(true);
+    setLoading(true)
+    setToken("");
+    setUser(null)
     console.log('Logging out...');
     signOut(auth)
       .catch(error => setError(error))
