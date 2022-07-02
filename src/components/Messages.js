@@ -21,7 +21,7 @@ import React, { useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa';
 import useApp from '../context/AppContext';
 import ChatMessage from './ChatMessage';
-
+import Logo from './Logo';
 
 const Message = ({name, photo, lastMessage,lastMessageSender,id, select, setSelected}) => {
 
@@ -69,12 +69,14 @@ const Message = ({name, photo, lastMessage,lastMessageSender,id, select, setSele
 
 const Messages = () => {
 
-  const {messagesUsersId, messagesUserData, messages} = useApp()
+  const {messagesUsersId, messagesUserData, messages, messageLoading} = useApp()
   const [mainData, setMainData] = useState([])
   const [data, setData] = useState([])
   const [search, setSearch] = useState("")
 
   const [selected, setSelected] = useState(-1)
+
+  const color = useColorModeValue("gray.200",'gray.700')
 
   useEffect(() => {
   
@@ -95,8 +97,6 @@ const Messages = () => {
 
   useEffect(() => {
 
-      
-
   }, [messagesUserData, messagesUsersId])
 
   // useEffect(() => {
@@ -104,80 +104,98 @@ const Messages = () => {
   // }, [selected])
 
   return (
-    
-    <Flex
-      height={"calc(100vh - 80px)"}
-      overflow={"hidden"}
-      position={'relative'}
-      marginLeft={-4}
-      marginTop={-4}
-      marginRight={-4}
-      marginBottom={-4}
-      flexDirection={"row"}
-      borderBottom="1px"
-      borderColor={useColorModeValue("gray.200",'gray.700')}
-    >
 
-      <Flex direction={'column'}
-        height={'full'}
+      <Flex
+        height={"calc(100vh - 80px)"}
+        overflow={"hidden"}
         position={'relative'}
-        borderRight='1px'
-        borderColor={useColorModeValue("gray.200",'gray.700')}
+        marginLeft={-4}
+        marginTop={-4}
+        marginRight={-4}
+        marginBottom={-4}
+        flexDirection={"row"}
+        borderBottom="1px"
+        borderColor={color}
       >
-        <Flex direction={"row"} alignItems={"center"}
-              px={3}  
-              borderBottom={"1px"}
-              borderRight={"1px"}
-              borderColor={useColorModeValue("gray.200",'gray.700')}
-            >
-              <FaSearch />
-              <Input 
-                border="none"
-                borderRadius={0}
-                focusBorderColor="none"
-                onChange={(e) => setSearch(e.target.value)}
-              />
+
+        <Flex direction={'column'}
+          height={'full'}
+          position={'relative'}
+          borderRight='1px'
+          borderColor={color}
+          
+        >
+          <Flex direction={"row"} alignItems={"center"}
+                px={3}  
+                borderBottom={"1px"}
+                borderRight={"1px"}
+                borderColor={color}
+              >
+                <FaSearch />
+                <Input 
+                  border="none"
+                  borderRadius={0}
+                  focusBorderColor="none"
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+
+          </Flex>
+
+          <Flex 
+            direction={"column"}
+            overflow={"overlay"}
+            w={'full'}
+              
+              sx={{
+                '&::-webkit-scrollbar': {
+                  width: '3px',
+                  backgroundColor: "transparent",
+                  zIndex:10
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: "gray.500",
+                },
+              }}
+              > 
+              
+              {messagesUserData?.map(d =>
+                <Message 
+                  name={d.name} 
+                  lastMessage={messages[d.g_id].messagesArray.slice(-1)[0].message} 
+                  lastMessageSender={messages[d.g_id].messagesArray.slice(-1)[0].who === 1?"You":d.name}
+                  photo={d.photo}
+                  id={d.g_id}
+                  key={d.g_id}
+                  select={selected}
+                  setSelected = {setSelected}
+                />
+              )}
+
+          </Flex>
+          
 
         </Flex>
 
-      <Flex 
-        direction={"column"}
-        overflow={"overlay"}
-          
-          sx={{
-            '&::-webkit-scrollbar': {
-              width: '3px',
-              backgroundColor: "transparent",
-              zIndex:10
-            },
-            '&::-webkit-scrollbar-thumb': {
-              background: "gray.500",
-            },
-          }}
-          > 
-          
-          {messagesUserData?.map(d =>
-            <Message 
-              name={d.name} 
-              lastMessage={messages[d.g_id].messagesArray.slice(-1)[0].message} 
-              lastMessageSender={messages[d.g_id].messagesArray.slice(-1)[0].who === 1?"You":d.name}
-              photo={d.photo}
-              id={d.g_id}
-              key={d.g_id}
-              select={selected}
-              setSelected = {setSelected}
-            />
-          )}
+        <Flex 
+
+          justifyContent={selected===-1?'center':""} 
+          alignItems={selected===-1?'center':""} 
+          w={'full'}
+          h={'full'}
+        >
+              {selected === -1?<Logo 
+                fontSize="5xl"
+              />:
+                <ChatMessage 
+                    messages={messages[selected]}
+                    userData={messagesUserData.filter(m => m.g_id === selected)}
+                />
+            }
+        </Flex>
 
       </Flex>
-      </Flex>
-            {selected === -1?<></>:
-              <ChatMessage 
-                  messages={messages[selected]}
-                  userData={messagesUserData.filter(m => m.g_id === selected)}
-              />
-          }
-      </Flex>
+
+  
   )
 }
 

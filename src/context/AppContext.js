@@ -34,8 +34,6 @@ export const AppProvider = ({children}) => {
     }
 
     const getMessages = async () => {
-
-        setMessagesLoading(true)
         
         if(user)
         {
@@ -68,7 +66,6 @@ export const AppProvider = ({children}) => {
                 })
 
                 setMessages(mess)
-                setMessagesLoading(false)
             })
         }
     }
@@ -78,7 +75,6 @@ export const AppProvider = ({children}) => {
         if(user)
         {
             getMessages()
-            
         }
     }, [user])
 
@@ -129,7 +125,7 @@ export const AppProvider = ({children}) => {
                     }
 
                     setMessagesUserData(prev => [...prev, userData])
-
+                    setMessagesLoading(false)
                 }
             }
         }
@@ -141,7 +137,7 @@ export const AppProvider = ({children}) => {
     
     useEffect(() => {
         console.log(messagesUserData)
-    }, [messagesUserData])
+    }, [messagesLoading])
 
     useEffect(() => {
 
@@ -149,6 +145,8 @@ export const AppProvider = ({children}) => {
             return;
         
     }, [user])
+
+
 
     const memo = useMemo(() => ({
         messages,

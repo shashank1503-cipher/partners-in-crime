@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       else 
       {
         await getUserDataFromMongo(token, user);
-        // navigate('/main');
+        navigate('/main');
       }
     else logout();
 
