@@ -2,24 +2,23 @@ import React, {createContext, useMemo, useContext, useState, useEffect} from 're
 import { GoogleAuthProvider, signInWithPopup , onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import useLocalStorage from "use-local-storage";
-
+import { useNavigate } from 'react-router';
 
 const provider = new GoogleAuthProvider()
+provider.setCustomParameters({
+    hd: "iiitkottayam.ac.in"
+})
 
 const URL = 'http://localhost:8000';
 
 const AuthContext = createContext({})
 
 export const AuthProvider = ({children}) => {
-    
+
+    const navigate = useNavigate()
     const [error, setError] = useState(null)
     const [user, setUser] = useState(null)
     const [token, setToken] = useLocalStorage("token", "")
-
-    useEffect(() => {
-        console.log(user)
-        console.log(token)
-    }, [user, token])
 
     const [loadingInitial, setLoadingInitial] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -29,18 +28,19 @@ export const AuthProvider = ({children}) => {
             if(token === "")
                 logout()
             else
-                getUserDataFromMongo(token, user)
-                
-        else logout()
-
-        console.log(user)
-            
+            {
+                getUserDataFromMongo(token, user) 
+                navigate('/main')
+            }
+        else 
+            logout()
         setLoadingInitial(false)
     }), [])
 
     const getUserDataFromMongo = async (token, results) => {
 
         let User = results;
+        console.log(User)
         User = {
             name: User.displayName,
             email: User.email,
@@ -71,16 +71,10 @@ export const AuthProvider = ({children}) => {
     }
 
     const signInPopup = () => signInWithPopup(auth, provider)
-    .then(async results => {
-        const domain = results.user.email.split('@')[1]
-        if(domain === 'iiitkottayam.ac.in')
-        {
-            const credentials = GoogleAuthProvider.credentialFromResult(results);
-            const token = credentials.idToken;
-            setToken(token)
-        }
-        else
-            return logout()
+    .then(results => {
+        const credentials = GoogleAuthProvider.credentialFromResult(results);
+        const token = credentials.idToken;
+        setToken(token)
     })
     .catch(error => {
         setError({
@@ -91,7 +85,7 @@ export const AuthProvider = ({children}) => {
 
     const logout = () => {
         setLoading(true)
-        console.log("Logging out...")
+        setToken("")
         signOut(auth)
         .catch(error => setError(error))
         .finally(() => setLoading(false))
