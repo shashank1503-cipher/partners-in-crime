@@ -54,6 +54,7 @@ const Notifications = () => {
     setNewData(newData);
     setOldData([...oldData, newData[indexOfObject]]);
   };
+  
   return (
     <Flex direction={'column'} justifyContent={'center'} align={'center'} p={5}>
       <Heading textAlign={'center'} fontFamily={`'Source Code Pro',sans-serif`}>
