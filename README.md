@@ -1,8 +1,10 @@
 # Partners In Crime
 
+
 Just another project
 
-## Changelog
+## Current Status
 
 - Created Landing and Signup Page
 - Added Sidebar
+- Main Page Done
