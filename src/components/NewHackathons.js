@@ -99,7 +99,8 @@ const NewHackathons = () => {
         ) : (
           hackathons.map(hackathon => (
             <HackathonCard
-              key={hackathon.id}
+              key={hackathon['_id']}
+              id = {hackathon['_id']}
               name={hackathon.name}
               logo={hackathon.image}
               heroImage={hackathon.heroImage}
