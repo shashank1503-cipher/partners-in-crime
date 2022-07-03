@@ -11,7 +11,7 @@ const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
 root.render(
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <AppProvider>
@@ -20,7 +20,7 @@ root.render(
         </AppProvider>
       </AuthProvider>
     </BrowserRouter>
-  </StrictMode>
+  // </StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change
