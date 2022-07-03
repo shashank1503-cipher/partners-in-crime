@@ -1,7 +1,6 @@
 # Roadmap
 
 ## Day 1-3
-
 Tasks
 
 - Complete Auth
