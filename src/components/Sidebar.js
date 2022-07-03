@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   IconButton,
   Avatar,
@@ -35,6 +35,7 @@ import Name from './Names';
 import Logo from './Logo';
 import { Link as NavLink } from 'react-router-dom';
 import StatusIndicator from './StatusIndicator';
+import useAuth from '../context/AuthContext';
 const LinkItems = [
   { name: 'Home', icon: FiHome, url: '/main' },
   { name: 'Find a Partner', icon: FaUserSecret, url: '/find' },
@@ -44,6 +45,10 @@ const LinkItems = [
 ];
 
 export default function SidebarWithHeader({ children }) {
+  let { user } = useAuth();
+  let userName = user.name.split(' ')[0];
+  let photo = user.photo;
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box>
@@ -142,6 +147,10 @@ const NavItem = ({ url, icon, badge, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  let { user } = useAuth();
+  let userName = user.name.split(' ')[0];
+  let photo = user.photo;
+  console.log(photo)
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -181,19 +190,14 @@ const MobileNav = ({ onOpen, ...rest }) => {
               _focus={{ boxShadow: 'none' }}
             >
               <HStack>
-                <Avatar
-                  size={'sm'}
-                  src={
-                    'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                  }
-                />
+                <Avatar size={'sm'} src={photo} referrerPolicy="no-referrer"/>
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Veronica Srivastava</Text>
+                  <Text fontSize="sm">{userName}</Text>
                 </VStack>
                 <Box display={{ base: 'none', md: 'flex' }}>
                   <FiChevronDown />
@@ -201,7 +205,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
               </HStack>
             </MenuButton>
             <MenuList borderColor={useColorModeValue('gray.200', 'gray.700')}>
-              <NavLink to = "/profile"><MenuItem>Profile</MenuItem></NavLink>
+              <NavLink to="/profile">
+                <MenuItem>Profile</MenuItem>
+              </NavLink>
               <MenuItem>Favourite Hackathons</MenuItem>
               <MenuItem>My Projects</MenuItem>
               <MenuDivider />

@@ -1,86 +1,128 @@
-import React, {createContext, useMemo, useContext, useState, useEffect} from 'react';
-import { GoogleAuthProvider, signInWithPopup , onAuthStateChanged, signOut } from 'firebase/auth';
+import React, {
+  createContext,
+  useMemo,
+  useContext,
+  useState,
+  useEffect,
+} from 'react';
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut,
+} from 'firebase/auth';
 import { auth } from '../firebase';
+import useLocalStorage from 'use-local-storage';
+import { useNavigate } from 'react-router';
 
-const provider = new GoogleAuthProvider()
 
-const AuthContext = createContext({})
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({
+  hd: 'iiitkottayam.ac.in'
+})
 
-export const AuthProvider = ({children}) => {
-    
-    const [error, setError] = useState(null)
-    const [user, setUser] = useState(null)
+const URL = 'http://localhost:8000';
 
-    const [loadingInitial, setLoadingInitial] = useState(true);
-    const [loading, setLoading] = useState(false);
+const AuthContext = createContext({});
 
-    useEffect(() => console.log(user), [user])
+export const AuthProvider = ({ children }) => {
+  let navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useLocalStorage('token', '');
 
-    useEffect(() => onAuthStateChanged(auth, (user) => {
-        if(user)
-            setUser(user)
-        else setUser(null)
+  const [loadingInitial, setLoadingInitial] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-        setLoadingInitial(false)
-    }), [])
+  useEffect(() => onAuthStateChanged(auth, async user => {
+    if (user)
+      if (token === '') logout();
+      else 
+      {
+        await getUserDataFromMongo(token, user);
+        navigate('/main');
+      }
+    else logout();
 
-    const signInPopup = () => signInWithPopup(auth, provider)
-    .then(async results => {
-        const domain = results.user.email.split('@')[1]
-        if(domain === 'iiitkottayam.ac.in')
-        {
-            const credentials = GoogleAuthProvider.credentialFromResult(results);
-            const token = credentials.idToken;
-            console.log(token)
-            const user = results.user;
-            setUser({
-                token,
-                user
-            })
+    setLoadingInitial(false);
+  }), []);
 
-            let data = await fetch('http://localhost:8000/auth/verify',{
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: `Bearer ${token}`
-                }
-            })
 
-            data = await data.json()
-            console.log(data)
+  const getUserDataFromMongo = async (token, results) => {
+    let User = results;
+    User = {
+      name: User.displayName,
+      email: User.email,
+      photo: User.photoURL,
+      g_id: User.uid,
+      skills: [],
+      batch: '20XX',
+      socials: [],
+    };
 
-        }
-        else
-            return Promise.reject(); 
-    })
-    .catch(error => {
-        setError({
-            code: error.code,
-            message: error.message
-        })
+    let data = await fetch(`${URL}/auth/adduser`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        user: User,
+      }),
     });
 
-    const logout = () => {
-        setLoading(true)
+    data = await data.json();
 
-        signOut(auth)
-        .catch(error => setError(error))
-        .finally(() => setLoading(false))
-    }
+    console.log("Data fetched")
 
-    const memo = useMemo(() => ({
-        user,
-        loading,
-        error,
-        signInPopup,
-        logout
-    }),[user, loading, error])
+    if (data.code === 2) setUser(data.data);
 
-    return <AuthContext.Provider value={memo}>
-        {!loadingInitial&&children}
+    setUser(User);
+  };
+
+  const signInPopup = () =>
+    signInWithPopup(auth, provider)
+      .then(async results => {
+          const credentials = GoogleAuthProvider.credentialFromResult(results);
+          const token = credentials.idToken;
+          setToken(token);
+      })
+      .catch(error => {
+        setError({
+          code: error.code,
+          message: error.message,
+        });
+      });
+
+  const logout = () => {
+    setLoading(true)
+    setToken("");
+    setUser(null)
+    console.log('Logging out...');
+    signOut(auth)
+      .catch(error => setError(error))
+      .finally(() => setLoading(false));
+  };
+
+  const memo = useMemo(
+    () => ({
+      token,
+      user,
+      loading,
+      error,
+      signInPopup,
+      logout,
+    }),
+    [user, loading, error]
+  );
+
+  return (
+    <AuthContext.Provider value={memo}>
+      {!loadingInitial && children}
     </AuthContext.Provider>
-}
+  );
+};
 
 export default function useAuth() {
-    return useContext(AuthContext);
+  return useContext(AuthContext);
 }
