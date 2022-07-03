@@ -42,8 +42,11 @@ export const AuthProvider = ({ children }) => {
         await getUserDataFromMongo(token, user);
         navigate('/main');
       }
-    else logout();
-
+    else 
+    {
+      console.log(user)
+      // logout();
+    }
     setLoadingInitial(false);
   }), []);
 
