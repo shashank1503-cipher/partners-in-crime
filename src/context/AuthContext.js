@@ -30,16 +30,20 @@ export const AuthProvider = ({ children }) => {
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  onAuthStateChanged(auth, user => {
-    if (user)
-      if (token === '') logout();
-      else getUserDataFromMongo(token, user);
-    else logout();
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, user => {
+        console.log('Called');
+        console.log(user)
+        getUserDataFromMongo(user);
+        setLoadingInitial(false);
+      }),
+    []
+  );
 
-    setLoadingInitial(false);
-  });
-
-  const getUserDataFromMongo = async (token, results) => {
+  const getUserDataFromMongo = async (results) => {
+    let token = results.accessToken;
+    console.log(token);
     let User = results;
     User = {
       name: User.displayName,
@@ -63,9 +67,8 @@ export const AuthProvider = ({ children }) => {
     });
 
     data = await data.json();
-
-    if (data.code === 2) setUser(data.data);
-
+    console.log(data);
+    // if (data.code === 2) setUser(data.data);
     setUser(User);
   };
 
