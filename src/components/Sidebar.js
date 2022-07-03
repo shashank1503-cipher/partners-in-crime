@@ -35,6 +35,7 @@ import Name from './Names';
 import Logo from './Logo';
 import { Link as NavLink } from 'react-router-dom';
 import StatusIndicator from './StatusIndicator';
+import useAuth from '../context/AuthContext';
 const LinkItems = [
   { name: 'Home', icon: FiHome, url: '/main' },
   { name: 'Find a Partner', icon: FaUserSecret, url: '/find' },
@@ -142,6 +143,7 @@ const NavItem = ({ url, icon, badge, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  let { logout } = useAuth();
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -201,11 +203,13 @@ const MobileNav = ({ onOpen, ...rest }) => {
               </HStack>
             </MenuButton>
             <MenuList borderColor={useColorModeValue('gray.200', 'gray.700')}>
-              <NavLink to = "/profile"><MenuItem>Profile</MenuItem></NavLink>
+              <NavLink to="/profile">
+                <MenuItem>Profile</MenuItem>
+              </NavLink>
               <MenuItem>Favourite Hackathons</MenuItem>
               <MenuItem>My Projects</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={logout}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
