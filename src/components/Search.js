@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Badge,
     Button,
@@ -11,7 +11,27 @@ import {
     Text,
     useColorModeValue,
   } from '@chakra-ui/react';
-const Search = () => {
+
+const [banda, setBanda]= useState('');
+const [loading,setLoading]=useState(false);
+const [error,setError]= useState('');
+const getSearch = async (q) => {
+  setLoading(true);
+  try {
+    const res =await fetch(
+      `http://127.0.0.1:8000/search?q=${q}`
+    );
+    const data= await res.json();
+    console.log(data);
+    setBanda(data.banda);
+  } catch(error)
+  {
+    console.error(error);
+    setError(error);
+  }
+  setLoading(false);
+}; 
+  
   return (
     <Center py={6}>
         <Stack
@@ -40,7 +60,7 @@ const Search = () => {
             p={1}
             pt={2}>
             <Heading fontSize={'2xl'} fontFamily={'body'}>
-              Akarsh Pandey
+            Akarsh
             </Heading>
             <Text fontWeight={600} color={'gray.500'} size="sm" mb={4}>
               @iamakarsh

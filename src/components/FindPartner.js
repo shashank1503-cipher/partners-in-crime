@@ -97,7 +97,7 @@ function FindPartner () {
           p={4}
           direction={'column'}   
         >
-          {loading?<Text>Loading...</Text>:data?.map(resu=>(<Button onClick={()=>{navigate("/search");}}>{resu.name}</Button>))}
+          {loading?<Text>Loading...</Text>:data?.map(resu=>(<Button onClick={()=>{navigate(`/search?id=${resu.name}`);}}>{resu.name}</Button>))}
           
           
         </Flex>
