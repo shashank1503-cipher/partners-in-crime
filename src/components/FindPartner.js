@@ -28,12 +28,12 @@ function FindPartner () {
   const [query, setQuery] = useState('');
   let fetchdata=async()=>{
     setloading(true)
-    console.log("check")
+    
     const res=await fetch(`http://127.0.0.1:8000/suggestions?q=${query}`)
     if(res.status===200)
     {
       const Data=await res.json()
-      console.log(Data)
+      
       setData(Data.data)
     }
     else 
@@ -43,9 +43,9 @@ function FindPartner () {
     }
   setloading(false)
   }
-  console.log(query)
+  
   useEffect(() => {
-    console.log("query")
+    
     fetchdata()
   }, [query])
   
