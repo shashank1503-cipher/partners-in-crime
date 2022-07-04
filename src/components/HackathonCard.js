@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { FaHeart, FaLink, FaUserSecret } from 'react-icons/fa';
 import { FiHeart } from 'react-icons/fi';
 import { useNavigate } from 'react-router';
+import useAuth from '../context/AuthContext';
 
 export default function HackathonCard(props) {
   const heroImageMap = {
@@ -34,7 +35,7 @@ export default function HackathonCard(props) {
     DEVFOLIO:
       'https://res.cloudinary.com/hackbot/image/upload/v1610594222/Hackbot%20Web/38809367_j6zmw0.png',
   };
-  let id = props.id
+  let id = props.id;
   let website = props.website;
   let heroImage = props.heroImage || heroImageMap[website];
   let logo = props.logo || logoImageMap[website];
@@ -49,8 +50,7 @@ export default function HackathonCard(props) {
   const [isInterested, setIsInterested] = useState(false);
   let navigate = useNavigate();
   let toast = useToast();
-  let token =
-    'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk4OTdjZjk0NTllMjU0ZmYxYzY3YTRlYjZlZmVhNTJmMjFhOWJhMTQiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiU0hBU0hBTksgS1VNQVIgU1JJVkFTVEFWQSAtSUlJVEsiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUFUWEFKektFX2wxczNyWTU0ejBFMEROV0F4MFNDbGs5VjdiOGZOVURwb2w9czk2LWMiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcGFydG5lcnMtaW4tY3JpbWUtMzgzMDkiLCJhdWQiOiJwYXJ0bmVycy1pbi1jcmltZS0zODMwOSIsImF1dGhfdGltZSI6MTY1Njc0NzAyNSwidXNlcl9pZCI6IkFMUEZtNVZDSURUeG5TZURCRFd4N2N2enB4ODMiLCJzdWIiOiJBTFBGbTVWQ0lEVHhuU2VEQkRXeDdjdnpweDgzIiwiaWF0IjoxNjU2NzY3MTE5LCJleHAiOjE2NTY3NzA3MTksImVtYWlsIjoic2hhc2hhbmtrdW1hcjIwYmNzMTVAaWlpdGtvdHRheWFtLmFjLmluIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMTE1MzgxMTc0MTY1MDU2Nzg4MDQiXSwiZW1haWwiOlsic2hhc2hhbmtrdW1hcjIwYmNzMTVAaWlpdGtvdHRheWFtLmFjLmluIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.bhUkAvSeSXiY_W2x8AKhtxSnsnGUEr2pkSEg5J-DOu-tNgbfO6TX2nPUr3UOZpQVjEPQpDIh8aO_YtNRan3_ud19qF5oBAQk61WPOqOsg8VQhI75P24CevQFYsHy6EktZGgUscQEPyttd9TwEKITWA4PCzlenS7nZFpCNK_-ULk25kUoNfCNjUCo1G_gdDBIhCvq_VfGJnAlk_rLe-uuwL2XYtX3z5stXWFs88aXoGmxh-LDa9W7kAHz1mgaPJ59soOvCmtxhUk_0kwG3bxMCvYP_rlluaAoByusqWmx4UzYZoX3eEoSFIQriSi5nECLPLWaBBRUFunx3LwSRGjWug';
+  let { token } = useAuth();
   let addInterested = async () => {
     let url = `http://127.0.0.1:8000/addfavourite`;
     let data = {
@@ -67,11 +67,11 @@ export default function HackathonCard(props) {
       });
       if (response.status === 200) {
         let json = await response.json();
-        console.log(json);
+        
         setIsInterested(true);
       } else {
-        let json = await response.json()
-        console.log(json)
+        let json = await response.json();
+        
         toast({
           title: 'Error',
           description: `${json.detail} - ${response.status}`,
@@ -102,7 +102,6 @@ export default function HackathonCard(props) {
       });
       if (response.status === 200) {
         let json = await response.json();
-        console.log(json);
         setIsInterested(false);
       } else {
         toast({

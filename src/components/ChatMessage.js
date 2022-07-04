@@ -65,7 +65,7 @@ function ChatMessage({messages, userData}) {
             timeStamp: new Date()
         }
 
-        console.log(mes)
+        
         
         await addDoc(collection(db, 'chats'), {
             ...mes
