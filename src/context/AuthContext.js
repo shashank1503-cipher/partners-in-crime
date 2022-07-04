@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
   let navigate = useNavigate();
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
+  const href = window.location.href
   const [token, setToken] = useLocalStorage('token', '');
 
   const [loadingInitial, setLoadingInitial] = useState(true);
@@ -40,12 +41,22 @@ export const AuthProvider = ({ children }) => {
       else 
       {
         await getUserDataFromMongo(token, user);
-        navigate('/main');
+
+        if(href.split("/")[3] === "")
+          navigate('/main');
       }
     else logout();
 
     setLoadingInitial(false);
   }), []);
+
+  useEffect(() => {
+      if(user)
+      {
+        setLoadingInitial(false)
+        console.log(user)
+      }
+  }, [user])
 
 
   const getUserDataFromMongo = async (token, results) => {

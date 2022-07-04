@@ -16,18 +16,19 @@ import {
   useDisclosure,
   Icon
 } from '@chakra-ui/react';
+import { doc, setDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaCheckDouble } from 'react-icons/fa';
 import useApp from '../context/AppContext';
+import { db } from '../firebase';
 import ChatMessage from './ChatMessage';
 import Logo from './Logo';
 
 const Message = ({name, photo, lastMessage,lastMessageSender,id, select, setSelected}) => {
 
     const b = (select === id)
-    console.log(lastMessage)
-
+  
     return (
       <Flex 
         alignItems={"center"}
@@ -56,11 +57,14 @@ const Message = ({name, photo, lastMessage,lastMessageSender,id, select, setSele
       >
         <Avatar size={"sm"} src={photo || null}/>
         <Flex direction={"column"}>
-          <Box fontSize={18}>{name.substring(0,10)}</Box>
+          <Box fontSize={18}>{name?.substring(0,10)}</Box>
           <Text 
             fontSize={14} 
             color="gray.500"
-          >{lastMessageSender}: {lastMessage}</Text>
+            display={'flex'}
+            alignItems={"center"}
+            gap={2}
+          >{lastMessageSender} {lastMessage}</Text>
         </Flex>
       </Flex>
     )
@@ -69,8 +73,7 @@ const Message = ({name, photo, lastMessage,lastMessageSender,id, select, setSele
 
 const Messages = () => {
 
-  const {messagesUsersId, messagesUserData, messages, messageLoading} = useApp()
-  const [mainData, setMainData] = useState([])
+  const {messagesUserData, messages} = useApp()
   const [data, setData] = useState([])
   const [search, setSearch] = useState("")
 
@@ -83,7 +86,7 @@ const Messages = () => {
     if(search.length > 0)
     {
         let new_data = []
-        data.map(d => {
+        messagesUserData.map(d => {
           if(d.name.toLowerCase().includes(search))
             new_data.push(d)
         })
@@ -91,17 +94,16 @@ const Messages = () => {
         setData([...new_data])
     }
     else
-      setData([...mainData])
+      setData([...messagesUserData])
     
   }, [search])
 
   useEffect(() => {
+    
+    if((messagesUserData.length > 0))
+      setData([...messagesUserData])
 
-  }, [messagesUserData, messagesUsersId])
-
-  // useEffect(() => {
-  //   console.log(selected)
-  // }, [selected])
+  }, [messagesUserData])
 
   return (
 
@@ -158,11 +160,11 @@ const Messages = () => {
               }}
               > 
               
-              {messagesUserData?.map(d =>
-                <Message 
+              {data.map(d =>
+                <Message
                   name={d.name} 
-                  lastMessage={messages[d.g_id].messagesArray.slice(-1)[0].message} 
-                  lastMessageSender={messages[d.g_id].messagesArray.slice(-1)[0].who === 1?"You":d.name}
+                  lastMessage={messages[d.g_id]?.messagesArray.slice(-1)[0].message} 
+                  lastMessageSender={messages[d.g_id]?.messagesArray.slice(-1)[0].who === 1?<FaCheckDouble/>:""}
                   photo={d.photo}
                   id={d.g_id}
                   key={d.g_id}

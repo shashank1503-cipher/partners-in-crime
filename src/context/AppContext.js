@@ -2,7 +2,6 @@ import React, {createContext, useMemo, useContext, useState, useEffect} from 're
 import useAuth from './AuthContext';
 import { db } from '../firebase';
 import { collection, doc, getDoc, getDocs, limit, onSnapshot, orderBy, query, where } from 'firebase/firestore';
-import { m } from 'framer-motion';
 
 // import 'firebase/firestore';
 // import 'firebase/auth';
@@ -24,21 +23,12 @@ export const AppProvider = ({children}) => {
 
     let myq;
 
-    const addMessage = (otherUserId, data) => {
-            
-            messages[`${otherUserId}`]['messagesArray'].push({
-            message: data.message,
-            who: data.sender===user.g_id?1:0
-            })
-            setMessages(messages)
-    }
-
     const getMessages = async () => {
-        
+
+        setMessagesLoading(true)
         if(user)
         {
             myq = query(colRef, where("users", 'array-contains', user?.g_id), orderBy('timeStamp'))
-            
             onSnapshot(myq, snapshot => {
                 
                 let mess = {}
@@ -47,7 +37,6 @@ export const AppProvider = ({children}) => {
                     const otherUserId = user.g_id===data.users[0]?data.users[1]:data.users[0];
                     
                     setMessagesUsersId(prev => new Set([...prev, otherUserId]))
-
 
                     if(!mess[otherUserId])
                     {
@@ -61,7 +50,9 @@ export const AppProvider = ({children}) => {
 
                     mess[otherUserId].messagesArray.push({
                         message: data.message,
-                        who: data.sender===user.g_id?1:0
+                        who: data.sender===user.g_id?1:0,
+                        
+
                     })
                 })
 
@@ -84,17 +75,17 @@ export const AppProvider = ({children}) => {
 
     useEffect(() => {
 
-        console.log(messagesUsersId)        
         
         const checkIfDataAvailable = async () => {
-
+            
+            console.log(messagesUsersId)    
             for(let id of messagesUsersId)
             {
                 console.log(id)
                 let userData = {}
                 if(messagesUserData.filter(m => m.g_id === id).length === 1)
                 {
-                    console.log('hello')
+                    
                 }
                 else
                 {
@@ -109,8 +100,6 @@ export const AppProvider = ({children}) => {
                         }),
                     });
 
-                    console.log("Hello")
-
                     data = await data.json()
                     
                     if(data.error)
@@ -123,15 +112,15 @@ export const AppProvider = ({children}) => {
                                 ...data.user
                             }
                     }
-
                     setMessagesUserData(prev => [...prev, userData])
-                    setMessagesLoading(false)
                 }
             }
+            setMessagesLoading(false)
         }
 
-        checkIfDataAvailable()
-
+        console.log(messagesUsersId.size)
+        if(messagesUsersId.size > 0)
+            checkIfDataAvailable()
         
     }, [messagesUsersId])
     

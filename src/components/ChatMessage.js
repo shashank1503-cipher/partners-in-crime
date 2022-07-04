@@ -58,6 +58,9 @@ function ChatMessage({messages, userData}) {
 
     const postMessage = async () => {
 
+        if(chatMes.length === 0)
+            return;
+        
         const mes = {
             message: chatMes,
             sender: user.g_id,
@@ -134,6 +137,7 @@ function ChatMessage({messages, userData}) {
                 px={4}
                 py={1}
                 gap={2}
+                boxShadow={'xs'}
             >
                 <Input
                     borderWidth={1}
@@ -141,8 +145,13 @@ function ChatMessage({messages, userData}) {
                     focusBorderColor="none"
                     value={chatMes}
                     onChange={e => setChatMes(e.target.value)}
+                    
                 />
-                <FaPaperPlane  cursor={'pointer'} onClick={() => postMessage()}/>
+                <Box background={'cyan.600'} color={'white'} p={2} borderRadius={"50%"}
+                    cursor={'pointer'} onClick={() => postMessage()}
+                >
+                    <FaPaperPlane/>
+                </Box>
             </Flex>
         </Flex>
     )
