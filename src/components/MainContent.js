@@ -3,6 +3,7 @@ import React from 'react';
 import DevfolioHackathon from './DevfolioHackathon';
 import MLHHackathon from './MLHHackathon';
 import NewHackathons from './NewHackathons';
+import Projects from './Projects';
 
 const MainContent = () => {
   return (
@@ -14,7 +15,7 @@ const MainContent = () => {
       <Heading textAlign={'center'} fontFamily={ `'Source Code Pro',sans-serif`}>Devfolio Hackathons</Heading>
       <DevfolioHackathon />
       <Heading textAlign={'center'} fontFamily={ `'Source Code Pro',sans-serif`}>Project Ideas</Heading>
-      <Text>Yahan Project Ideas dal denge </Text>
+      <Projects/>
     </Flex>
   );
 };

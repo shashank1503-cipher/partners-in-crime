@@ -37,16 +37,16 @@ const DevfolioHackathon = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [page, setPage] = useState(0);
   let fetchData = async () => {
-    console.log(perPage);
+    
     setLoading(true);
     try {
       const res = await fetch(
         `https://hackathon-api-v2.herokuapp.com/devfolio?q=${query}&page=${page}&per_page=${perPage}&`
       );
-      console.log(res.status);
+      
       if (res.status === 200) {
         const data = await res.json();
-        console.log(data);
+        
         setTotalRecords(data.meta.total);
         setHackathons(data.data);
         setError(null);
