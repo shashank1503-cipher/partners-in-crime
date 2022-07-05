@@ -45,9 +45,10 @@ export default function HackathonCard(props) {
   let Location = props.location;
   let mode = props.mode;
   let link = props.url;
+  let interested = props.interested
   const bg = useColorModeValue('white', 'gray.900');
   const color = useColorModeValue('gray.700', 'white');
-  const [isInterested, setIsInterested] = useState(false);
+  const [isInterested, setIsInterested] = useState(interested);
   let navigate = useNavigate();
   let toast = useToast();
   let { token } = useAuth();
@@ -55,6 +56,15 @@ export default function HackathonCard(props) {
     let url = `http://127.0.0.1:8000/addfavourite`;
     let data = {
       hackathon_id: id,
+      name: name,
+      image: logo,
+      heroImage: heroImage,
+      website: website,
+      url: link,
+      location: Location,
+      start: startDate,
+      end: endDate,
+      mode: mode,
     };
     try {
       let response = await fetch(url, {
@@ -67,11 +77,11 @@ export default function HackathonCard(props) {
       });
       if (response.status === 200) {
         let json = await response.json();
-        
+
         setIsInterested(true);
       } else {
         let json = await response.json();
-        
+
         toast({
           title: 'Error',
           description: `${json.detail} - ${response.status}`,
@@ -125,7 +135,7 @@ export default function HackathonCard(props) {
   return (
     <Center py={6} px={6}>
       <Box
-        maxW={'445px'}
+        maxW={'sm'}
         minW={'xs'}
         bg={bg}
         boxShadow={'2xl'}

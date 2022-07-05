@@ -60,10 +60,26 @@ const AddAProject = () => {
         } else {
           const data = await res.json();
           setImageError(data.error);
+          toast({
+            title: 'Error',
+            description: `${data.error} - ${res.status}`,
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          });
+          
           
         }
       } catch (error) {
         setImageError(error.message);
+        toast({
+          title: 'Error',
+          description: `Something went wrong - ${error.message}`,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+
         
       } finally {
         setUploading(false);
