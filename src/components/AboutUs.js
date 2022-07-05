@@ -25,7 +25,7 @@ export default function SocialProfileWithImage() {
         <Box
           maxW={'270px'}
           w={'full'}
-          bg={useColorModeValue('white', 'gray.800')}
+          bg={useColorModeValue('#d1f0f6', 'gray.800')}
           boxShadow={'2xl'}
           rounded={'md'}
           overflow={'hidden'}
@@ -66,7 +66,7 @@ export default function SocialProfileWithImage() {
                   <Button
                     w={'full'}
                     mt={8}
-                    bg={useColorModeValue('#151f21')}
+                    bg={useColorModeValue('#FFFFFF')}
                     color={'blue'}
                     rounded={'md'}
                     _hover={{
@@ -82,7 +82,7 @@ export default function SocialProfileWithImage() {
                   <Button
                     w={'full'}
                     mt={8}
-                    bg={useColorModeValue('#151f21')}
+                    bg={useColorModeValue('#FFFFFF')}
                     rounded={'md'}
                     _hover={{
                       transform: 'translateY(-2px)',
@@ -100,7 +100,7 @@ export default function SocialProfileWithImage() {
         <Box
           maxW={'270px'}
           w={'full'}
-          bg={useColorModeValue('white', 'gray.800')}
+          bg={useColorModeValue('#d1f0f6', 'gray.800')}
           boxShadow={'2xl'}
           rounded={'md'}
           overflow={'hidden'}
@@ -141,7 +141,7 @@ export default function SocialProfileWithImage() {
                   <Button
                     w={'full'}
                     mt={8}
-                    bg={useColorModeValue('#151f21')}
+                    bg={useColorModeValue('#FFFFFF')}
                     color={'blue'}
                     rounded={'md'}
                     _hover={{
@@ -157,7 +157,7 @@ export default function SocialProfileWithImage() {
                   <Button
                     w={'full'}
                     mt={8}
-                    bg={useColorModeValue('#151f21')}
+                    bg={useColorModeValue('#FFFFFF')}
                     rounded={'md'}
                     _hover={{
                       transform: 'translateY(-2px)',
@@ -175,7 +175,7 @@ export default function SocialProfileWithImage() {
         <Box
           maxW={'270px'}
           w={'full'}
-          bg={useColorModeValue('white', 'gray.800')}
+          bg={useColorModeValue('#d1f0f6', 'gray.800')}
           boxShadow={'2xl'}
           rounded={'md'}
           overflow={'hidden'}
@@ -216,7 +216,7 @@ export default function SocialProfileWithImage() {
                   <Button
                     w={'full'}
                     mt={8}
-                    bg={useColorModeValue('#151f21')}
+                    bg={useColorModeValue('#FFFFFF')}
                     color={'blue'}
                     rounded={'md'}
                     _hover={{
@@ -232,7 +232,7 @@ export default function SocialProfileWithImage() {
                   <Button
                     w={'full'}
                     mt={8}
-                    bg={useColorModeValue('#151f21')}
+                    bg={useColorModeValue('#FFFFFF')}
                     rounded={'md'}
                     _hover={{
                       transform: 'translateY(-2px)',
@@ -250,7 +250,7 @@ export default function SocialProfileWithImage() {
         <Box
           maxW={'270px'}
           w={'full'}
-          bg={useColorModeValue('white', 'gray.800')}
+          bg={useColorModeValue('#d1f0f6', 'gray.800')}
           boxShadow={'2xl'}
           rounded={'md'}
           overflow={'hidden'}
@@ -291,7 +291,7 @@ export default function SocialProfileWithImage() {
                   <Button
                     w={'full'}
                     mt={8}
-                    bg={useColorModeValue('#151f21')}
+                    bg={useColorModeValue('#FFFFFF')}
                     color={'blue'}
                     rounded={'md'}
                     _hover={{
@@ -307,7 +307,7 @@ export default function SocialProfileWithImage() {
                   <Button
                     w={'full'}
                     mt={8}
-                    bg={useColorModeValue('#151f21')}
+                    bg={useColorModeValue('#FFFFFF')}
                     rounded={'md'}
                     _hover={{
                       transform: 'translateY(-2px)',
