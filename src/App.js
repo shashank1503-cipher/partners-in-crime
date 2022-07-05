@@ -98,6 +98,10 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/aboutus"
+          element={<AboutUs/>}>
+            </Route>
       </Routes>
     </ChakraProvider>
   );
