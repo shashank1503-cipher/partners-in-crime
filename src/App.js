@@ -12,7 +12,7 @@ import NotificationsPage from './pages/NotificationsPage';
 import Landing from './pages/Landing';
 import Profile from './pages/ProfilePage';
 import useAuth from './context/AuthContext';
-
+import AboutUs from './components/AboutUs';
 import PrivateRoute from './utils/PrivateRoute';
 
 import Searchpage from './pages/Searchpage';
@@ -82,7 +82,7 @@ function App() {
         <Route path="/notifications" element={<NotificationsPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/search" element={<Searchpage/>}/>
-
+        <Route path="/aboutus" element={<AboutUs/>}/>
       </Routes>
     </ChakraProvider>
   );
