@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { Stack, Text, Button, Flex } from '@chakra-ui/react';
+import { FaHeart, FaUserSecret } from 'react-icons/fa';
+import useAuth from '../context/AuthContext';
 import { FiMail } from 'react-icons/fi';
-import { FaUserSecret } from 'react-icons/fa';
 
 export default function NotificationCard(props) {
   let { title, description, date, time, type, _id } = props.data;
+
   const [loading, setLoading] = useState(false);
+  let { token } = useAuth();
   let markAsRead = async () => {
     setLoading(true);
     let response = await fetch(`http://127.0.0.1:8000/notifications/${_id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     if (response.status === 200) {
@@ -25,7 +28,13 @@ export default function NotificationCard(props) {
     <Stack p="4" boxShadow="lg" m="4" borderRadius="sm" w={'full'}>
       <Stack direction="row" alignItems="center">
         <Text fontSize={'2xl'}>
-          {type === 'Message' ? <FiMail /> : <FaUserSecret />}
+          {type === 'Message' ? (
+            <FiMail />
+          ) : type === 'Interest' ? (
+            <FaHeart />
+          ) : (
+            <FaUserSecret />
+          )}
         </Text>
         <Text fontWeight="semibold">{title}</Text>
       </Stack>
@@ -37,11 +46,11 @@ export default function NotificationCard(props) {
         <Text fontSize={{ base: 'sm' }} textAlign={'left'} maxW={'4xl'}>
           {description}
         </Text>
-        <Stack direction={{ base: 'column', md: 'row' }}>
+        {/* <Stack direction={{ base: 'column', md: 'row' }}>
           <Button variant="solid" colorScheme="green" onClick={markAsRead}>
             Mark as Read
           </Button>
-        </Stack>
+        </Stack> */}
       </Stack>
       <Flex justifyContent={'flex-end'} pt={5} pr={5}>
         <Text>

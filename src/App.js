@@ -12,15 +12,14 @@ import NotificationsPage from './pages/NotificationsPage';
 import Landing from './pages/Landing';
 import Profile from './pages/ProfilePage';
 import useAuth from './context/AuthContext';
-
+import AboutUs from './components/AboutUs';
 import PrivateRoute from './utils/PrivateRoute';
 
 import Searchpage from './pages/Searchpage';
-
+import MyProjectsPage from './pages/MyProjectsPage';
+import FavouriteHackathonsPage from './pages/FavouriteHackathonsPage';
 
 function App() {
-  let { user } = useAuth();
-
   return (
     <ChakraProvider>
       <Routes>
@@ -75,14 +74,34 @@ function App() {
           }
         />
 
-        <Route path="/main" element={<Main />} />
-        <Route path="/find" element={<FindPartnerPage />} />
-        <Route path="/add" element={<AddAProjectPage />} />
-        <Route path="/messages" element={<MessagesPage />} />
-        <Route path="/notifications" element={<NotificationsPage />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/search" element={<Searchpage/>}/>
-
+        <Route
+          path="/search"
+          element={
+            <PrivateRoute>
+              <Searchpage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/myprojects"
+          element={
+            <PrivateRoute>
+              <MyProjectsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/favouritehackathons"
+          element={
+            <PrivateRoute>
+              <FavouriteHackathonsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/aboutus"
+          element={<AboutUs/>}>
+            </Route>
       </Routes>
     </ChakraProvider>
   );

@@ -13,42 +13,38 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
-import {Routes, Route, useNavigate} from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
-import React, { useEffect, useState,Link } from 'react';
+import React, { useEffect, useState, Link } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import {withRouter} from 'react-router-dom';
-function FindPartner () {
-  const navigate= useNavigate();
-  const [loading, setloading] = useState(false)
-  const [data, setData] = useState(null)
+import { withRouter } from 'react-router-dom';
+function FindPartner() {
+  const navigate = useNavigate();
+  const [loading, setloading] = useState(false);
+  const [data, setData] = useState(null);
   let color = useColorModeValue('gray.900', 'gray.50');
   const [isActive, setIsActive] = useState(false);
   const { isOpen, onToggle } = useDisclosure();
   const [query, setQuery] = useState('');
-  let fetchdata=async()=>{
-    setloading(true)
-    
-    const res=await fetch(`http://127.0.0.1:8000/suggestions?q=${query}`)
-    if(res.status===200)
-    {
-      const Data=await res.json()
-      
-      setData(Data.data)
+  let fetchdata = async () => {
+    setloading(true);
+
+    const res = await fetch(`http://127.0.0.1:8000/suggestions?q=${query}`);
+    if (res.status === 200) {
+      const Data = await res.json();
+
+      setData(Data.data);
+    } else {
+      const Data = await res.json();
+      console.log(Data.detail);
     }
-    else 
-    {
-      const Data=await res.json()
-      console.log(Data.detail)
-    }
-  setloading(false)
-  }
-  
+    setloading(false);
+  };
+
   useEffect(() => {
-    
-    fetchdata()
-  }, [query])
-  
+    fetchdata();
+  }, [query]);
+
   return (
     <Flex justifyContent={'center'} direction={'column'} align={'center'}>
       <Heading fontFamily={`'Source Code Pro',sans-serif`}>
@@ -71,7 +67,7 @@ function FindPartner () {
               children={<FaSearch />}
               size={'lg'}
             />
-           <Input
+            <Input
               type="text"
               placeholder="What/Who are you looking for?"
               size={'lg'}
@@ -81,8 +77,6 @@ function FindPartner () {
                 setQuery(e.target.value);
               }}
             />
-            
-            
           </InputGroup>
         </FormControl>
       </Flex>
@@ -95,25 +89,25 @@ function FindPartner () {
           rounded={'md'}
           overflow={'hidden'}
           p={4}
-          direction={'column'}   
+          direction={'column'}
         >
-
-          {loading?<Text>Loading...</Text>:data?.map(resu=>(<Button onClick={()=>{navigate(`/search?id=${resu.name}`);}}>{resu.name}</Button>))}
-
-
-          
-
-
-          
-          
+          {loading ? (
+            <></>
+          ) : (
+            data?.map(resu => (
+              <Button
+                onClick={() => {
+                  navigate(`/search?id=${resu.name}`);
+                }}
+              >
+                {resu.name}
+              </Button>
+            ))
+          )}
         </Flex>
       </Collapse>
     </Flex>
-    
   );
-};
+}
 
 export default FindPartner;
-
-
-  

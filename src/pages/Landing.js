@@ -10,20 +10,39 @@ import {
   Image,
   Input,
   Link,
+  ModalFooter,
   Stack,
   Text,
   useBreakpointValue,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import React, { useState } from 'react';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { Link as NavLink } from 'react-router-dom';
 import useAuth from '../context/AuthContext';
-
+import { FcGoogle } from 'react-icons/fc';
+import { Center } from '@chakra-ui/react';
+import Footer from '../components/Footer';
+import {
+ 
+  chakra,
+  VisuallyHidden,
+} from '@chakra-ui/react';
+import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { ReactNode } from 'react';
 function Landing() {
-  const { signInPopup } = useAuth();
-
+  const { signInPopup, error } = useAuth();
+  let toast = useToast();
+  if (error) {
+    toast({
+      title: 'Error',
+      description: `${error.message} - ${error.code}`,
+      status: 'error',
+      isClosable: true,
+    });
+  }
   return (
     <Flex direction="column">
       <Flex
@@ -45,9 +64,18 @@ function Landing() {
         </Flex>
 
         <Flex justifyContent={'flex-end'} gap={3}>
-          <Button colorScheme={'cyan'} onClick={signInPopup}>
-            <AiOutlineGoogle />
+          <Button
+            onClick={signInPopup}
+            w={'full'}
+            maxW={'md'}
+            variant={'outline'}
+            leftIcon={<FcGoogle />}
+          >
+            <Center>
+              <Text>Sign in with Google</Text>
+            </Center>
           </Button>
+
           <ColorModeSwitcher />
         </Flex>
       </Flex>
@@ -72,26 +100,21 @@ function Landing() {
               </Heading>{' '}
               <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
                 Some quirky tagline
-              </Text> 
+              </Text>
               <Stack
                 direction={{ base: 'column', md: 'row' }}
                 spacing={4}
                 justifyContent={'center'}
               >
-                <Button
-                size={'lg'}
-                  rounded={'full'}
-                  colorScheme={'cyan'}
-                >
+                <Button  onClick={signInPopup} size={'lg'} rounded={'full'} colorScheme={'cyan'}>
                   Get Started
                 </Button>
-                
               </Stack>
             </Stack>
           </Flex>
+
           <Flex flex={1} p={10}>
             <Image
-
               alt={'Landing Image'}
               objectFit={'cover'}
               src={
@@ -100,8 +123,12 @@ function Landing() {
             />
           </Flex>
         </Stack>
+        <Footer/>
       </Flex>
+    
     </Flex>
+    
+   
   );
 }
 

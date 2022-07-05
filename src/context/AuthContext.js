@@ -16,11 +16,10 @@ import { auth } from '../firebase';
 import useLocalStorage from 'use-local-storage';
 import { useNavigate } from 'react-router';
 
-
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({
-  hd: 'iiitkottayam.ac.in'
-})
+  hd: 'iiitkottayam.ac.in',
+});
 
 const URL = 'http://localhost:8000';
 
