@@ -33,9 +33,9 @@ export const AppProvider = ({children}) => {
                 
                 let mess = {}
                 snapshot.docs.forEach((doc) => {
+                    const doc_id = doc.id
                     const data = doc.data()
                     const otherUserId = user.g_id===data.users[0]?data.users[1]:data.users[0];
-                    
                     setMessagesUsersId(prev => new Set([...prev, otherUserId]))
 
                     if(!mess[otherUserId])
@@ -51,8 +51,7 @@ export const AppProvider = ({children}) => {
                     mess[otherUserId].messagesArray.push({
                         message: data.message,
                         who: data.sender===user.g_id?1:0,
-                        
-
+                        id: doc_id
                     })
                 })
 
@@ -70,18 +69,14 @@ export const AppProvider = ({children}) => {
     }, [user])
 
     useEffect(() => {
-        console.log(messages)
-    }, [messages])
-
-    useEffect(() => {
 
         
         const checkIfDataAvailable = async () => {
             
-            console.log(messagesUsersId)    
+            // console.log(messagesUsersId)    
             for(let id of messagesUsersId)
             {
-                console.log(id)
+                // console.log(id)
                 let userData = {}
                 if(messagesUserData.filter(m => m.g_id === id).length === 1)
                 {
@@ -124,9 +119,6 @@ export const AppProvider = ({children}) => {
         
     }, [messagesUsersId])
     
-    useEffect(() => {
-        console.log(messagesUserData)
-    }, [messagesLoading])
 
     useEffect(() => {
 

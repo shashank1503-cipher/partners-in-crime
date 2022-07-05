@@ -185,9 +185,8 @@ const Messages = () => {
           w={'full'}
           h={'full'}
         >
-              {selected === -1?<Logo 
-                fontSize="5xl"
-              />:
+              {selected === -1?<></>
+              :
                 <ChatMessage 
                     messages={messages[selected]}
                     userData={messagesUserData.filter(m => m.g_id === selected)}

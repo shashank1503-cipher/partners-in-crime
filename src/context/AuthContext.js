@@ -10,6 +10,7 @@ import {
   signInWithPopup,
   onAuthStateChanged,
   signOut,
+  getIdToken
 } from 'firebase/auth';
 import { auth } from '../firebase';
 import useLocalStorage from 'use-local-storage';
@@ -36,41 +37,52 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => onAuthStateChanged(auth, async user => {
-    if (user)
-      if (token === '') logout();
-      else 
+    setLoadingInitial(false)
+      if (user)
       {
-        await getUserDataFromMongo(token, user);
+        setLoadingInitial(true)
+        console.log(user)
+        const token = await getIdToken(user)
+        setToken(token)
 
-        if(href.split("/")[3] === "")
-          navigate('/main');
+        const User = {
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+          g_id: user.uid,
+          skills: [],
+          batch: '20XX',
+          socials: [],
+        };
+
+        setUser(User);
       }
-    else logout();
-
-    setLoadingInitial(false);
   }), []);
 
   useEffect(() => {
-      if(user)
+
+    const func = async () => {
+      // console.log(token, user)
+      if(token !== "" && user)
       {
-        setLoadingInitial(false)
-        console.log(user)
+          await getUserDataFromMongo(token, user)
+  
+          if(href.split("/")[3] === "")
+            navigate('/main')
+          else navigate(`/${href.split("/")[3]}`);
       }
+    }
+
+    func()
+    
   }, [user])
 
 
   const getUserDataFromMongo = async (token, results) => {
     let User = results;
-    User = {
-      name: User.displayName,
-      email: User.email,
-      photo: User.photoURL,
-      g_id: User.uid,
-      skills: [],
-      batch: '20XX',
-      socials: [],
-    };
 
+    // console.log("TOKEN : ", token)
+    // console.log(User)
     let data = await fetch(`${URL}/auth/adduser`, {
       method: 'POST',
       headers: {
@@ -84,35 +96,37 @@ export const AuthProvider = ({ children }) => {
 
     data = await data.json();
 
+    // console.log(data)
+    if(data.error) return logout();
+
     console.log("Data fetched")
 
     if (data.code === 2) setUser(data.data);
 
     setUser(User);
+    setLoadingInitial(false)
   };
 
-  const signInPopup = () =>
-    signInWithPopup(auth, provider)
-      .then(async results => {
-          const credentials = GoogleAuthProvider.credentialFromResult(results);
-          const token = credentials.idToken;
-          setToken(token);
-      })
-      .catch(error => {
-        setError({
-          code: error.code,
-          message: error.message,
-        });
-      });
+  const signInPopup = async () => {
+    
+    try{
+      const results = await signInWithPopup(auth, provider)
+      // console.log(results)
+    }
+    catch{
+      console.log("error")
+    }
+  }
 
   const logout = () => {
     setLoading(true)
-    setToken("");
-    setUser(null)
-    console.log('Logging out...');
     signOut(auth)
-      .catch(error => setError(error))
-      .finally(() => setLoading(false));
+      .catch(error => console.log(error))
+      .finally(() => {
+        setToken("");
+        setUser(null)
+        console.log('Logging out...');
+      });
   };
 
   const memo = useMemo(

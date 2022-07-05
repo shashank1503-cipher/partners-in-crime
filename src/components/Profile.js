@@ -95,12 +95,12 @@ const Profile = () => {
                     else{
                         const data = await res.json();
                         setImageError(data.error);
-                        console.log(data.error);
+                        
                     }
                 } 
                 catch(error){
                     setImageError(error.message);
-                    console.log(error.message);
+                    
                 } 
                 finally{
                     setUploading(false);

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   IconButton,
   Avatar,
@@ -45,10 +45,6 @@ const LinkItems = [
 ];
 
 export default function SidebarWithHeader({ children }) {
-  let { user } = useAuth();
-  let userName = user.name.split(' ')[0];
-  let photo = user.photo;
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box>
@@ -147,10 +143,9 @@ const NavItem = ({ url, icon, badge, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
-  let { user } = useAuth();
-  let userName = user.name.split(' ')[0];
+  let { user, logout } = useAuth();
+  let name = user.name.split(' ')[0];
   let photo = user.photo;
-  console.log(photo)
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -190,14 +185,14 @@ const MobileNav = ({ onOpen, ...rest }) => {
               _focus={{ boxShadow: 'none' }}
             >
               <HStack>
-                <Avatar size={'sm'} src={photo} referrerPolicy="no-referrer"/>
+                <Avatar size={'sm'} src={photo} referrerPolicy="no-referrer" />
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">{userName}</Text>
+                  <Text fontSize="sm">{name}</Text>
                 </VStack>
                 <Box display={{ base: 'none', md: 'flex' }}>
                   <FiChevronDown />
@@ -211,7 +206,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               <MenuItem>Favourite Hackathons</MenuItem>
               <MenuItem>My Projects</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={logout}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { FaImage } from 'react-icons/fa';
+import useAuth from '../context/AuthContext';
 
 const AddAProject = () => {
   let color = useColorModeValue('gray.900', 'gray.50');
@@ -21,11 +22,15 @@ const AddAProject = () => {
   const [uploading, setUploading] = useState(false);
   const [imageError, setImageError] = useState('');
   const [title, setTitle] = useState('');
+  const [shortDesc, setShortDesc] = useState('');
   const [description, setDescription] = useState('');
+
   const [skills, setSkills] = useState('');
   const [loading, setLoading] = useState(false);
 
   const toast = useToast();
+
+  let { token } = useAuth();
   let uploadImage = async () => {
     setUploading(true);
     if (image) {
@@ -55,11 +60,11 @@ const AddAProject = () => {
         } else {
           const data = await res.json();
           setImageError(data.error);
-          console.log(data.error);
+          
         }
       } catch (error) {
         setImageError(error.message);
-        console.log(error.message);
+        
       } finally {
         setUploading(false);
         setImage(null);
@@ -71,12 +76,20 @@ const AddAProject = () => {
   };
   let sendData = async () => {
     setLoading(true);
-    let token =
-      'eyJhbGciOiJSUzI1NiIsImtpZCI6ImIwNmExMTkxNThlOGIyODIxNzE0MThhNjdkZWE4Mzc0MGI1ZWU3N2UiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiUHJhZHl1bW5hIFBhdGlsIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FBVFhBSnpMZDc2R0czbzNwWjZVSXFkV3ZoS0ZNQkRPbGpOQUtQeHNabHJ0VlE9czk2LWMiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20venRvY2tzLWF1dGgiLCJhdWQiOiJ6dG9ja3MtYXV0aCIsImF1dGhfdGltZSI6MTY0Nzg3NjQxNiwidXNlcl9pZCI6Ik1WR1NEOFNsYUVXalRHYjJRTzlSZERUSjBVcTIiLCJzdWIiOiJNVkdTRDhTbGFFV2pUR2IyUU85UmREVEowVXEyIiwiaWF0IjoxNjQ3ODc2NDE2LCJleHAiOjE2NDc4ODAwMTYsImVtYWlsIjoicHJhZHl1bW5hcmFqZS5wYXRpbEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfbnVtYmVyIjoiKzkxOTEzMDA0NDE2MSIsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMDg5MTcwNzc1NTkyODY5NDEzODkiXSwicGhvbmUiOlsiKzkxOTEzMDA0NDE2MSJdLCJlbWFpbCI6WyJwcmFkeXVtbmFyYWplLnBhdGlsQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.ayCuupceExjo62yVIktdPo616IhkLHAFtJRZxuVbcePybWdKTI8Ajim5nSwfYwRWHh7EKdlR9LqOLflj2jlJbCSVJ7WmHTBQfBQkrHhCh7sWMFT7l_yY5DaeQnZgz3cZ2P2O_9k03JmEyYlSsOP4giz3CHsVUXyqmfkO0Fq-QlYN5H-i5c5sr0N629kaNJLrRXbfjiHjgkL87km7pflzSKlFXH6KmDptJwLkWkINZ4ofmW7xdLsFjecjrepI9ByX5owjt5cwKXHVvcYOTLCa45_8xEbhg8iJrQlDWui0AFxDYD8rFRsb3vnDs4FIFbzAp6oniQSGw2Y5sJBO6ACDsA';
+    if (!skills) {
+      setLoading(false);
+      toast({
+        title: 'Please enter at least one skill',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
     let skillArr = skills.split(' ');
     let data = {
       image_url: imageUrl,
       title: title,
+      description: shortDesc,
       idea: description,
       skills: skillArr,
     };
@@ -97,16 +110,17 @@ const AddAProject = () => {
           isClosable: true,
         });
         setTitle('');
+        setShortDesc('');
         setDescription('');
         setSkills('');
         setImageUrl('');
         setImage(null);
         localStorage.removeItem('title');
+        localStorage.removeItem('shortDesc');
         localStorage.removeItem('description');
         localStorage.removeItem('skills');
         localStorage.removeItem('image');
         localStorage.removeItem('imageUrl');
-        
       } else {
         const data = await res.json();
         toast({
@@ -128,20 +142,20 @@ const AddAProject = () => {
     }
   };
   let saveDraft = () => {
-    try{
-    localStorage.setItem('title', title);
-    localStorage.setItem('description', description);
-    localStorage.setItem('skills', skills);
-    localStorage.setItem('imageUrl', imageUrl);
-    localStorage.setItem('image', image);
-    toast({
-      title: 'Draft Saved',
-      status: 'success',
-      duration: 9000,
-      isClosable: true,
-    });
-
-    }catch(error){
+    try {
+      localStorage.setItem('title', title);
+      localStorage.setItem('shortDesc', shortDesc);
+      localStorage.setItem('description', description);
+      localStorage.setItem('skills', skills);
+      localStorage.setItem('imageUrl', imageUrl);
+      localStorage.setItem('image', image);
+      toast({
+        title: 'Draft Saved',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+    } catch (error) {
       toast({
         title: error.message,
         status: 'error',
@@ -151,8 +165,8 @@ const AddAProject = () => {
     }
   };
   let loadDraft = () => {
-    
     setTitle(localStorage.getItem('title'));
+    setShortDesc(localStorage.getItem('shortDesc'));
     setDescription(localStorage.getItem('description'));
     setSkills(localStorage.getItem('skills'));
     setImageUrl(localStorage.getItem('imageUrl'));
@@ -264,6 +278,33 @@ const AddAProject = () => {
           textAlign={'center'}
           mb={4}
         >
+          A short pitch about your project
+        </Text>
+        <FormControl>
+          <Textarea
+            placeholder="Your Idea"
+            value={shortDesc}
+            onChange={e => setShortDesc(e.target.value)}
+          />
+        </FormControl>
+      </Flex>
+      <Flex
+        mt={10}
+        bg={useColorModeValue('white', 'gray.900')}
+        boxShadow={'2xl'}
+        rounded={'md'}
+        overflow={'hidden'}
+        p={8}
+        direction={'column'}
+        align={'center'}
+        w={['sm', 'md', 'lg', 'xl']}
+        justifyContent={'center'}
+      >
+        <Text
+          fontFamily={`'Source Code Pro',sans-serif`}
+          textAlign={'center'}
+          mb={4}
+        >
           Billion Dollar Idea
         </Text>
         <FormControl>
@@ -296,6 +337,7 @@ const AddAProject = () => {
             For your one hell of a team
           </Text>
           <Input
+            isRequired={true}
             placeholder="Skills You Require"
             size={['sm', 'md', 'lg', 'lg']}
             value={skills}

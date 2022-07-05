@@ -12,7 +12,11 @@ import NotificationsPage from './pages/NotificationsPage';
 import Landing from './pages/Landing';
 import Profile from './pages/ProfilePage';
 import useAuth from './context/AuthContext';
+
 import PrivateRoute from './utils/PrivateRoute';
+
+import Searchpage from './pages/Searchpage';
+
 
 function App() {
   let { user } = useAuth();
@@ -21,6 +25,7 @@ function App() {
     <ChakraProvider>
       <Routes>
         <Route path="/" element={<Landing />} />
+
         <Route
           path="/main"
           element={
@@ -69,6 +74,15 @@ function App() {
             </PrivateRoute>
           }
         />
+
+        <Route path="/main" element={<Main />} />
+        <Route path="/find" element={<FindPartnerPage />} />
+        <Route path="/add" element={<AddAProjectPage />} />
+        <Route path="/messages" element={<MessagesPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/search" element={<Searchpage/>}/>
+
       </Routes>
     </ChakraProvider>
   );

@@ -18,16 +18,18 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spinner,
+  Text,
   useDisclosure,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { FaArrowLeft, FaArrowRight, FaFilter, FaSearch } from 'react-icons/fa';
+import useAuth from '../context/AuthContext';
 import HackathonCard from './HackathonCard';
 import Logo from './Logo';
+import ProjectCard from './ProjectCard';
 
-const DevfolioHackathon = () => {
-  const [hackathons, setHackathons] = useState([]);
+const Projects = () => {
+  const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [perPage, setPerPage] = useState(3);
@@ -35,20 +37,29 @@ const DevfolioHackathon = () => {
   const [more, setMore] = useState(false);
   const [query, setQuery] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+  let {token} = useAuth()
   let fetchData = async () => {
-    
+    console.log(perPage);
     setLoading(true);
     try {
       const res = await fetch(
-        `https://hackathon-api-v2.herokuapp.com/devfolio?q=${query}&page=${page}&per_page=${perPage}&`
+        `http://127.0.0.1:8000/fetchprojects?q=${query}&page=${page}&per_page=${perPage}&`
+        ,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          }
+        }
+
       );
-      
+      console.log(res.status);
       if (res.status === 200) {
         const data = await res.json();
-        
+        console.log(data);
         setTotalRecords(data.meta.total);
-        setHackathons(data.data);
+        setProjects(data.data);
         setError(null);
       } else {
         const data = await res.json();
@@ -63,7 +74,7 @@ const DevfolioHackathon = () => {
   };
   useEffect(() => {
     fetchData();
-  }, [perPage,page]);
+  }, [perPage, page]);
   return (
     <>
       <Flex justifyContent={'flex-end'}>
@@ -76,7 +87,14 @@ const DevfolioHackathon = () => {
         align={'center'}
       >
         {loading ? (
-          <Logo fontSize={'4xl'} />
+          <Text
+            fontSize="2xl"
+            fontFamily={`'Source Code Pro', sans-serif`}
+            color={'cyan'}
+            fontWeight="bold"
+          >
+            <Logo fontSize={'4xl'} />
+          </Text>
         ) : error ? (
           <Alert status="error">
             <AlertIcon />
@@ -84,29 +102,26 @@ const DevfolioHackathon = () => {
             <AlertDescription>{error.message}</AlertDescription>
           </Alert>
         ) : (
-          hackathons.map(hackathon => (
-            <HackathonCard
-              key={hackathon['_id']}
-              id = {hackathon['_id']}
-              name={hackathon.name}
-              logo={hackathon.image}
-              heroImage={hackathon.heroImage}
-              website={hackathon.website}
-              url={hackathon.url}
-              location={hackathon.location}
-              start={hackathon.start}
-              end={hackathon.end}
-              mode={hackathon.mode}
+          projects.map(project => (
+            <ProjectCard
+              key={project['_id']}
+              id={project['_id']}
+              title={project['title']}
+              description={project['description']}
+              heroImage={project['hero_image']}
+              logo={project['image']}
+              idea={project['idea']}
+              userName={project['name']}
             />
           ))
         )}
       </Flex>
       <Flex justifyContent={'flex-end'} m={5}>
-        <ButtonGroup display={more && !loading ? 'flex' : 'none'} mr={'10'} >
+        <ButtonGroup display={more ? 'flex' : 'none'} mr={'10'}>
           <IconButton
             icon={<FaArrowLeft />}
             onClick={() => setPage(page - 1)}
-            disabled={page === 0 ? true : false}
+            disabled={page === 1 ? true : false}
           >
             Previous
           </IconButton>
@@ -125,7 +140,7 @@ const DevfolioHackathon = () => {
           display={loading ? 'none' : 'flex'}
           onClick={() => {
             setPerPage(more ? 3 : 10);
-            setPage(0);
+            setPage(1);
             setMore(!more);
           }}
         >
@@ -156,7 +171,6 @@ const DevfolioHackathon = () => {
               </InputGroup>
             </FormControl>
           </ModalBody>
-
           <ModalFooter>
             <Button onClick={fetchData} mr={5} colorScheme={'teal'}>
               Apply
@@ -169,4 +183,4 @@ const DevfolioHackathon = () => {
   );
 };
 
-export default DevfolioHackathon;
+export default Projects;
