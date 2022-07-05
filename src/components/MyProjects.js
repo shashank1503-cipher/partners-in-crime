@@ -24,11 +24,10 @@ import {
 import React, { useEffect, useState } from 'react';
 import { FaArrowLeft, FaArrowRight, FaFilter, FaSearch } from 'react-icons/fa';
 import useAuth from '../context/AuthContext';
-import HackathonCard from './HackathonCard';
 import Logo from './Logo';
 import ProjectCard from './ProjectCard';
 
-const Projects = () => {
+const MyProjects = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -44,7 +43,7 @@ const Projects = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/fetchprojects?q=${query}&page=${page}&per_page=${perPage}&`,
+        `http://127.0.0.1:8000/fetchuserprojects?q=${query}&page=${page}&per_page=${perPage}&`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -56,7 +55,7 @@ const Projects = () => {
       if (res.status === 200) {
         const data = await res.json();
         console.log(data);
-        setTotalRecords(data.meta.total_records);
+        setTotalRecords(data.meta.total);
         setProjects(data.data);
         setError(null);
       } else {
@@ -105,12 +104,11 @@ const Projects = () => {
               key={project['_id']}
               id={project['_id']}
               title={project['title']}
+              description={project['description']}
               heroImage={project['hero_image']}
               logo={project['image']}
               idea={project['idea']}
-              shortDescription={project['description']}
               userName={project['name']}
-              interested={project['interested']}
             />
           ))
         )}
@@ -127,7 +125,7 @@ const Projects = () => {
           <IconButton
             icon={<FaArrowRight />}
             disabled={
-              Math.floor(totalRecords / perPage) === page - 1 ? true : false
+              Math.floor(totalRecords / perPage) === page ? true : false
             }
             onClick={() => setPage(page + 1)}
           >
@@ -182,4 +180,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default MyProjects;

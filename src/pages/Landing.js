@@ -14,6 +14,7 @@ import {
   Text,
   useBreakpointValue,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import React, { useState } from 'react';
@@ -22,8 +23,16 @@ import { Link as NavLink } from 'react-router-dom';
 import useAuth from '../context/AuthContext';
 
 function Landing() {
-  const { signInPopup } = useAuth();
-
+  const { signInPopup, error } = useAuth();
+  let toast = useToast();
+  if (error) {
+    toast({
+      title: 'Error',
+      description: `${error.message} - ${error.code}`,
+      status: 'error',
+      isClosable: true,
+    });
+  }
   return (
     <Flex direction="column">
       <Flex
@@ -72,26 +81,20 @@ function Landing() {
               </Heading>{' '}
               <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
                 Some quirky tagline
-              </Text> 
+              </Text>
               <Stack
                 direction={{ base: 'column', md: 'row' }}
                 spacing={4}
                 justifyContent={'center'}
               >
-                <Button
-                size={'lg'}
-                  rounded={'full'}
-                  colorScheme={'cyan'}
-                >
+                <Button size={'lg'} rounded={'full'} colorScheme={'cyan'}>
                   Get Started
                 </Button>
-                
               </Stack>
             </Stack>
           </Flex>
           <Flex flex={1} p={10}>
             <Image
-
               alt={'Landing Image'}
               objectFit={'cover'}
               src={

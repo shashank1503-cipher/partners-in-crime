@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   IconButton,
   Avatar,
@@ -36,6 +36,7 @@ import Logo from './Logo';
 import { Link as NavLink } from 'react-router-dom';
 import StatusIndicator from './StatusIndicator';
 import useAuth from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 const LinkItems = [
   { name: 'Home', icon: FiHome, url: '/main' },
   { name: 'Find a Partner', icon: FaUserSecret, url: '/find' },
@@ -75,6 +76,33 @@ export default function SidebarWithHeader({ children }) {
 }
 
 const SidebarContent = ({ onClose, ...rest }) => {
+  const { token } = useAuth();
+  let fetchNewNotification = async () => {
+    try {
+      const res = await fetch(`http://Localhost:8000/isNewnotification`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      if (res.status === 200) {
+        console.log(data);
+        console.log(data.data);
+        if (data.data) {
+          console.log('new notification');
+          LinkItems[4].new = true;
+        } else {
+          LinkItems[4].new = false;
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchNewNotification();
+  }, []);
   return (
     <Box
       transition="3s ease"
@@ -96,6 +124,11 @@ const SidebarContent = ({ onClose, ...rest }) => {
             icon={link.icon}
             url={link.url}
             badge={link.new}
+            onClick={() => {
+              if (link.new === true) {
+                LinkItems[4].new = false;
+              }
+            }}
           >
             {link.name}
           </NavItem>
@@ -146,6 +179,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
   let { user, logout } = useAuth();
   let name = user.name.split(' ')[0];
   let photo = user.photo;
+  let navigate = useNavigate();
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -203,8 +237,16 @@ const MobileNav = ({ onOpen, ...rest }) => {
               <NavLink to="/profile">
                 <MenuItem>Profile</MenuItem>
               </NavLink>
-              <MenuItem>Favourite Hackathons</MenuItem>
-              <MenuItem>My Projects</MenuItem>
+              <MenuItem onClick={() => {
+                  navigate('/favouritehackathons');
+                }}>Favourite Hackathons</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  navigate('/myprojects');
+                }}
+              >
+                My Projects
+              </MenuItem>
               <MenuDivider />
               <MenuItem onClick={logout}>Sign out</MenuItem>
             </MenuList>

@@ -23,13 +23,17 @@ export default function ProjectCard(props) {
   let heroImage = props.heroImage || 'https://via.placeholder.com/400x200';
   let logo = props.logo;
   let title = props.title;
-  let idea = props.idea;
-  idea = idea.length > 30 ? idea.substring(0, 30) + '...' : idea;
+  let shortDescription = props.shortDescription || 'No description';
+  shortDescription =
+    shortDescription.length > 30
+      ? shortDescription.substring(0, 30) + '...'
+      : shortDescription;
+  let interested = props.interested;
 
   let userName = props.userName;
   const bg = useColorModeValue('white', 'gray.900');
   const color = useColorModeValue('gray.700', 'white');
-  const [isInterested, setIsInterested] = useState(false);
+  const [isInterested, setIsInterested] = useState(interested);
   let navigate = useNavigate();
   let toast = useToast();
   let { token } = useAuth();
@@ -49,11 +53,11 @@ export default function ProjectCard(props) {
       });
       if (response.status === 200) {
         let json = await response.json();
-        
+
         setIsInterested(true);
       } else {
         let json = await response.json();
-        
+
         toast({
           title: 'Error',
           description: `${json.detail} - ${response.status}`,
@@ -84,7 +88,7 @@ export default function ProjectCard(props) {
       });
       if (response.status === 200) {
         let json = await response.json();
-        
+
         setIsInterested(false);
       } else {
         toast({
@@ -108,7 +112,7 @@ export default function ProjectCard(props) {
   return (
     <Center py={6} px={6}>
       <Box
-        maxW={'445px'}
+        maxW={'sm'}
         minW={'xs'}
         bg={bg}
         boxShadow={'2xl'}
@@ -133,7 +137,7 @@ export default function ProjectCard(props) {
           </Heading>
           <Flex align={'center'}>
             <Text color={'gray.400'}>
-              <Text>{idea}</Text>
+              <Text>{shortDescription}</Text>
               <Text fontWeight={'bold'} color={'gray.100'}>
                 By
               </Text>
