@@ -38,21 +38,19 @@ const Projects = () => {
   const [query, setQuery] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [page, setPage] = useState(1);
-  let {token} = useAuth()
+  let { token } = useAuth();
   let fetchData = async () => {
     console.log(perPage);
     setLoading(true);
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/fetchprojects?q=${query}&page=${page}&per_page=${perPage}&`
-        ,
+        `http://127.0.0.1:8000/fetchprojects?q=${query}&page=${page}&per_page=${perPage}&`,
         {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
-          }
+          },
         }
-
       );
       console.log(res.status);
       if (res.status === 200) {

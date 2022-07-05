@@ -36,7 +36,7 @@ export default function ProjectCard(props) {
   let addInterested = async () => {
     let url = `http://127.0.0.1:8000/addfavourite`;
     let data = {
-      hackathon_id: id,
+      project_id: id,
     };
     try {
       let response = await fetch(url, {
