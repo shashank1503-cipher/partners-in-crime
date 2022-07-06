@@ -7,6 +7,7 @@ import {
   ButtonGroup,
   Flex,
   FormControl,
+  Heading,
   IconButton,
   Input,
   InputGroup,
@@ -99,7 +100,7 @@ const Projects = () => {
             <AlertTitle>Error! </AlertTitle>
             <AlertDescription>{error.message}</AlertDescription>
           </Alert>
-        ) : (
+        ) : projects.length > 0 ? (
           projects.map(project => (
             <ProjectCard
               key={project['_id']}
@@ -113,6 +114,13 @@ const Projects = () => {
               interested={project['interested']}
             />
           ))
+        ) : (
+          <Flex direction={'column'} justifyContent={'space-evenly'} minH={'xs'} textAlign={'center'}>
+            <Heading>Uh oh! Nothing to see here T_T</Heading>
+            <Text fontSize="lg" fontFamily={`'Source Code Pro', sans-serif`}>
+              No projects found. Take a chill pill and come back later.
+            </Text>
+          </Flex>
         )}
       </Flex>
       <Flex justifyContent={'flex-end'} m={5}>

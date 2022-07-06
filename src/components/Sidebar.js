@@ -41,7 +41,7 @@ const LinkItems = [
   { name: 'Find a Partner', icon: FaUserSecret, url: '/find' },
   { name: 'Add a Project', icon: FiPlus, url: '/add' },
   { name: 'Messages', icon: FiMessageSquare, url: '/messages' },
-  { name: 'Notifications', icon: FiBell, url: '/notifications', new: true },
+  { name: 'Notifications', icon: FiBell, url: '/notifications', new: false },
 ];
 
 export default function SidebarWithHeader({ children }) {

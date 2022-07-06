@@ -18,13 +18,21 @@ import PrivateRoute from './utils/PrivateRoute';
 import Searchpage from './pages/Searchpage';
 import MyProjectsPage from './pages/MyProjectsPage';
 import FavouriteHackathonsPage from './pages/FavouriteHackathonsPage';
+import SpecificProjectPage from './pages/SpecificProjectPage';
 
 function App() {
   return (
     <ChakraProvider>
       <Routes>
         <Route path="/" element={<Landing />} />
-
+        <Route
+          path="/project"
+          element={
+            <PrivateRoute>
+              <SpecificProjectPage />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/main"
           element={
@@ -98,10 +106,8 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route
-          path="/aboutus"
-          element={<AboutUs/>}>
-            </Route>
+
+        <Route path="/aboutus" element={<AboutUs />}></Route>
       </Routes>
     </ChakraProvider>
   );
