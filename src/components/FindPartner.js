@@ -99,6 +99,8 @@ function FindPartner() {
                 onClick={() => {
                   navigate(`/search?id=${resu.name}`);
                 }}
+
+                my = {'2'}
               >
                 {resu.name}
               </Button>
