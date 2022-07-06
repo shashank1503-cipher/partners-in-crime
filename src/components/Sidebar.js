@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   IconButton,
   Avatar,
@@ -79,13 +79,14 @@ const SidebarContent = ({ onClose, ...rest }) => {
   const { token } = useAuth();
   let fetchNewNotification = async () => {
     try {
-      const res = await fetch(`http://Localhost:8000/isNewnotification`, {
+      let res = await fetch(`http://Localhost:8000/isNewnotification`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       });
-      const data = await res.json();
+
+      let data = await res.json();
       if (res.status === 200) {
         console.log(data);
         console.log(data.data);
@@ -176,10 +177,26 @@ const NavItem = ({ url, icon, badge, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
-  let { user, logout } = useAuth();
+  const [imageURL, setImageURL] = useState();
+  let { user, logout, token } = useAuth();
   let name = user.name.split(' ')[0];
-  let photo = user.photo;
   let navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProfilePhoto = async () => {
+      const res = await fetch("http://localhost:8000/fetchuserpic", {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      setImageURL(data["photo"])
+    }
+    fetchProfilePhoto();
+  }, [])
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -219,7 +236,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               _focus={{ boxShadow: 'none' }}
             >
               <HStack>
-                <Avatar size={'sm'} src={photo} referrerPolicy="no-referrer" />
+                <Avatar size={'sm'} src={imageURL} referrerPolicy="no-referrer" />
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems="flex-start"
