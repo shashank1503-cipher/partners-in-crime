@@ -45,7 +45,7 @@ export default function HackathonCard(props) {
   let Location = props.location;
   let mode = props.mode;
   let link = props.url;
-  let interested = props.interested
+  let interested = props.interested;
   const bg = useColorModeValue('white', 'gray.900');
   const color = useColorModeValue('gray.700', 'white');
   const [isInterested, setIsInterested] = useState(interested);
@@ -188,6 +188,7 @@ export default function HackathonCard(props) {
               variant={isInterested ? 'solid' : 'outline'}
               colorScheme="red"
               aria-label="Interested"
+              disabled={props.interestButtonDisabled}
               icon={isInterested ? <FaHeart /> : <FiHeart />}
               onClick={() => {
                 if (isInterested) {

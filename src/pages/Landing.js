@@ -25,15 +25,11 @@ import useAuth from '../context/AuthContext';
 import { FcGoogle } from 'react-icons/fc';
 import { Center } from '@chakra-ui/react';
 import Footer from '../components/Footer';
-import {
- 
-  chakra,
-  VisuallyHidden,
-} from '@chakra-ui/react';
+import { chakra, VisuallyHidden } from '@chakra-ui/react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { ReactNode } from 'react';
 function Landing() {
-  const { signInPopup, error } = useAuth();
+  const { signInPopup, error, loading } = useAuth();
   let toast = useToast();
   if (error) {
     toast({
@@ -70,6 +66,7 @@ function Landing() {
             maxW={'md'}
             variant={'outline'}
             leftIcon={<FcGoogle />}
+            isLoading={loading}
           >
             <Center>
               <Text>Sign in with Google</Text>
@@ -85,8 +82,9 @@ function Landing() {
         justifyContent={'center'}
         textAlign={'center'}
         minH={'75vh'}
+
       >
-        <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
+        <Stack minH={'100vh'} direction={{ base: 'column-reverse', md: 'row' }}>
           <Flex p={8} flex={1} align={'center'} justify={'center'}>
             <Stack spacing={10} w={'full'} maxW={'lg'}>
               <Heading
@@ -106,7 +104,12 @@ function Landing() {
                 spacing={4}
                 justifyContent={'center'}
               >
-                <Button  onClick={signInPopup} size={'lg'} rounded={'full'} colorScheme={'cyan'}>
+                <Button
+                  onClick={signInPopup}
+                  size={'lg'}
+                  rounded={'full'}
+                  colorScheme={'cyan'}
+                >
                   Get Started
                 </Button>
               </Stack>
@@ -123,12 +126,9 @@ function Landing() {
             />
           </Flex>
         </Stack>
-        <Footer/>
+        <Footer />
       </Flex>
-    
     </Flex>
-    
-   
   );
 }
 

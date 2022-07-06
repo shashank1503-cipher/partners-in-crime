@@ -74,6 +74,7 @@ const MyProjects = () => {
   }, [perPage, page]);
   return (
     <>
+    
       <Flex justifyContent={'flex-end'}>
         <IconButton icon={<FaFilter />} onClick={onOpen} />
       </Flex>
