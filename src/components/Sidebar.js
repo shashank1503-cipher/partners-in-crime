@@ -19,7 +19,6 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
-  Badge,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import {
@@ -77,33 +76,33 @@ export default function SidebarWithHeader({ children }) {
 
 const SidebarContent = ({ onClose, ...rest }) => {
   const { token } = useAuth();
-  let fetchNewNotification = async () => {
-    try {
-      let res = await fetch(`http://Localhost:8000/isNewnotification`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      let data = await res.json();
-      if (res.status === 200) {
-        console.log(data);
-        console.log(data.data);
-        if (data.data) {
-          console.log('new notification');
-          LinkItems[4].new = true;
-        } else {
-          LinkItems[4].new = false;
-        }
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
   useEffect(() => {
+    let fetchNewNotification = async () => {
+      try {
+        let res = await fetch(`http://Localhost:8000/isNewnotification`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        let data = await res.json();
+        if (res.status === 200) {
+          // console.log(data);
+          // console.log(data.data);
+          if (data.data) {
+            // console.log('new notification');
+            LinkItems[4].new = true;
+          } else {
+            LinkItems[4].new = false;
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
     fetchNewNotification();
-  }, []);
+  }, [token]);
   return (
     <Box
       transition="3s ease"
@@ -118,22 +117,20 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <Logo fontSize="2xl" />
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map(link => (
-        <>
-          <NavItem
-            key={link.name}
-            icon={link.icon}
-            url={link.url}
-            badge={link.new}
-            onClick={() => {
-              if (link.new === true) {
-                LinkItems[4].new = false;
-              }
-            }}
-          >
-            {link.name}
-          </NavItem>
-        </>
+      {LinkItems.map((link, index) => (
+        <NavItem
+          icon={link.icon}
+          url={link.url}
+          badge={link.new}
+          onClick={() => {
+            if (link.new === true) {
+              LinkItems[4].new = false;
+            }
+          }}
+          key={index}
+        >
+          {link.name}
+        </NavItem>
       ))}
     </Box>
   );
@@ -195,7 +192,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
       setImageURL(data["photo"])
     }
     fetchProfilePhoto();
-  }, [])
+  }, [token])
 
   return (
     <Flex

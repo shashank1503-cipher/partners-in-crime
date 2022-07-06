@@ -40,7 +40,7 @@ const Projects = () => {
   const [page, setPage] = useState(1);
   let { token } = useAuth();
   let fetchData = async () => {
-    console.log(perPage);
+    // console.log(perPage);
     setLoading(true);
     try {
       const res = await fetch(
@@ -52,10 +52,10 @@ const Projects = () => {
           },
         }
       );
-      console.log(res.status);
+      // console.log(res.status);
       if (res.status === 200) {
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         setTotalRecords(data.meta.total_records);
         setProjects(data.data);
         setError(null);
