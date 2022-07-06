@@ -76,7 +76,6 @@ const Messages = () => {
   const {messagesUserData, messages} = useApp()
   const [data, setData] = useState([])
   const [search, setSearch] = useState("")
-
   const [selected, setSelected] = useState(-1)
 
   const color = useColorModeValue("gray.200",'gray.700')
