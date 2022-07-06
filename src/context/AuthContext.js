@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
         setLoadingInitial(false);
         if (user) {
           setLoadingInitial(true);
-          console.log(user);
+          // console.log(user);
           const token = await getIdToken(user);
           setToken(token);
 
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const func = async () => {
-      console.log(token, user);
+      // console.log(token, user);
       if (token !== '' && user) {
         await getUserDataFromMongo(token, user);
 
@@ -93,10 +93,10 @@ export const AuthProvider = ({ children }) => {
 
     data = await data.json();
 
-    console.log(data);
+    // console.log(data);
     if (data.error) return logout();
 
-    console.log('Data fetched');
+    // console.log('Data fetched');
 
     if (data.code === 2) setUser(data.data);
 
@@ -123,7 +123,7 @@ export const AuthProvider = ({ children }) => {
       .finally(() => {
         setToken('');
         setUser(null);
-        console.log('Logging out...');
+        // console.log('Logging out...');
         setLoading(false);
       });
   };

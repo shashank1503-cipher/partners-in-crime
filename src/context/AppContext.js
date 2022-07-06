@@ -113,7 +113,7 @@ export const AppProvider = ({children}) => {
             setMessagesLoading(false)
         }
 
-        console.log(messagesUsersId.size)
+        // console.log(messagesUsersId.size)
         if(messagesUsersId.size > 0)
             checkIfDataAvailable()
         

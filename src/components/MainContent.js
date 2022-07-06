@@ -32,10 +32,10 @@ const MainContent = () => {
       });
       const data = await res.json();
       if (res.status === 200) {
-        console.log(data);
-        console.log(data.data);
+        // console.log(data);
+        // console.log(data.data);
         if (data.data) {
-          console.log('first time');
+          // console.log('first time');
           onOpen();
         }
       }
