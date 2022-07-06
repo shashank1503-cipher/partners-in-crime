@@ -18,8 +18,9 @@ import {
     Textarea
 } from '@chakra-ui/react';
 import { addDoc, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import {FaEllipsisV, FaPaperPlane} from 'react-icons/fa'
+import useApp from '../context/AppContext';
 import useAuth from '../context/AuthContext'
 import { db } from '../firebase';
 
@@ -36,9 +37,26 @@ const Mes = ({message, who}) => {
             py={1}
             maxW={"70%"}
             borderRadius={10}
+            justifyContent={'space-between'}
+            alignItems="center"
+            role={'group'}
             
         >
             <Text>{message}</Text>
+            {/* <Box
+                opacity={0}
+                zIndex={-1}
+                _groupHover={{
+                    opacity: 1,
+                    zIndex: 1
+                }}
+            >
+
+            <FaEllipsisV 
+                cursor={'pointer'}
+                fontSize={10}
+            />
+            </Box> */}
         </Flex>
     )
 
@@ -48,41 +66,47 @@ function ChatMessage({messages, userData}) {
 
     const {user} = useAuth()
     const [chatMes, setChatMes] = useState("")
-    const [message, setMessage] = useState([...messages.messagesArray])
-    
+    const [message, setMessage] = useState([])
+   
     useEffect(() => {
         setMessage([...messages.messagesArray])
+        setTimeout(() => scroll(), 0)
     }, [messages])
 
-
-
+    
     const postMessage = async () => {
 
+        console.log("Posting...")
+        console.log(chatMes)
+        if(chatMes.length === 0)
+        {
+            console.log("Length 0")
+            return;
+        }
+
+        const messs = chatMes
+        setChatMes("");
         const mes = {
-            message: chatMes,
+            message: messs,
             sender: user.g_id,
             users: [userData[0].g_id, user.g_id],
             timeStamp: new Date()
         }
 
-        
-        
         await addDoc(collection(db, 'chats'), {
             ...mes
         }) 
-
-        setChatMes("")
-        scroll()
     }
 
     const scroll = () => {
         const m = document.getElementById('messageBox')
-        
+        console.log("Running...")
         m.scrollTo({
             top: (m.scrollHeight),
             behavior: 'smooth'
         })
     }
+
 
     return (
         <Flex
@@ -125,7 +149,7 @@ function ChatMessage({messages, userData}) {
                 }}
             >
 
-                {message.map(m => <Mes who={m.who} message={m.message}/>)}
+                {message.map(m => <Mes who={m.who} key={m.id} message={m.message}/>)}
             </Flex>
 
             <Flex 
@@ -134,6 +158,7 @@ function ChatMessage({messages, userData}) {
                 px={4}
                 py={1}
                 gap={2}
+                boxShadow={'xs'}
             >
                 <Input
                     borderWidth={1}
@@ -141,8 +166,14 @@ function ChatMessage({messages, userData}) {
                     focusBorderColor="none"
                     value={chatMes}
                     onChange={e => setChatMes(e.target.value)}
+                    onKeyDown={e => e.code==="Enter"?postMessage():null}
+                    
                 />
-                <FaPaperPlane  cursor={'pointer'} onClick={() => postMessage()}/>
+                <Box background={'cyan.600'} color={'white'} p={2} borderRadius={"50%"}
+                    cursor={'pointer'} onClick={() => postMessage()}
+                >
+                    <FaPaperPlane/>
+                </Box>
             </Flex>
         </Flex>
     )
