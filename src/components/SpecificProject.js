@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Badge,
   Box,
   Button,
   ButtonGroup,
@@ -58,6 +59,8 @@ const SpecificProject = ({ id }) => {
   const [isUserInterested, setIsUserInterested] = useState(
     data.is_user_interested
   );
+  let linkColor = useColorModeValue('cyan.600', 'cyan');
+  let badgeBG = useColorModeValue('gray.50', 'gray.600');
   return (
     <Flex direction={'column'}>
       <Flex
@@ -137,10 +140,20 @@ const SpecificProject = ({ id }) => {
           p={5}
           justifyContent={'space-evenly'}
         >
-          <Heading>About Project</Heading>
+          <Heading fontFamily={`'Source Code Pro',sans-serif`}>
+            About Project
+          </Heading>
           <Text>{data.idea}</Text>
-          <Heading>Required Skills</Heading>
-          <Text>{data.required_skills.join(', ')}</Text>
+          <Heading fontFamily={`'Source Code Pro',sans-serif`}>
+            Required Skills
+          </Heading>
+          <Flex direction={'row'} wrap={'wrap'}>
+            {data.required_skills.map(skill => (
+              <Badge bg={badgeBG} fontWeight={'400'} m={1}>
+                {skill}
+              </Badge>
+            ))}
+          </Flex>
         </Flex>
         <Flex direction={'column'} p={10}>
           <Heading fontSize={'xl'} m={2}>
@@ -149,7 +162,9 @@ const SpecificProject = ({ id }) => {
           <HStack m={4}>
             <Avatar size={'md'} src={data.image} referrerPolicy="no-referrer" />
             <VStack alignItems="flex-start" spacing="1px" ml="2">
-              <Link fontSize="sm">{data.name}</Link>
+              <Link color={linkColor} fontSize="sm">
+                {data.name}
+              </Link>
             </VStack>
           </HStack>
           <Flex direction={'column'}>
@@ -163,7 +178,9 @@ const SpecificProject = ({ id }) => {
                   referrerPolicy="no-referrer"
                 />
                 <VStack alignItems="flex-start" spacing="1px" ml="2">
-                  <Link fontSize="sm">{user.name}</Link>
+                  <Link color={linkColor} fontSize="sm">
+                    {user.name}
+                  </Link>
                 </VStack>
               </HStack>
             ))}
