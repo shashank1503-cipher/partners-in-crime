@@ -71,8 +71,8 @@ const Profile = () => {
                     setCollg('IIIT Kottayam');
                     setBatch(data['batch'])
                     setBio(data['bio'])
-                    setGithub('socials' in data ? data['socials'][0] : '');
-                    setLinkedIn('socials' in data ? data['socials'][1] : '');        
+                    setGithub('socials' in data ? data['socials'][0].split("/")[data['socials'][0].split("/").length - 1] : '');
+                    setLinkedIn('socials' in data ? data['socials'][1].split("/")[data['socials'][1].split("/").length - 1] : '');        
                     setSkills(data['skills'])
                 }
             } catch (error) {
