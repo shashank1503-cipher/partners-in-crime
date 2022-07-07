@@ -23,6 +23,7 @@ import React from 'react';
 import useAuth from '../context/AuthContext';
 import { FcGoogle } from 'react-icons/fc';
 import { Center } from '@chakra-ui/react';
+import { Link as NavLink } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { FiGithub } from 'react-icons/fi';
 function Landing() {
@@ -46,7 +47,7 @@ function Landing() {
         boxShadow={'xl'}
         bg={useColorModeValue('gray.100', 'gray.900')}
       >
-        <Flex direction={'column'}>
+        <NavLink to = '/'><Flex direction={'column'}>
           <Heading
             fontFamily={`'Source Code Pro', sans-serif`}
             color={useColorModeValue('cyan.600', 'cyan')}
@@ -55,7 +56,7 @@ function Landing() {
             {' '}
             &lt;partnersInCrime&gt;
           </Heading>{' '}
-        </Flex>
+        </Flex></NavLink>
         <Flex justifyContent={'flex-end'} gap={3}>
           <IconButton
             icon={<FiGithub />}

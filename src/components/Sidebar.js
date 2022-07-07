@@ -114,7 +114,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Logo fontSize="2xl" />
+        <NavLink to = '/main'><Logo fontSize="2xl" /></NavLink>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link, index) => (
