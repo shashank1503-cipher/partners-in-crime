@@ -86,22 +86,36 @@ const Messages = () => {
   const [conDrawer, setConDrawer] = useState(false)
   const [addUserData, setAddUserData] = useState([])
   const [loading, setLoading] = useState(false)
+  const [fetchBool, setFetchBool] = useState(true)
   const Ref = useRef(null)
 
   const [selected, setSelected] = useState(-1)
 
   const color = useColorModeValue("gray.200",'gray.700')
 
-  const fetchSuggestions = async () => {
-    let res = await fetch(`http://127.0.0.1:8000/users/data`)
+  const fetchSuggestions = async (skip = 0) => {
+
+    if(!fetchBool)
+      return;
+
+    let res = await fetch(`http://127.0.0.1:8000/users/data?skip=${skip}`, {
+      headers:{
+        authentication: `Bearer ${token}`
+      }
+    })
+
+
     
     res = await res.json()
+
+    if(res.data.length === 0)
+      setFetchBool(false)
+
     console.log(res.data)
 
-      let usersData = res.data.filter(p => p.g_id !== user.g_id)
-      setAddUserData([...usersData, 
+    let usersData = await res.data.filter(p => p.g_id !== user.g_id)
+    setAddUserData(p => [...new Map(Array.from([...p, ...usersData]).map(m => [m['g_id'], m])).values()])
 
-      ])
 
   }
 
@@ -250,7 +264,7 @@ const Messages = () => {
 
           </Flex>
 
-          <Button m={2} onClick={() => setConDrawer(!conDrawer)}>{conDrawer?<FaArrowLeft/>:"Start a Conversation"}</Button>
+          <Button m={2} onClick={() => setConDrawer(!conDrawer)}>{conDrawer?<Box py={2}><FaArrowLeft fontSize={'20px'}/></Box>:"Start a Conversation"}</Button>
 
           <Flex
             direction={"column"}
@@ -269,8 +283,8 @@ const Messages = () => {
             }}
 
             ref={Ref}
-            onScroll={e => e.target.scrollHeight < (e.target.scrollTop+e.target.clientHeight)?"":console.log("NO")}
-
+            onScroll={e => parseInt(e.target.scrollHeight)-1 <= parseInt(parseInt(e.target.scrollTop)+parseInt(e.target.clientHeight))?fetchSuggestions(addUserData.length+1):null}
+            // onScroll = {e => console.log(e.target.scrollHeight)}
           > 
               
               
@@ -290,10 +304,10 @@ const Messages = () => {
 
               {conDrawer?addUserData.length ===0?"No Data":addUserData.map(d => 
                 <Message
-                  name={d.name}
-                  photo={d.photo}
-                  id={d.g_id}
-                  key={d.g_id}
+                  name={d?.name}
+                  photo={d?.photo}
+                  id={d?.g_id}
+                  key={d?.g_id}
                   navi={NaviToChat}
                 />
               ):<></>}
