@@ -40,7 +40,6 @@ const Projects = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [page, setPage] = useState(1);
   let { token } = useAuth();
-  console.log(token);
   let fetchData = async () => {
     // console.log(perPage);
     setLoading(true);
