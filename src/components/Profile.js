@@ -14,7 +14,8 @@ import {
     Select,
     Textarea,
     InputLeftAddon,
-    InputGroup
+    InputGroup,
+    InputRightAddon
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import useAuth from '../context/AuthContext';
@@ -158,6 +159,12 @@ const Profile = () => {
             if(res.status === 200){
                 const Data = await res.json();
                 setData(Data.data);
+                // if(Data.data?.length !== 0){
+                //     setDis(true);
+                // }
+                // else{
+                //     setDis(false);
+                // }
             } 
             else{
                 const Data = await res.json();
@@ -198,7 +205,7 @@ const Profile = () => {
             // required fields check and mobile number
             for (const key in data) {
 
-                if(key === 'mobile' && data[key].length !== 10){
+                if(key === 'mobile' && data[key].length !== 10 && data[key]?.length !== 0){
                     console.log("hello");
                     toast({
                         position: 'bottom-right',
@@ -479,18 +486,33 @@ const Profile = () => {
                         })
                     }</Flex>
                     <FormControl textAlign = {'center'}>
-                        <Input
-                            type="text"
-                            size={['sm', 'md', 'lg', 'lg']}
-                            maxWidth = {'80%'}
-                            textAlign = {['center', 'left']}
-                            fontSize = {'lg'}
-                            placeholder="Include skills you're familiar with"
-                            value={query ?? ""}
-                            onChange={e => {
-                              setQuery(e.target.value);
-                            }}
-                        />
+                        <InputGroup
+                            size = {['sm', 'md', 'lg', 'lg']}
+                            justifyContent = {'center'}
+                        >
+                            <Input
+                                type="text"
+                                size={['sm', 'md', 'lg', 'lg']}
+                                maxWidth = {'75%'}
+                                textAlign = {['center', 'left']}
+                                fontSize = {'lg'}
+                                placeholder="Include skills you're familiar with"
+                                value={query ?? ""}
+                                onChange={e => {
+                                  setQuery(e.target.value);
+                                }}
+                            />
+                            <button 
+                                onClick = {() => {return (query?.length !== 0) && setSkills((prev) => Array.from(new Set([...prev, query])))}}
+                                disabled = {query?.length === 0}
+                            ><InputRightAddon
+                                children = "Add"
+                                backgroundColor = {'#21232c'} 
+                                _hover = {!(query?.length === 0) ? {'backgroundColor': '#81E6D9', 'color': 'black'} : {'backgroundColor': '#21232c', 'color': 'white'}}
+                                transition={'all 0.3s ease-in-out'}
+                                cursor = {(query?.length === 0) && 'not-allowed'}
+                            /></button>
+                        </InputGroup>
                     </FormControl>
                     <Flex
                         w={'80%'}
