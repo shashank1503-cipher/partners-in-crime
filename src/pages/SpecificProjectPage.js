@@ -1,5 +1,6 @@
 import React from 'react';
-import { useParams } from 'react-router';
+import { useParams, useSearchParams } from 'react-router-dom';
+
 import SidebarWithHeader from '../components/Sidebar';
 import SpecificProject from '../components/SpecificProject';
 

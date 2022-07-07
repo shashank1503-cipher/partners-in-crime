@@ -40,6 +40,7 @@ const Projects = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [page, setPage] = useState(1);
   let { token } = useAuth();
+  console.log(token);
   let fetchData = async () => {
     // console.log(perPage);
     setLoading(true);
@@ -115,7 +116,12 @@ const Projects = () => {
             />
           ))
         ) : (
-          <Flex direction={'column'} justifyContent={'space-evenly'} minH={'xs'} textAlign={'center'}>
+          <Flex
+            direction={'column'}
+            justifyContent={'space-evenly'}
+            minH={'xs'}
+            textAlign={'center'}
+          >
             <Heading>Uh oh! Nothing to see here T_T</Heading>
             <Text fontSize="lg" fontFamily={`'Source Code Pro', sans-serif`}>
               No projects found. Take a chill pill and come back later.

@@ -97,7 +97,7 @@ function Landing() {
                 &lt;partnersInCrime&gt;
               </Heading>{' '}
               <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
-                Let's Create Something Fishy
+                Let's Do Something Fishy  
               </Text>
               <Stack
                 direction={{ base: 'column', md: 'row' }}
