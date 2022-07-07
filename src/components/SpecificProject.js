@@ -36,13 +36,16 @@ const SpecificProject = ({ id }) => {
   let fetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`https://partners-in-crime-backend.herokuapp.com/project/${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await fetch(
+        `https://partners-in-crime-backend.herokuapp.com/project/${id}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (res.status === 200) {
         let json = await res.json();
         setData(json.data);
@@ -233,7 +236,11 @@ const SpecificProject = ({ id }) => {
               <Heading fontFamily={`'Source Code Pro',sans-serif`} m={2}>
                 Required Skills
               </Heading>
-              <Flex direction={'row'} wrap={'wrap'} justifyContent={['center','center','center','flex-start']}>
+              <Flex
+                direction={'row'}
+                wrap={'wrap'}
+                justifyContent={['center', 'center', 'center', 'flex-start']}
+              >
                 {data.required_skills.map(skill => (
                   <Badge bg={badgeBG} fontWeight={'400'} m={1}>
                     {skill}
@@ -269,7 +276,13 @@ const SpecificProject = ({ id }) => {
                         referrerPolicy="no-referrer"
                       />
                       <VStack alignItems="flex-start" spacing="1px" ml="2">
-                        <Link color={linkColor} fontSize="sm">
+                        <Link
+                          color={linkColor}
+                          fontSize="sm"
+                          onClick={() => {
+                            navigate(`/profile/${user['_id']}`);
+                          }}
+                        >
                           {user.name}
                         </Link>
                       </VStack>
