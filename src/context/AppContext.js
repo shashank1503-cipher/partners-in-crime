@@ -73,10 +73,8 @@ export const AppProvider = ({children}) => {
         
         const checkIfDataAvailable = async () => {
             
-            // console.log(messagesUsersId)    
             for(let id of messagesUsersId)
             {
-                // console.log(id)
                 let userData = {}
                 if(messagesUserData.filter(m => m.g_id === id).length === 1)
                 {
@@ -127,12 +125,11 @@ export const AppProvider = ({children}) => {
         
     }, [user])
 
-
-
     const memo = useMemo(() => ({
         messages,
         messagesUsersId,
         messagesUserData,
+        setMessagesUserData,
         messagesLoading
     }),[messages, messagesUserData, messagesUsersId, messagesLoading])
 
