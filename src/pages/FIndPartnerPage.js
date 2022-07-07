@@ -5,7 +5,7 @@ import SidebarWithHeader from '../components/Sidebar';
 const FindPartnerPage = () => {
   return (
     <SidebarWithHeader>
-      <FindPartner />
+      
     </SidebarWithHeader>
   );
 };
