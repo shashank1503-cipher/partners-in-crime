@@ -350,6 +350,7 @@ const Profile = () => {
                             required = {true}
                             textAlign = {['center', 'left']}
                             fontSize = {'lg'}
+                            maxLength = {40}
                         />
                     </FormControl>
                     <FormControl textAlign = {'center'}>
@@ -452,7 +453,7 @@ const Profile = () => {
                     <Flex 
                         direction = {'row'}
                         flexWrap = {'wrap'}
-                        w = {'80%'}
+                        w = {['90%', '90%', '90%', '80%']}
                         my = {[0, 0, 0, 4]}
                     >{
                         skills.map((skill, index) => {
@@ -552,7 +553,7 @@ const Profile = () => {
                 p={8}
                 direction={['column', 'row']}
                 w = {['85%']}
-                minH = {'300'}
+                minH = {'250'}
             >
                 <Flex direction = {['column', 'row']} w = {'100%'}>
                     <FormControl textAlign = {'center'}>
@@ -563,7 +564,8 @@ const Profile = () => {
                                 placeholder = 'Something about yourself' 
                                 value = {bio ?? ""} 
                                 onChange = {(e) => setBio(e.target.value)}
-                                rows = {8}
+                                rows = {7}
+                                maxLength = {500}
                             />
                         </Flex>
                     </FormControl>    
@@ -599,6 +601,7 @@ const Profile = () => {
                                 onChange={e => setGithub(e.target.value)}
                                 textAlign = {['center', 'left']}
                                 fontSize = {'lg'}
+                                maxLength = {30}
                             />
                         </InputGroup>
                     </FormControl>
@@ -620,6 +623,7 @@ const Profile = () => {
                                 width = {'60%'}
                                 textAlign = {['center', 'left']}
                                 fontSize = {'lg'}
+                                maxLength = {40}
                             />
                         </InputGroup>
                     </FormControl>
