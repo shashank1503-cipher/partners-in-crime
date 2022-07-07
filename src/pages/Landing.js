@@ -39,9 +39,10 @@ function Landing() {
   return (
     <Flex direction="column">
       <Flex
+      direction={['column', 'column', 'column', 'row']}
         alignItems={'center'}
         justifyContent={'space-between'}
-        p={5}
+        p={[0,0,0,5]}
         boxShadow={'xl'}
         bg={useColorModeValue('gray.100', 'gray.900')}
       >
