@@ -568,6 +568,7 @@ const Profile = () => {
                         >
                             <InputLeftAddon 
                                 children = "github/"
+                                backgroundColor = {'#21232c'}
                             />
                             <Input
                                 placeholder="github.com/{profile}"
@@ -588,6 +589,7 @@ const Profile = () => {
                         >
                             <InputLeftAddon 
                                 children = "linkedIn/"
+                                backgroundColor = {'#21232c'}
                             />
                             <Input
                                 placeholder="linkedin.com/in/{profile}"
