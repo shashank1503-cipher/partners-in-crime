@@ -24,8 +24,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 const Profile = () => {
 
     const { token } = useAuth();
-
-    let color = useColorModeValue('gray.900', 'gray.50');
+    
     const [image, setImage] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [uploading, setUploading] = useState(false);
