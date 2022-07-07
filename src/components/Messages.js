@@ -98,7 +98,7 @@ const Messages = () => {
     if(!fetchBool)
       return;
 
-    let res = await fetch(`http://127.0.0.1:8000/users/data?skip=${skip}`, {
+    let res = await fetch(`https://partners-in-crime-backend.herokuapp.com/users/data?skip=${skip}`, {
       headers:{
         authentication: `Bearer ${token}`
       }
