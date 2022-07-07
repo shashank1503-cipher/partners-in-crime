@@ -343,7 +343,7 @@ const Profile = () => {
                         <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Name<span style = {{color: 'red'}}>{''}*</span></Text>
                         <Input
                             placeholder="Your First Name"
-                            size={['sm', 'md', 'lg', 'lg']}
+                            size={['lg', 'lg', 'lg', 'lg']}
                             value={name ?? ""}
                             onChange={e => setName(e.target.value)}
                             width = {'80%'}
@@ -357,7 +357,7 @@ const Profile = () => {
                     <Text fontSize = {['lg', 'lg']} mb = {['3', '1']} mt = {['3', '0']}>Email Id<span style = {{color: 'red'}}>{''}*</span></Text>
                         <Input
                             placeholder="Your College Email Id"
-                            size={['sm', 'md', 'lg', 'lg']}
+                            size={['lg', 'lg', 'lg', 'lg']}
                             value={email ?? ""}
                             onChange={e => setEmail(e.target.value)}
                             width = {'80%'}
@@ -384,7 +384,7 @@ const Profile = () => {
                         <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Mobile</Text>
                         <Input
                             placeholder="Your Mobile Number"
-                            size={['sm', 'md', 'lg', 'lg']}
+                            size={['lg', 'lg', 'lg', 'lg']}
                             value={mobile ?? ""}
                             onChange={e => setMobile(e.target.value)}
                             width = {'80%'}
@@ -398,7 +398,7 @@ const Profile = () => {
                     <Text fontSize = {['lg', 'lg']} mb = {['3', '1']} mt = {['3', '0']}>College/Institution</Text>
                         <Input
                             placeholder="Your College/Institution's Name"
-                            size={['sm', 'md', 'lg', 'lg']}
+                            size={['lg', 'lg', 'lg', 'lg']}
                             value={collg ?? ""}
                             onChange={e => setCollg(e.target.value)}
                             width = {'80%'}
@@ -487,12 +487,12 @@ const Profile = () => {
                     }</Flex>
                     <FormControl textAlign = {'center'}>
                         <InputGroup
-                            size = {['sm', 'md', 'lg', 'lg']}
+                            size = {['lg', 'lg', 'lg', 'lg']}
                             justifyContent = {'center'}
                         >
                             <Input
                                 type="text"
-                                size={['sm', 'md', 'lg', 'lg']}
+                                size={['lg', 'lg', 'lg', 'lg']}
                                 maxWidth = {'75%'}
                                 textAlign = {['center', 'left']}
                                 fontSize = {'lg'}
@@ -507,7 +507,7 @@ const Profile = () => {
                                 disabled = {query?.length === 0}
                             ><InputRightAddon
                                 children = "Add"
-                                backgroundColor = {'#21232c'} 
+                                backgroundColor = {useColorModeValue('#cccfcc', '#21232c')} 
                                 _hover = {!(query?.length === 0) ? {'backgroundColor': '#81E6D9', 'color': 'black'} : {'backgroundColor': '#21232c', 'color': 'white'}}
                                 transition={'all 0.3s ease-in-out'}
                                 cursor = {(query?.length === 0) && 'not-allowed'}
@@ -586,16 +586,16 @@ const Profile = () => {
                     <FormControl textAlign = {'center'}>
                         <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Github Profile</Text>
                         <InputGroup
-                            size = {['sm', 'md', 'lg', 'lg']}
+                            size = {['lg', 'lg', 'lg', 'lg']}
                             justifyContent = {'center'}
                         >
                             <InputLeftAddon 
                                 children = "github/"
-                                backgroundColor = {'#21232c'}
+                                backgroundColor = {useColorModeValue('#cccfcc', '#21232c')}
                             />
                             <Input
                                 placeholder="github.com/{profile}"
-                                size={['sm', 'md', 'lg', 'lg']}
+                                size={['lg', 'lg', 'lg', 'lg']}
                                 value={github ?? ""}
                                 width = {'60%'}
                                 onChange={e => setGithub(e.target.value)}
@@ -608,16 +608,16 @@ const Profile = () => {
                     <FormControl textAlign = {'center'}>
                         <Text fontSize = {['lg', 'lg']} mb = {['3', '1']} mt = {['3', '0']}>LinkedIn Profile</Text>
                         <InputGroup
-                            size = {['sm', 'md', 'lg', 'lg']}
+                            size = {['lg', 'lg', 'lg', 'lg']}
                             justifyContent = {'center'}
                         >
                             <InputLeftAddon 
                                 children = "linkedIn/"
-                                backgroundColor = {'#21232c'}
+                                backgroundColor = {useColorModeValue('#cccfcc','#21232c')}
                             />
                             <Input
                                 placeholder="linkedin.com/in/{profile}"
-                                size={['sm', 'md', 'lg', 'lg']}
+                                size={['lg', 'lg', 'lg', 'lg']}
                                 value={linkedIn ?? ""}
                                 onChange={e => setLinkedIn(e.target.value)}
                                 width = {'60%'}
