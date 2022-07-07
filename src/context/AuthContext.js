@@ -40,6 +40,11 @@ export const AuthProvider = ({ children }) => {
       onAuthStateChanged(auth, async user => {
         setLoadingInitial(false);
         if (user) {
+
+          if(user.email.split('@')[1] !== 'iiitkottayam.ac.in')
+            return logout()
+          console.log(user)
+
           setLoadingInitial(true);
           // console.log(user);
           const token = await getIdToken(user);
@@ -108,7 +113,8 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const results = await signInWithPopup(auth, provider);
-      // console.log(results)
+      // console.log(results.user.email.split('@')[1])
+
     } catch {
       console.log('error');
     } finally {
@@ -122,6 +128,7 @@ export const AuthProvider = ({ children }) => {
       .catch(error => console.log(error))
       .finally(() => {
         setToken('');
+        console.log("Logged out")
         setUser(null);
         // console.log('Logging out...');
         setLoading(false);
