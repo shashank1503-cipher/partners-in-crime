@@ -25,6 +25,7 @@ export default function SocialProfileWithImage() {
   return (
     <Flex minH={'120vh'} direction={'column'} justifyContent={'space-between'}>
       <Flex
+        direction={['column', 'column', 'column', 'row']}
         alignItems={'center'}
         justifyContent={'space-between'}
         p={5}
