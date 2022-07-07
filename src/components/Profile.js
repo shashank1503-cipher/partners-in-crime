@@ -350,6 +350,7 @@ const Profile = () => {
                             required = {true}
                             textAlign = {['center', 'left']}
                             fontSize = {'lg'}
+                            maxLength = {40}
                         />
                     </FormControl>
                     <FormControl textAlign = {'center'}>
@@ -564,6 +565,7 @@ const Profile = () => {
                                 value = {bio ?? ""} 
                                 onChange = {(e) => setBio(e.target.value)}
                                 rows = {8}
+                                maxLength = {600}
                             />
                         </Flex>
                     </FormControl>    
@@ -599,6 +601,7 @@ const Profile = () => {
                                 onChange={e => setGithub(e.target.value)}
                                 textAlign = {['center', 'left']}
                                 fontSize = {'lg'}
+                                maxLength = {30}
                             />
                         </InputGroup>
                     </FormControl>
@@ -620,6 +623,7 @@ const Profile = () => {
                                 width = {'60%'}
                                 textAlign = {['center', 'left']}
                                 fontSize = {'lg'}
+                                maxLength = {40}
                             />
                         </InputGroup>
                     </FormControl>
