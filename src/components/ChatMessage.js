@@ -76,15 +76,11 @@ function ChatMessage({messages, userData}) {
     
     const postMessage = async () => {
 
-        console.log("Posting...")
-        console.log(chatMes)
-        if(chatMes.length === 0)
-        {
-            console.log("Length 0")
-            return;
-        }
-
-        const messs = chatMes
+        let messs = chatMes
+        messs = messs.trim()
+        if(messs.length === 0)
+            return
+        
         setChatMes("");
         const mes = {
             message: messs,
