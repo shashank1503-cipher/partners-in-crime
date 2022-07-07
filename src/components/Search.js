@@ -53,7 +53,7 @@ function Display() {
   }, []);
 
   return (
-    <Flex wrap={'wrap'}>
+    <Flex wrap={'wrap'} justifyContent={'space-evenly'}>
       {loading ? (
         <Text
           fontSize="2xl"
@@ -73,10 +73,13 @@ function Display() {
         bandas.map(banda => (
           <ProfileCard
             key={banda.id}
+            id={banda['_id']}
             name={banda.name}
             photo={banda.photo}
             skills={banda.skills}
             email={banda.email}
+            bio={banda.bio}
+            gId = {banda.g_id}
           />
         ))
       )}

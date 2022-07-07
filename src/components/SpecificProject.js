@@ -21,6 +21,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
 import { FiHeart, FiMail } from 'react-icons/fi';
+import { useNavigate } from 'react-router';
 import useAuth from '../context/AuthContext';
 import Logo from './Logo';
 
@@ -31,6 +32,7 @@ const SpecificProject = ({ id }) => {
   const [error, setError] = useState(null);
   let { token } = useAuth();
   let toast = useToast();
+  let navigate = useNavigate();
   let fetchData = async () => {
     setIsLoading(true);
     try {
@@ -155,11 +157,7 @@ const SpecificProject = ({ id }) => {
             borderColor={'gray.200'}
             direction={['column', 'column', 'column', 'row']}
           >
-            <Box
-              pos={'relative'}
-              maxW={['100%', '100%', '50%', '50%']}
-              minW={['100%', '100%', '50%', '50%']}
-            >
+            <Box pos={'relative'} flex={1}>
               <Image
                 src={data.hero_image}
                 maxH={'lg'}
@@ -169,7 +167,7 @@ const SpecificProject = ({ id }) => {
             </Box>
             <Flex
               direction={'column'}
-              w={['100%', '100%', '50%', '50%']}
+              flex={1}
               minH={['md', 'md', 'md', 'md']}
               p={5}
               justifyContent={'space-evenly'}
@@ -204,6 +202,9 @@ const SpecificProject = ({ id }) => {
                   colorScheme={'cyan'}
                   variant={'outline'}
                   leftIcon={<FiMail />}
+                  onClick={() => {
+                    navigate(`/messages?chat=${data.g_id}`);
+                  }}
                 >
                   Send Message
                 </Button>
@@ -215,26 +216,24 @@ const SpecificProject = ({ id }) => {
             boxShadow={'2xl'}
             rounded={'md'}
             borderColor={'gray.200'}
-            direction={['column-reverse', 'column-reverse', 'column', 'row']}
+            direction={['column', 'column', 'column', 'row']}
           >
             <Flex
               pos={'relative'}
-              maxW={['100%', '100%', '50%', '50%']}
-              minW={['100%', '100%', '50%', '50%']}
+              flex={1}
               direction={'column'}
-              w={['100%', '100%', '50%', '50%']}
-              minH={['md', 'md', 'md', 'md']}
               p={5}
+              textAlign={['center', 'center', 'center', 'left']}
               justifyContent={'space-evenly'}
             >
-              <Heading fontFamily={`'Source Code Pro',sans-serif`}>
+              <Heading fontFamily={`'Source Code Pro',sans-serif`} m={2}>
                 About Project
               </Heading>
               <Text>{data.idea}</Text>
-              <Heading fontFamily={`'Source Code Pro',sans-serif`}>
+              <Heading fontFamily={`'Source Code Pro',sans-serif`} m={2}>
                 Required Skills
               </Heading>
-              <Flex direction={'row'} wrap={'wrap'}>
+              <Flex direction={'row'} wrap={'wrap'} justifyContent={['center','center','center','flex-start']}>
                 {data.required_skills.map(skill => (
                   <Badge bg={badgeBG} fontWeight={'400'} m={1}>
                     {skill}

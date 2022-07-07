@@ -19,6 +19,7 @@ import Searchpage from './pages/Searchpage';
 import MyProjectsPage from './pages/MyProjectsPage';
 import FavouriteHackathonsPage from './pages/FavouriteHackathonsPage';
 import SpecificProjectPage from './pages/SpecificProjectPage';
+import ProfileDetailPage from './pages/ProfileDetailPage';
 
 function App() {
   return (
@@ -30,6 +31,14 @@ function App() {
           element={
             <PrivateRoute>
               <SpecificProjectPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile/:id"
+          element={
+            <PrivateRoute>
+              <ProfileDetailPage />
             </PrivateRoute>
           }
         />
