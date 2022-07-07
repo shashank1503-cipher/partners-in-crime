@@ -112,7 +112,7 @@ export default function SocialProfileWithImage() {
                   >
                     Akarsh Pandey
                   </Heading>
-                  <Text color={'gray.500'}>Professional Procastinator</Text>
+                  <Text color={'gray.500'}>Professional Procrastinator</Text>
                 </Stack>
                 <Stack direction={'row'} justify={'center'}>
                   <Center p={8}>
