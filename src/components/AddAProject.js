@@ -37,7 +37,7 @@ const AddAProject = () => {
   useEffect(() => {
     const queryData = async () => {
       setQueryLoading(true);
-      const res = await fetch(`http://127.0.0.1:8000/suggestions?q=${query}`);
+      const res = await fetch(`https://partners-in-crime-backend.herokuapp.com/suggestions?q=${query}`);
       if (res.status === 200) {
         const Data = await res.json();
         setData(Data.data);
@@ -126,7 +126,7 @@ const AddAProject = () => {
       skills: skills,
     };
     try {
-      const res = await fetch('http://127.0.0.1:8000/addproject', {
+      const res = await fetch('https://partners-in-crime-backend.herokuapp.com/addproject', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

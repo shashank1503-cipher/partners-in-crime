@@ -10,16 +10,19 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router';
 
 export default function ProfileCard(props) {
   let badgeBG = useColorModeValue('gray.50', 'gray.800');
-
+  let id = props.id;
   let name = props.name;
   let img = props.photo;
   let email = props.email;
   let bio = props.bio;
+  bio = bio ? (bio.length > 30 ? bio.substring(0, 30) + '...' : bio) : '';
   let skills = props.skills;
-
+  let gId = props.gId;
+  let navigate = useNavigate();
   return (
     <Center py={6}>
       <Stack
@@ -33,7 +36,12 @@ export default function ProfileCard(props) {
         padding={4}
       >
         <Flex flex={1} bg="blue.200">
-          <Image objectFit="cover" boxSize="100%" src={img} referrerPolicy={'no-referrer'} />
+          <Image
+            objectFit="cover"
+            boxSize="100%"
+            src={img}
+            referrerPolicy={'no-referrer'}
+          />
         </Flex>
         <Stack
           flex={1}
@@ -54,7 +62,7 @@ export default function ProfileCard(props) {
             color={useColorModeValue('gray.700', 'gray.400')}
             px={3}
           >
-            Actress, musician, songwriter and artist. PM for work inquires or
+            {bio}
           </Text>
           <Flex
             align={'center'}
@@ -84,6 +92,9 @@ export default function ProfileCard(props) {
               rounded={'full'}
               variant={'outline'}
               colorScheme={'cyan'}
+              onClick={() => {
+                navigate(`/messages?chat=${gId}`);
+              }}
             >
               Message
             </Button>
@@ -92,6 +103,9 @@ export default function ProfileCard(props) {
               fontSize={'sm'}
               rounded={'full'}
               colorScheme={'cyan'}
+              onClick={() => {
+                navigate(`/profile/${id}`);
+              }}
             >
               View Profile
             </Button>

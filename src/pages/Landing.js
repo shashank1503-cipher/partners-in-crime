@@ -7,6 +7,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  IconButton,
   Image,
   Input,
   Link,
@@ -18,16 +19,12 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
-import React, { useState } from 'react';
-import { AiOutlineGoogle } from 'react-icons/ai';
-import { Link as NavLink } from 'react-router-dom';
+import React from 'react';
 import useAuth from '../context/AuthContext';
 import { FcGoogle } from 'react-icons/fc';
 import { Center } from '@chakra-ui/react';
 import Footer from '../components/Footer';
-import { chakra, VisuallyHidden } from '@chakra-ui/react';
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
-import { ReactNode } from 'react';
+import { FiGithub } from 'react-icons/fi';
 function Landing() {
   const { signInPopup, error, loading } = useAuth();
   let toast = useToast();
@@ -42,9 +39,10 @@ function Landing() {
   return (
     <Flex direction="column">
       <Flex
+      direction={['column', 'column', 'column', 'row']}
         alignItems={'center'}
         justifyContent={'space-between'}
-        p={5}
+        p={[0,0,0,5]}
         boxShadow={'xl'}
         bg={useColorModeValue('gray.100', 'gray.900')}
       >
@@ -58,8 +56,17 @@ function Landing() {
             &lt;partnersInCrime&gt;
           </Heading>{' '}
         </Flex>
-
         <Flex justifyContent={'flex-end'} gap={3}>
+          <IconButton
+            icon={<FiGithub />}
+            variant={'ghost'}
+            onClick={() =>
+              window.open(
+                'https://github.com/shashank1503-cipher/partners-in-crime',
+                '_blank'
+              )
+            }
+          />
           <Button
             onClick={signInPopup}
             w={'full'}
@@ -82,7 +89,6 @@ function Landing() {
         justifyContent={'center'}
         textAlign={'center'}
         minH={'75vh'}
-
       >
         <Stack minH={'100vh'} direction={{ base: 'column-reverse', md: 'row' }}>
           <Flex p={8} flex={1} align={'center'} justify={'center'}>
@@ -97,7 +103,7 @@ function Landing() {
                 &lt;partnersInCrime&gt;
               </Heading>{' '}
               <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
-                Let's Create Something Fishy
+                Let's Do Something Fishy
               </Text>
               <Stack
                 direction={{ base: 'column', md: 'row' }}

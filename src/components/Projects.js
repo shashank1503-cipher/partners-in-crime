@@ -45,7 +45,7 @@ const Projects = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/fetchprojects?q=${query}&page=${page}&per_page=${perPage}&`,
+        `https://partners-in-crime-backend.herokuapp.com/fetchprojects?q=${query}&page=${page}&per_page=${perPage}&`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -115,7 +115,12 @@ const Projects = () => {
             />
           ))
         ) : (
-          <Flex direction={'column'} justifyContent={'space-evenly'} minH={'xs'} textAlign={'center'}>
+          <Flex
+            direction={'column'}
+            justifyContent={'space-evenly'}
+            minH={'xs'}
+            textAlign={'center'}
+          >
             <Heading>Uh oh! Nothing to see here T_T</Heading>
             <Text fontSize="lg" fontFamily={`'Source Code Pro', sans-serif`}>
               No projects found. Take a chill pill and come back later.

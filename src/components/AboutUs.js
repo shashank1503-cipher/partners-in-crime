@@ -19,11 +19,13 @@ import { FcGoogle } from 'react-icons/fc';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { FaUserSecret } from 'react-icons/fa';
 import Footer from './Footer';
+import { FiGithub } from 'react-icons/fi';
 export default function SocialProfileWithImage() {
   let { signInPopup, error, loading } = useAuth();
   return (
     <Flex minH={'120vh'} direction={'column'} justifyContent={'space-between'}>
       <Flex
+        direction={['column', 'column', 'column', 'row']}
         alignItems={'center'}
         justifyContent={'space-between'}
         p={5}
@@ -42,18 +44,16 @@ export default function SocialProfileWithImage() {
         </Flex>
 
         <Flex justifyContent={'flex-end'} gap={3}>
-          <Button
-            onClick={signInPopup}
-            w={'full'}
-            maxW={'md'}
-            variant={'outline'}
-            leftIcon={<FcGoogle />}
-            isLoading={loading}
-          >
-            <Center>
-              <Text>Sign in with Google</Text>
-            </Center>
-          </Button>
+          <IconButton
+            icon={<FiGithub />}
+            variant={'ghost'}
+            onClick={() =>
+              window.open(
+                'https://github.com/shashank1503-cipher/partners-in-crime',
+                '_blank'
+              )
+            }
+          />
 
           <ColorModeSwitcher />
         </Flex>
@@ -112,7 +112,7 @@ export default function SocialProfileWithImage() {
                   >
                     Akarsh Pandey
                   </Heading>
-                  <Text color={'gray.500'}>Professional Procastinator</Text>
+                  <Text color={'gray.500'}>Professional Procrastinator</Text>
                 </Stack>
                 <Stack direction={'row'} justify={'center'}>
                   <Center p={8}>
@@ -385,7 +385,7 @@ export default function SocialProfileWithImage() {
           </Center>
         </Flex>
       </Flex>
-      <Footer/>
+      <Footer />
     </Flex>
   );
 }

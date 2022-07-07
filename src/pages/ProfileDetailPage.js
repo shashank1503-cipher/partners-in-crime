@@ -1,17 +1,18 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import ProfileDetail from '../components/ProfileDetail';
 
 import SidebarWithHeader from '../components/Sidebar';
-import SpecificProject from '../components/SpecificProject';
 
-const SpecificProjectPage = () => {
+
+const ProfileDetailPage = () => {
   let { id } = useParams();
   console.log(id);
   return (
     <SidebarWithHeader>
-      <SpecificProject id={id} />
+      <ProfileDetail id={id} />
     </SidebarWithHeader>
   );
 };
 
-export default SpecificProjectPage;
+export default ProfileDetailPage;
