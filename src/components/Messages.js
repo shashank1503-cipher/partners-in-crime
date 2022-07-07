@@ -100,15 +100,7 @@ const Messages = () => {
 
       let usersData = res.data.filter(p => p.g_id !== user.g_id)
       setAddUserData([...usersData, 
-        ...usersData, 
-        ...usersData,
-        ...usersData,
-        ...usersData,
-        ...usersData,
-        ...usersData,
-        ...usersData,
-        ...usersData,
-        ...usersData,
+
       ])
 
   }
@@ -122,10 +114,10 @@ const Messages = () => {
 
   }, [conDrawer])
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    console.log(Ref.current.scrollHeight)
-  }, [Ref.current.scrollHeight])
+  //   console.log(Ref.current.scrollHeight)
+  // }, [Ref.current.scrollHeight])
 
   useEffect(() => {
 
@@ -277,6 +269,7 @@ const Messages = () => {
             }}
 
             ref={Ref}
+            onScroll={e => e.target.scrollHeight < (e.target.scrollTop+e.target.clientHeight)?"":console.log("NO")}
 
           > 
               

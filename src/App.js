@@ -26,7 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route
-          path="/project"
+          path="/project/:id"
           element={
             <PrivateRoute>
               <SpecificProjectPage />
