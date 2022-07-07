@@ -202,7 +202,7 @@ const Profile = () => {
                     console.log("hello");
                     toast({
                         position: 'bottom-right',
-                        title: 'Mobile No. has to be of 10 digits',
+                        title: 'Mobile No. should be of 10 digits',
                         status: 'error',
                         duration: 9000,
                         isClosable: true,
