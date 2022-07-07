@@ -43,7 +43,7 @@ const Mes = ({message, who}) => {
             
         >
             <Text>{message}</Text>
-            {/* <Box
+            <Box
                 opacity={0}
                 zIndex={-1}
                 _groupHover={{
@@ -56,7 +56,7 @@ const Mes = ({message, who}) => {
                 cursor={'pointer'}
                 fontSize={10}
             />
-            </Box> */}
+            </Box>
         </Flex>
     )
 
@@ -121,8 +121,8 @@ function ChatMessage({messages, userData}) {
                 py={1}
                 boxShadow={'xl'}
             >
-                <Avatar src={userData[0].photo || null}/>
-                <Text fontSize={16} flex={1}>{userData[0].name}</Text>
+                <Avatar src={userData[0]?.photo || null}/>
+                <Text fontSize={16} flex={1}>{userData[0]?.name}</Text>
                 <FaEllipsisV cursor={'pointer'}/>
                 
             </Flex>

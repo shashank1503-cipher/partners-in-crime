@@ -17,15 +17,18 @@ import {
   Icon
 } from '@chakra-ui/react';
 import { doc, setDoc } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
-import { FaSearch, FaCheckDouble } from 'react-icons/fa';
+import { FaSearch, FaCheckDouble, FaArrowLeft } from 'react-icons/fa';
+import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 import useApp from '../context/AppContext';
+import useAuth from '../context/AuthContext';
 import { db } from '../firebase';
 import ChatMessage from './ChatMessage';
 import Logo from './Logo';
 
-const Message = ({name, photo, lastMessage,lastMessageSender,id, select, setSelected}) => {
+const Message = ({name, photo, lastMessage,lastMessageSender,id, select, navi}) => {
 
     const b = (select === id)
   
@@ -52,12 +55,12 @@ const Message = ({name, photo, lastMessage,lastMessageSender,id, select, setSele
         w={250}
         py={3}
         cursor="pointer"
-        
-        onClick={() => setSelected(id)}
+
+        onClick={() => navi(id)}
       >
         <Avatar size={"sm"} src={photo || null}/>
         <Flex direction={"column"}>
-          <Box fontSize={18}>{name?.substring(0,10)}</Box>
+          <Box fontSize={18}>{name.charAt(0).toUpperCase()}{name?.split(" ")[0].slice(1).toLowerCase()}</Box>
           <Text 
             fontSize={14} 
             color="gray.500"
@@ -73,27 +76,76 @@ const Message = ({name, photo, lastMessage,lastMessageSender,id, select, setSele
 
 const Messages = () => {
 
-  const {messagesUserData, messages} = useApp()
+
+  const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const {messagesUserData, messages, setMessagesUserData} = useApp()
+  const {token, user} = useAuth()
   const [data, setData] = useState([])
   const [search, setSearch] = useState("")
+  const [conDrawer, setConDrawer] = useState(false)
+  const [addUserData, setAddUserData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const Ref = useRef(null)
+
   const [selected, setSelected] = useState(-1)
 
   const color = useColorModeValue("gray.200",'gray.700')
 
-  useEffect(() => {
-  
-    if(search.length > 0)
-    {
-        let new_data = []
-        messagesUserData.map(d => {
-          if(d.name.toLowerCase().includes(search))
-            new_data.push(d)
-        })
+  const fetchSuggestions = async () => {
+    let res = await fetch(`http://127.0.0.1:8000/users/data`)
+    
+    res = await res.json()
+    console.log(res.data)
 
-        setData([...new_data])
+      let usersData = res.data.filter(p => p.g_id !== user.g_id)
+      setAddUserData([...usersData, 
+
+      ])
+
+  }
+
+  useEffect(() => {
+
+    if(conDrawer)
+    {
+      fetchSuggestions()
     }
+
+  }, [conDrawer])
+
+  // useEffect(() => {
+
+  //   console.log(Ref.current.scrollHeight)
+  // }, [Ref.current.scrollHeight])
+
+  useEffect(() => {
+
+    console.log(addUserData)
+
+  }, [addUserData])
+
+  useEffect(() => {
+    
+    if(!conDrawer)
+      if(search.length > 0)
+      {
+          let new_data = []
+          messagesUserData.map(d => {
+            if(d.name.toLowerCase().includes(search))
+              new_data.push(d)
+          })
+
+          setData([...new_data])
+      }
+      else
+        setData([...messagesUserData])
+    
     else
-      setData([...messagesUserData])
+    {
+      
+        
+    }
     
   }, [search])
 
@@ -103,6 +155,61 @@ const Messages = () => {
       setData([...messagesUserData])
 
   }, [messagesUserData])
+
+  const NaviToChat = (id) => {
+    setConDrawer(false)
+    navigate({
+      pathname: "/messages",
+      search: `?chat=${id}`
+  })
+}
+
+  useEffect(() => {
+    console.log(selected)
+    if(selected !== -1)
+    {
+        if(messagesUserData.filter(m => m.g_id === selected).length === 1)
+        {
+            console.log("YESS", selected)
+        }
+        else
+        {
+          UpdateMessagesUserData(selected)
+        }
+    }
+  
+  }, [selected])
+
+
+  useEffect(() => {
+
+    if(params.get('chat'))
+      setSelected(params.get('chat'))
+
+  }, [params])
+
+  const UpdateMessagesUserData = async (id) => {
+    setLoading(true)
+    let userData = {}
+    let data = await fetch("http://localhost:8000/auth/getUser", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+          g_id: id
+      })
+    })
+
+    data = await data.json()
+
+    userData = {...data.user}
+    
+    setMessagesUserData(prev => [...prev, userData])
+    setLoading(false)
+
+  }
 
   return (
 
@@ -135,6 +242,7 @@ const Messages = () => {
                 <FaSearch />
                 <Input 
                   border="none"
+                  placeholder="Search"
                   borderRadius={0}
                   focusBorderColor="none"
                   onChange={(e) => setSearch(e.target.value)}
@@ -142,24 +250,31 @@ const Messages = () => {
 
           </Flex>
 
-          <Flex 
+          <Button m={2} onClick={() => setConDrawer(!conDrawer)}>{conDrawer?<FaArrowLeft/>:"Start a Conversation"}</Button>
+
+          <Flex
             direction={"column"}
             overflow={"overlay"}
             w={'full'}
               
-              sx={{
-                '&::-webkit-scrollbar': {
-                  width: '3px',
-                  backgroundColor: "transparent",
-                  zIndex:10
-                },
-                '&::-webkit-scrollbar-thumb': {
-                  background: "gray.500",
-                },
-              }}
-              > 
+            sx={{
+              '&::-webkit-scrollbar': {
+                width: '3px',
+                backgroundColor: "transparent",
+                zIndex:10
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: "gray.500",
+              },
+            }}
+
+            ref={Ref}
+            onScroll={e => e.target.scrollHeight < (e.target.scrollTop+e.target.clientHeight)?"":console.log("NO")}
+
+          > 
               
-              {data.map(d =>
+              
+              {!conDrawer && data.map(d =>
                 <Message
                   name={d.name} 
                   lastMessage={messages[d.g_id]?.messagesArray.slice(-1)[0].message} 
@@ -168,9 +283,21 @@ const Messages = () => {
                   id={d.g_id}
                   key={d.g_id}
                   select={selected}
-                  setSelected = {setSelected}
+                  navi={NaviToChat}
                 />
               )}
+
+
+              {conDrawer?addUserData.length ===0?"No Data":addUserData.map(d => 
+                <Message
+                  name={d.name}
+                  photo={d.photo}
+                  id={d.g_id}
+                  key={d.g_id}
+                  navi={NaviToChat}
+                />
+              ):<></>}
+
 
           </Flex>
           
@@ -179,17 +306,19 @@ const Messages = () => {
 
         <Flex 
 
-          justifyContent={selected===-1?'center':""} 
-          alignItems={selected===-1?'center':""} 
+          justifyContent={loading?'center':""} 
+          alignItems={loading?'center':""} 
           w={'full'}
           h={'full'}
         >
-              {selected === -1?<></>
-              :
-                <ChatMessage 
-                    messages={messages[selected]}
-                    userData={messagesUserData.filter(m => m.g_id === selected)}
-                />
+              {loading?<Logo fontSize={'7xl'}></Logo>
+              :<></>
+            }
+            {selected === -1 || loading? <></>:
+              <ChatMessage 
+              messages={messages[selected]?messages[selected]:{messagesArray:[]}}
+              userData={messagesUserData.filter(m => m.g_id === selected)}
+              />
             }
         </Flex>
 
