@@ -7,7 +7,7 @@ const AddAProjectPage = () => {
   return (
     <SidebarWithHeader>
       <AddAProject />
-      <Footer/>
+      
     </SidebarWithHeader>
    
   );
