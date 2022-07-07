@@ -48,7 +48,7 @@ const Profile = () => {
     useEffect(() => {
         const userData = async () => {
             try {
-                const res = await fetch('http://localhost:8000/fetchuserprofile', {
+                const res = await fetch('https://partners-in-crime-backend.herokuapp.com/fetchuserprofile', {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${token}`,
@@ -104,7 +104,7 @@ const Profile = () => {
                         setImageUrl(data.url);
     
                         try{
-                            res = await fetch("http://localhost:8000/updateuserpic", {
+                            res = await fetch("https://partners-in-crime-backend.herokuapp.com/updateuserpic", {
                                 method: "PUT",
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ const Profile = () => {
     useEffect(() => {
         const queryData = async () => {
             setloading(true);
-            const res = await fetch(`http://127.0.0.1:8000/suggestions?q=${query}`);
+            const res = await fetch(`https://partners-in-crime-backend.herokuapp.com/suggestions?q=${query}`);
             if(res.status === 200){
                 const Data = await res.json();
                 setData(Data.data);
@@ -193,7 +193,7 @@ const Profile = () => {
                 }
             }
 
-            const res = await fetch("http://localhost:8000/updateuserprofile", {
+            const res = await fetch("https://partners-in-crime-backend.herokuapp.com/updateuserprofile", {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',

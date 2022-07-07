@@ -93,7 +93,7 @@ const Messages = () => {
   const color = useColorModeValue("gray.200",'gray.700')
 
   const fetchSuggestions = async () => {
-    let res = await fetch(`http://127.0.0.1:8000/users/data`)
+    let res = await fetch(`https://partners-in-crime-backend.herokuapp.com/users/data`)
     
     res = await res.json()
     console.log(res.data)
@@ -191,7 +191,7 @@ const Messages = () => {
   const UpdateMessagesUserData = async (id) => {
     setLoading(true)
     let userData = {}
-    let data = await fetch("http://localhost:8000/auth/getUser", {
+    let data = await fetch("https://partners-in-crime-backend.herokuapp.com/auth/getUser", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

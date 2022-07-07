@@ -36,7 +36,7 @@ const SpecificProject = ({ id }) => {
   let fetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/project/${id}`, {
+      const res = await fetch(`https://partners-in-crime-backend.herokuapp.com/project/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ const SpecificProject = ({ id }) => {
     fetchData();
   }, []);
   let addInterested = async () => {
-    let url = `http://127.0.0.1:8000/addfavourite`;
+    let url = `https://partners-in-crime-backend.herokuapp.com/addfavourite`;
     let data = {
       project_id: id,
     };
@@ -103,7 +103,7 @@ const SpecificProject = ({ id }) => {
     }
   };
   let removeInterested = async () => {
-    let url = `http://127.0.0.1:8000/deleteFavourite/${id}?is_project=${true}`;
+    let url = `https://partners-in-crime-backend.herokuapp.com/deleteFavourite/${id}?is_project=${true}`;
     try {
       let response = await fetch(url, {
         method: 'DELETE',

@@ -21,7 +21,7 @@ provider.setCustomParameters({
   hd: 'iiitkottayam.ac.in',
 });
 
-const URL = 'http://localhost:8000';
+const URL = 'https://partners-in-crime-backend.herokuapp.com';
 
 const AuthContext = createContext({});
 

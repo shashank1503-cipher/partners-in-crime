@@ -82,7 +82,7 @@ export const AppProvider = ({children}) => {
                 }
                 else
                 {
-                    let data = await fetch(`http://localhost:8000/auth/getUser`, {
+                    let data = await fetch(`https://partners-in-crime-backend.herokuapp.com/auth/getUser`, {
                         method: 'POST',
                         headers: {
                           'Content-Type': 'application/json',

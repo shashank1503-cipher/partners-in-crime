@@ -34,7 +34,7 @@ const ProfileDetail = ({ id }) => {
   let fetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/profile/${id}`, {
+      const res = await fetch(`https://partners-in-crime-backend.herokuapp.com/profile/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
