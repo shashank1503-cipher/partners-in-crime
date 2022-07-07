@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   IconButton,
   Avatar,
@@ -19,7 +19,6 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
-  Badge,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import {
@@ -42,7 +41,7 @@ const LinkItems = [
   { name: 'Find a Partner', icon: FaUserSecret, url: '/find' },
   { name: 'Add a Project', icon: FiPlus, url: '/add' },
   { name: 'Messages', icon: FiMessageSquare, url: '/messages' },
-  { name: 'Notifications', icon: FiBell, url: '/notifications', new: true },
+  { name: 'Notifications', icon: FiBell, url: '/notifications', new: false },
 ];
 
 export default function SidebarWithHeader({ children }) {
@@ -77,32 +76,33 @@ export default function SidebarWithHeader({ children }) {
 
 const SidebarContent = ({ onClose, ...rest }) => {
   const { token } = useAuth();
-  let fetchNewNotification = async () => {
-    try {
-      const res = await fetch(`http://Localhost:8000/isNewnotification`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
-      if (res.status === 200) {
-        console.log(data);
-        console.log(data.data);
-        if (data.data) {
-          console.log('new notification');
-          LinkItems[4].new = true;
-        } else {
-          LinkItems[4].new = false;
-        }
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
   useEffect(() => {
+    let fetchNewNotification = async () => {
+      try {
+        let res = await fetch(`http://Localhost:8000/isNewnotification`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        let data = await res.json();
+        if (res.status === 200) {
+          // console.log(data);
+          // console.log(data.data);
+          if (data.data) {
+            // console.log('new notification');
+            LinkItems[4].new = true;
+          } else {
+            LinkItems[4].new = false;
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
     fetchNewNotification();
-  }, []);
+  }, [token]);
   return (
     <Box
       transition="3s ease"
@@ -117,22 +117,20 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <Logo fontSize="2xl" />
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map(link => (
-        <>
-          <NavItem
-            key={link.name}
-            icon={link.icon}
-            url={link.url}
-            badge={link.new}
-            onClick={() => {
-              if (link.new === true) {
-                LinkItems[4].new = false;
-              }
-            }}
-          >
-            {link.name}
-          </NavItem>
-        </>
+      {LinkItems.map((link, index) => (
+        <NavItem
+          icon={link.icon}
+          url={link.url}
+          badge={link.new}
+          onClick={() => {
+            if (link.new === true) {
+              LinkItems[4].new = false;
+            }
+          }}
+          key={index}
+        >
+          {link.name}
+        </NavItem>
       ))}
     </Box>
   );
@@ -176,10 +174,26 @@ const NavItem = ({ url, icon, badge, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
-  let { user, logout } = useAuth();
+  const [imageURL, setImageURL] = useState();
+  let { user, logout, token } = useAuth();
   let name = user.name.split(' ')[0];
-  let photo = user.photo;
   let navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProfilePhoto = async () => {
+      const res = await fetch("http://localhost:8000/fetchuserpic", {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      setImageURL(data["photo"])
+    }
+    fetchProfilePhoto();
+  }, [token])
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -219,7 +233,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               _focus={{ boxShadow: 'none' }}
             >
               <HStack>
-                <Avatar size={'sm'} src={photo} referrerPolicy="no-referrer" />
+                <Avatar size={'sm'} src={imageURL} referrerPolicy="no-referrer" />
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems="flex-start"

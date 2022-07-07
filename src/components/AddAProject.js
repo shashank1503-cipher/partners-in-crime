@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   ButtonGroup,
   Flex,
@@ -25,12 +26,31 @@ const AddAProject = () => {
   const [shortDesc, setShortDesc] = useState('');
   const [description, setDescription] = useState('');
 
-  const [skills, setSkills] = useState('');
+  const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [queryLoading, setQueryLoading] = useState(false);
+  const [query, setQuery] = useState('');
+  const [data, setData] = useState([]);
   const toast = useToast();
 
   let { token } = useAuth();
+  useEffect(() => {
+    const queryData = async () => {
+      setQueryLoading(true);
+      const res = await fetch(`http://127.0.0.1:8000/suggestions?q=${query}`);
+      if (res.status === 200) {
+        const Data = await res.json();
+        setData(Data.data);
+      } else {
+        const Data = await res.json();
+        console.log(Data.detail);
+      }
+      setQueryLoading(false);
+    };
+    if (query) {
+      queryData();
+    }
+  }, [query]);
   let uploadImage = async () => {
     setUploading(true);
     if (image) {
@@ -67,8 +87,6 @@ const AddAProject = () => {
             duration: 9000,
             isClosable: true,
           });
-          
-          
         }
       } catch (error) {
         setImageError(error.message);
@@ -79,8 +97,6 @@ const AddAProject = () => {
           duration: 9000,
           isClosable: true,
         });
-
-        
       } finally {
         setUploading(false);
         setImage(null);
@@ -101,13 +117,13 @@ const AddAProject = () => {
         isClosable: true,
       });
     }
-    let skillArr = skills.split(' ');
+
     let data = {
       image_url: imageUrl,
       title: title,
       description: shortDesc,
       idea: description,
-      skills: skillArr,
+      skills: skills,
     };
     try {
       const res = await fetch('http://127.0.0.1:8000/addproject', {
@@ -340,26 +356,101 @@ const AddAProject = () => {
         rounded={'md'}
         overflow={'hidden'}
         p={8}
-        direction={'column'}
-        align={'center'}
-        w={['sm', 'md', 'lg', 'xl']}
+        direction={['column', 'row']}
+        w={'85%'}
+        transition={'all 0.3s ease-in-out'}
       >
-        <FormControl>
-          <Text
-            fontFamily={`'Source Code Pro',sans-serif`}
-            textAlign={'center'}
-            mb={4}
-          >
-            For your one hell of a team
+        <Flex
+          direction={'column'}
+          w={'100%'}
+          justifyContent={'center'}
+          alignItems={'center'}
+        >
+          <Text fontSize={['lg', 'lg']} mb={['3', '1']}>
+            Skills<span style={{ color: 'red' }}>{''}*</span>
           </Text>
-          <Input
-            isRequired={true}
-            placeholder="Skills You Require"
-            size={['sm', 'md', 'lg', 'lg']}
-            value={skills}
-            onChange={e => setSkills(e.target.value)}
-          />
-        </FormControl>
+          <Flex direction={'row'} flexWrap={'wrap'} w={'80%'} my={[0, 0, 0, 4]}>
+            {skills ? (
+              skills.map((skill, index) => {
+                return (
+                  <Box
+                    key={index}
+                    mr={[2, 2, 2, 4]}
+                    p={2}
+                    mb={[2, 2, 2, 2]}
+                    borderColor={'teal'}
+                    fontSize={['sm', 'sm', 'sm', 'lg']}
+                    borderWidth={1}
+                    rounded={'lg'}
+                    _hover={{ backgroundColor: '#81E6D9', color: 'black' }}
+                    transition={'all 0.3s ease-in-out'}
+                  >
+                    {skill}
+                    <Box
+                      color={'red'}
+                      ml={'2'}
+                      cursor={'pointer'}
+                      display={'inline'}
+                      _hover={{ color: 'white' }}
+                      onClick={() => {
+                        return setSkills(prev => prev.filter(s => s !== skill));
+                      }}
+                    >
+                      &#x2715;
+                    </Box>
+                  </Box>
+                );
+              })
+            ) : (
+              <></>
+            )}
+          </Flex>
+          <FormControl textAlign={'center'}>
+            <Input
+              type="text"
+              size={['sm', 'md', 'lg', 'lg']}
+              maxWidth={'80%'}
+              textAlign={['center', 'left']}
+              fontSize={'lg'}
+              placeholder="Include skills you're familiar with"
+              value={query ?? ''}
+              onChange={e => {
+                setQuery(e.target.value);
+              }}
+            />
+          </FormControl>
+          <Flex
+            w={'80%'}
+            bg={useColorModeValue('white', 'gray.900')}
+            rounded={'md'}
+            overflow={'hidden'}
+            pt={4}
+            direction={['column', 'column', 'column', 'row']}
+            justifyContent={['center', 'center', 'center', 'flex-start']}
+            flexWrap={['nowrap', 'nowrap', 'nowrap', 'wrap']}
+          >
+            {queryLoading ? (
+              <></>
+            ) : (
+              data?.map((resu, index) => (
+                <Button
+                  key={index}
+                  mr={[0, 0, 0, 4]}
+                  onClick={e => {
+                    return setSkills(prev =>
+                      prev
+                        ? Array.from(new Set([...prev, resu.name]))
+                        : [resu.name]
+                    );
+                  }}
+                  my={[2, 2, 2, 2]}
+                >
+                  {resu.name}
+                </Button>
+              ))
+            )}
+          </Flex>
+        </Flex>
       </Flex>
       <Flex m={10}>
         <ButtonGroup spacing={10}>

@@ -33,7 +33,7 @@ export default function ProfileCard(props) {
         padding={4}
       >
         <Flex flex={1} bg="blue.200">
-          <Image objectFit="cover" boxSize="100%" src={img} />
+          <Image objectFit="cover" boxSize="100%" src={img} referrerPolicy={'no-referrer'} />
         </Flex>
         <Stack
           flex={1}
@@ -56,13 +56,19 @@ export default function ProfileCard(props) {
           >
             Actress, musician, songwriter and artist. PM for work inquires or
           </Text>
-          <Stack align={'center'} justify={'center'} direction={'row'} mt={6}>
+          <Flex
+            align={'center'}
+            justify={'center'}
+            direction={'row'}
+            mt={6}
+            wrap={'wrap'}
+          >
             {skills.map(skill => (
-              <Badge px={2} py={1} bg={badgeBG} fontWeight={'400'}>
+              <Badge px={2} py={1} bg={badgeBG} fontWeight={'400'} m={1}>
                 {skill}
               </Badge>
             ))}
-          </Stack>
+          </Flex>
 
           <Stack
             width={'100%'}

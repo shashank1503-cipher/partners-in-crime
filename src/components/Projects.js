@@ -7,6 +7,7 @@ import {
   ButtonGroup,
   Flex,
   FormControl,
+  Heading,
   IconButton,
   Input,
   InputGroup,
@@ -40,7 +41,7 @@ const Projects = () => {
   const [page, setPage] = useState(1);
   let { token } = useAuth();
   let fetchData = async () => {
-    console.log(perPage);
+    // console.log(perPage);
     setLoading(true);
     try {
       const res = await fetch(
@@ -52,10 +53,10 @@ const Projects = () => {
           },
         }
       );
-      console.log(res.status);
+      // console.log(res.status);
       if (res.status === 200) {
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         setTotalRecords(data.meta.total_records);
         setProjects(data.data);
         setError(null);
@@ -99,7 +100,7 @@ const Projects = () => {
             <AlertTitle>Error! </AlertTitle>
             <AlertDescription>{error.message}</AlertDescription>
           </Alert>
-        ) : (
+        ) : projects.length > 0 ? (
           projects.map(project => (
             <ProjectCard
               key={project['_id']}
@@ -113,6 +114,13 @@ const Projects = () => {
               interested={project['interested']}
             />
           ))
+        ) : (
+          <Flex direction={'column'} justifyContent={'space-evenly'} minH={'xs'} textAlign={'center'}>
+            <Heading>Uh oh! Nothing to see here T_T</Heading>
+            <Text fontSize="lg" fontFamily={`'Source Code Pro', sans-serif`}>
+              No projects found. Take a chill pill and come back later.
+            </Text>
+          </Flex>
         )}
       </Flex>
       <Flex justifyContent={'flex-end'} m={5}>

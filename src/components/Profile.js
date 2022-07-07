@@ -6,60 +6,80 @@ import {
     Heading,
     Input,
     Text,
-    Textarea,
     useColorModeValue,
     useToast,
     Image,
     Box,
     IconButton,
-    Icon,
-    Select
+    Select,
+    Textarea
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { FaImage, FaPencilAlt } from 'react-icons/fa';
+import useAuth from '../context/AuthContext';
+import { FaPencilAlt } from 'react-icons/fa';
 
 const Profile = () => {
+
+    const { token } = useAuth();
+
     let color = useColorModeValue('gray.900', 'gray.50');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [uploading, setUploading] = useState(false);
     const [imageHover, setImageHover] = useState(false);
     const [imageError, setImageError] = useState('');
+    const [query, setQuery] = useState('');
+    const [data, setData] = useState(null);
+    const [loading, setloading] = useState(false);
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [username, setUsername] = useState('');
+    const [name, setName] = useState('');
     const [mobile, setMobile] = useState('');
     const [email, setEmail] = useState('');
     const [collg, setCollg] = useState('');
-    const [courseSpl, setCourseSpl] = useState(null);
-    const [studyYear, setStudyYear] = useState(null);
-    const [pronouns, setPronouns] = useState(null);
+    const [batch, setBatch] = useState('');
+    const [pronouns, setPronouns] = useState(3);
+    const [skills, setSkills] = useState([]);
+    const [bio, setBio] = useState('');
     const [github, setGithub] = useState('');
     const [linkedIn, setLinkedIn] = useState('');    
 
     const toast = useToast();
-    
+
     useEffect(() => {
-        // dummy fetch user data
         const userData = async () => {
-            setImageUrl("profile.png");
-            setPronouns(1);
-            setFirstName('Veronica');
-            setLastName('Shrivastava');
-            setUsername('*man');
-            setMobile('9876543210');
-            setEmail('abc@iiitkottayam.ac.in');
-            setCollg('IIIT Kottayam');
-            setCourseSpl(0);
-            setStudyYear(2);
-            setGithub('');
-            setLinkedIn('');
+            try {
+                const res = await fetch('http://localhost:8000/fetchuserprofile', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+    
+                const data = await res.json();
+    
+                if (res.status === 200) {
+    
+                    // console.log(data);
+    
+                    setImageUrl(data['photo']);
+                    setPronouns('pronoun' in data ? data['pronoun'] : 3);
+                    setName(data['name']);
+                    setMobile('mobile' in data ? data['mobile'] : '');
+                    setEmail(data['email']);
+                    setCollg('IIIT Kottayam');
+                    setBatch(data['batch'])
+                    setBio(data['bio'])
+                    setGithub('socials' in data ? data['socials'][0] : '');
+                    setLinkedIn('socials' in data ? data['socials'][1] : "");        
+                    setSkills(data['skills'])
+                }
+            } catch (error) {
+                console.log(error);
+            }
+    
         };
         userData();
-    }, []);
-
-    // post data changes yet to be made
+    }, [token]);
 
     useEffect(() => {
         const uploadImage = async () => {
@@ -72,25 +92,39 @@ const Profile = () => {
                 formData.append('file', image);
     
                 try{
-                    formData.append('upload_preset', 'z4pkkeb2');
-                    formData.append('cloud_name', 'dikr8bxj7');
-                    const res = await fetch(
-                        'https://api.cloudinary.com/v1_1/dikr8bxj7/image/upload', {
+                    formData.append('upload_preset', 'partnersInCrime');
+                    formData.append('cloud_name', 'dpjf6btln');
+                    let res = await fetch(
+                        'https://api.cloudinary.com/v1_1/dpjf6btln/image/upload', {
                             method: 'POST',
                             body: formData,
                     });
                     if(res.status === 200){
                         const data = await res.json();
                         setImageUrl(data.url);
+    
+                        try{
+                            res = await fetch("http://localhost:8000/updateuserpic", {
+                                method: "PUT",
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${token}`,
+                                },
+                                body: JSON.stringify({"photo": data.url})
+                            });
+    
+                            toast({
+                                position: "bottom-right",
+                                title: 'Profile Pic Updated',
+                                status: `${res.status === 200 ? "success" : "error"}`,
+                                duration: 9000,
+                                isClosable: true,
+                            });
+                        }
+                        catch(e){
+                            console.log(e);
+                        }
                         setImageError('');
-
-                        toast({
-                            position: "bottom-right",
-                            title: 'Profile Pic Updated',
-                            status: 'success',
-                            duration: 9000,
-                            isClosable: true,
-                        });
                     }
                     else{
                         const data = await res.json();
@@ -104,6 +138,7 @@ const Profile = () => {
                 } 
                 finally{
                     setUploading(false);
+                    setImage(null);
                 }
             }
             else{
@@ -111,18 +146,85 @@ const Profile = () => {
                 setUploading(false);
             }
         };
-
         uploadImage();
-    }, [image, toast]);
+    }, [image, toast, token]);
+
+    useEffect(() => {
+        const queryData = async () => {
+            setloading(true);
+            const res = await fetch(`http://127.0.0.1:8000/suggestions?q=${query}`);
+            if(res.status === 200){
+                const Data = await res.json();
+                setData(Data.data);
+            } 
+            else{
+                const Data = await res.json();
+                console.log(Data.detail);
+            }
+            setloading(false);
+        };
+        queryData();
+    }, [query]);
+
+    const updateUserData = async () => {
+        try {
+            setUploading(true);
+            const data = {
+                'name': name,
+                'photo': imageUrl,
+                'skills': skills,
+                'batch': batch,
+                'socials': [github, linkedIn],
+                'mobile': mobile,
+                'pronoun': pronouns,
+                'bio': bio
+            }
+
+            for (const key in data) {
+                if ((data[key] === '' || data[key].length === 0) && !(['batch', 'socials', 'mobile', 'bio'].includes(key))) {
+                    toast({
+                        position: 'bottom-right',
+                        title: `${key.charAt(0).toUpperCase() + key.slice(1) + ' cannot be empty!'}`,
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                    });
+                    return;
+                }
+            }
+
+            const res = await fetch("http://localhost:8000/updateuserprofile", {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(data)
+            });
+
+            toast({
+                position: "bottom-right",
+                title: 'Profile Updated',
+                status: `${res.status === 200 ? "success" : "error"}`,
+                duration: 9000,
+                isClosable: true,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+        finally{
+            setUploading(false)
+        }
+    };
 
     return (
-        <>
+        <Box>
         <Flex direction={'column'}>
             <Flex justifyContent = {'space-evenly'} direction = {['column', 'row']} align = {'center'} my = {["0", "2"]}>
                 <Heading fontFamily={`'Source Code Pro',sans-serif`} size = {["2xl", "2xl"]} my = {["7", "0"]}>
                     Who are you? 🤔	
                 </Heading>
-                <label for = "picId"><Box
+                <label htmlFor = "picId"><Box
                     position = {'relative'}
                     borderRadius = {'full'}
                     onMouseEnter = {() => setImageHover(true)}
@@ -161,7 +263,7 @@ const Profile = () => {
                         _hover = {{opacity: '0.1'}}
                         borderRadius = 'full'
                         boxSize = {['200px', '170px']}
-                        src = {imageUrl}
+                        src = {imageUrl === '' ? "profile.png" : imageUrl}
                         alt = 'Profile Pic'
                         zIndex = {-1}
                     />
@@ -182,10 +284,11 @@ const Profile = () => {
                 <Flex direction = {['column','row']} w = {'100%'}>
                     <FormControl textAlign = {'center'}>
                         <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Preferred Pronoun</Text>
-                        <Flex justifyContent = {'center'}><Select variant = {'filled'} fontSize = {'lg'} placeholder = {!pronouns && 'Select Pronoun'} w = {'80%'} value = {pronouns} textAlign = {['center', 'left']}>
+                        <Flex justifyContent = {'center'}><Select variant = {'filled'} fontSize = {'lg'} placeholder = {!pronouns && 'Select Pronoun'} w = {'80%'} value = {pronouns ?? ""} textAlign = {['center', 'left']} onChange = {(e) => setPronouns(e.target.value)}>
                             <option value = '0'>He/Him</option>
                             <option value = '1'>She/Her</option>
                             <option value = '2'>They/Them</option>
+                            <option value = '3'>Don't want to specify</option>
                         </Select></Flex>
                     </FormControl>
                 </Flex>
@@ -202,51 +305,12 @@ const Profile = () => {
             >
                 <Flex direction = {['column','row']} w = {'100%'}>
                     <FormControl textAlign = {'center'}>
-                        <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>First Name<span style = {{color: 'red'}}>{''}*</span></Text>
+                        <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Name<span style = {{color: 'red'}}>{''}*</span></Text>
                         <Input
                             placeholder="Your First Name"
                             size={['sm', 'md', 'lg', 'lg']}
-                            value={firstName}
-                            onChange={e => setFirstName(e.target.value)}
-                            width = {'80%'}
-                            required = {true}
-                            textAlign = {['center', 'left']}
-                            fontSize = {'lg'}
-                        />
-                    </FormControl>
-                    <FormControl textAlign = {'center'}>
-                    <Text fontSize = {['lg', 'lg']} mb = {['3', '1']} mt = {['3', '0']}>Last Name</Text>
-                        <Input
-                            placeholder="Your Last Name"
-                            size={['sm', 'md', 'lg', 'lg']}
-                            value={lastName}
-                            onChange={e => setLastName(e.target.value)}
-                            width = {'80%'}
-                            textAlign = {['center', 'left']}
-                            fontSize = {'lg'}
-                        />
-                    </FormControl>
-                </Flex>
-            </Flex>
-            
-            <Flex
-                mt={10}
-                bg={useColorModeValue('white', 'gray.900')}
-                boxShadow={'2xl'}
-                rounded={'md'}
-                overflow={'hidden'}
-                p={8}
-                direction={['column', 'row']}
-                w = {'85%'}
-            >
-                <Flex direction = {['column','row']} w = {'100%'}>
-                    <FormControl textAlign = {'center'}>
-                        <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Username<span style = {{color: 'red'}}>{''}*</span></Text>
-                        <Input
-                            placeholder="Your Username"
-                            size={['sm', 'md', 'lg', 'lg']}
-                            value={username}
-                            onChange={e => setUsername(e.target.value)}
+                            value={name ?? ""}
+                            onChange={e => setName(e.target.value)}
                             width = {'80%'}
                             required = {true}
                             textAlign = {['center', 'left']}
@@ -258,11 +322,12 @@ const Profile = () => {
                         <Input
                             placeholder="Your College Email Id"
                             size={['sm', 'md', 'lg', 'lg']}
-                            value={email}
+                            value={email ?? ""}
                             onChange={e => setEmail(e.target.value)}
                             width = {'80%'}
                             textAlign = {['center', 'left']}
                             fontSize = {'lg'}
+                            disabled
                         />
                     </FormControl>
                 </Flex>
@@ -284,7 +349,7 @@ const Profile = () => {
                         <Input
                             placeholder="Your Mobile Number"
                             size={['sm', 'md', 'lg', 'lg']}
-                            value={mobile}
+                            value={mobile ?? ""}
                             onChange={e => setMobile(e.target.value)}
                             width = {'80%'}
                             required = {true}
@@ -297,11 +362,12 @@ const Profile = () => {
                         <Input
                             placeholder="Your College/Institution's Name"
                             size={['sm', 'md', 'lg', 'lg']}
-                            value={collg}
+                            value={collg ?? ""}
                             onChange={e => setCollg(e.target.value)}
                             width = {'80%'}
                             textAlign = {['center', 'left']}
                             fontSize = {'lg'}
+                            disabled
                         />
                     </FormControl>
                 </Flex>
@@ -319,25 +385,141 @@ const Profile = () => {
             >
                 <Flex direction = {['column', 'row']} w = {'100%'}>
                     <FormControl textAlign = {'center'}>
-                        <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Course Specialisation</Text>
-                        <Flex justifyContent = {'center'}><Select variant = {'filled'} fontSize = {'lg'} placeholder = {!courseSpl && 'Select course specialisation'} w = {'80%'} value = {courseSpl} textAlign = {['center', 'left']}>
-                            <option value = '0'>Computer Science and Engineering</option>
-                            <option value = '1'>Computer Science and Engineering - CyberSec</option>
-                            <option value = '2'>Electronics and Communication Engineering</option>
+                        <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Batch</Text>
+                        <Flex justifyContent = {'center'}><Select variant = {'filled'} fontSize = {'lg'} w = {'80%'} placeholder = {batch === "20XX" ? "20XX" : ""} value = {batch !== "20XX" ? batch : ""} textAlign = {['center', 'left']} onChange = {(e) => setBatch(e.target.value)}>
+                            <option value = "2021">Batch 2021</option>
+                            <option value = "2020">Batch 2020</option>
+                            <option value = "2019">Batch 2019</option>
                         </Select></Flex>
-                    </FormControl>
+                    </FormControl>    
+                </Flex>
+            </Flex>
+
+            <Flex
+                mt={10}
+                bg={useColorModeValue('white', 'gray.900')}
+                boxShadow={'2xl'}
+                rounded={'md'}
+                overflow={'hidden'}
+                p={8}
+                direction={['column', 'row']}
+                w = {'85%'}
+                transition={'all 0.3s ease-in-out'}
+            >
+                <Flex 
+                    direction = {'column'}
+                    w = {'100%'}
+                    justifyContent = {'center'}
+                    alignItems = {'center'}
+                >
+                    <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Skills<span style = {{color: 'red'}}>{''}*</span></Text>
+                    <Flex 
+                        direction = {'row'}
+                        flexWrap = {'wrap'}
+                        w = {'80%'}
+                        my = {[0, 0, 0, 4]}
+                    >{
+                        skills.map((skill, index) => {
+                            return  <Box
+                                        key = {index}
+                                        mr = {[2, 2, 2, 4]}
+                                        p = {2}
+                                        mb = {[2, 2, 2, 2]}
+                                        borderColor = {'teal'}
+                                        fontSize = {['sm', 'sm', 'sm', 'lg']}
+                                        borderWidth = {1}
+                                        rounded = {'lg'}
+                                        _hover = {{backgroundColor: "#81E6D9", color: "black"}}
+                                        transition={'all 0.3s ease-in-out'}
+                                    >
+                                        {skill}
+                                        <Box
+                                            color = {'red'}
+                                            ml = {'2'}
+                                            cursor = {'pointer'}
+                                            display = {'inline'}
+                                            _hover = {{color: "white"}}
+                                            onClick = {() => {
+                                                return setSkills((prev) => prev.filter(s => s !== skill));;
+                                            }}
+                                        >
+                                            &#x2715;
+                                        </Box>
+                                    </Box>
+                        })
+                    }</Flex>
                     <FormControl textAlign = {'center'}>
-                        <Text fontSize = {['lg', 'lg']} mb = {['3', '1']} mt = {['3', '0']}>Study Year<span style = {{color: 'red'}}>{''}*</span></Text>
-                        <Flex justifyContent = {'center'}><Select variant = {'filled'} fontSize = {'lg'} placeholder = {!studyYear && 'Select Study year'} w = {'80%'} value = {studyYear} textAlign = {['center', 'left']}>
-                            <option value = '0'>1st Year</option>
-                            <option value = '1'>2nd Year</option>
-                            <option value = '2'>3rd Year</option>
-                            <option value = '3'>4th Year</option>
-                        </Select></Flex>
+                        <Input
+                            type="text"
+                            size={['sm', 'md', 'lg', 'lg']}
+                            maxWidth = {'80%'}
+                            textAlign = {['center', 'left']}
+                            fontSize = {'lg'}
+                            placeholder="Include skills you're familiar with"
+                            value={query ?? ""}
+                            onChange={e => {
+                              setQuery(e.target.value);
+                            }}
+                        />
+                        
                     </FormControl>
+                    <Flex
+                        w={'80%'}
+                        bg={useColorModeValue('white', 'gray.900')}
+                        rounded={'md'}
+                        overflow={'hidden'}
+                        pt = {4}
+                        direction = {['column', 'column', 'column', 'row']}
+                        justifyContent = {['center', 'center', 'center', 'flex-start']}
+                        flexWrap = {['nowrap', 'nowrap', 'nowrap', 'wrap']}
+                    >
+                        {loading ? (
+                            <></>
+                        ) : (
+                            data?.map((resu, index) => (
+                                <Button
+                                    key = {index} 
+                                    mr = {[0, 0, 0, 4]}
+                                    onClick={(e) => {
+                                       return setSkills((prev) => Array.from(new Set([...prev, resu.name])));
+                                    }}
+                                    my = {[2, 2, 2, 2]}
+                                >
+                                    {resu.name}
+                                </Button>
+                            ))
+                        )}
+                    </Flex>
                 </Flex>
             </Flex>
             
+            <Flex
+                mt={10}
+                bg={useColorModeValue('white', 'gray.900')}
+                boxShadow={'2xl'}
+                rounded={'md'}
+                overflow={'hidden'}
+                p={8}
+                direction={['column', 'row']}
+                w = {['85%']}
+                minH = {'300'}
+            >
+                <Flex direction = {['column', 'row']} w = {'100%'}>
+                    <FormControl textAlign = {'center'}>
+                        <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Bio</Text>
+                        <Flex justifyContent = {'center'}>
+                            <Textarea 
+                                w = {['100%', '100%', '100%', '80%']} 
+                                placeholder = 'Something about yourself' 
+                                value = {bio ?? ""} 
+                                onChange = {(e) => setBio(e.target.value)}
+                                rows = {8}
+                            />
+                        </Flex>
+                    </FormControl>    
+                </Flex>
+            </Flex>
+
             <Flex
                 mt={10}
                 bg={useColorModeValue('white', 'gray.900')}
@@ -354,7 +536,7 @@ const Profile = () => {
                         <Input
                             placeholder="Your Github Profile Link"
                             size={['sm', 'md', 'lg', 'lg']}
-                            value={github}
+                            value={github ?? ""}
                             onChange={e => setGithub(e.target.value)}
                             width = {'80%'}
                             required = {true}
@@ -367,7 +549,7 @@ const Profile = () => {
                         <Input
                             placeholder="Your LinkedIn Profile Link"
                             size={['sm', 'md', 'lg', 'lg']}
-                            value={linkedIn}
+                            value={linkedIn ?? ""}
                             onChange={e => setLinkedIn(e.target.value)}
                             width = {'80%'}
                             textAlign = {['center', 'left']}
@@ -379,13 +561,13 @@ const Profile = () => {
 
             <Flex m={10}>
                 <ButtonGroup spacing={10}>
-                    <Button variant={'solid'} colorScheme={'teal'}>
+                    <Button variant={'solid'} colorScheme={'teal'} onClick = {updateUserData} isLoading = {uploading}>
                         Save Changes
                     </Button>
                 </ButtonGroup>
             </Flex>
         </Flex>    
-        </>
+        </Box>
     );
 };
 

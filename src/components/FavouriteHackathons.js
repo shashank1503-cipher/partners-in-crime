@@ -39,7 +39,7 @@ const FavouriteHackathons = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [page, setPage] = useState(1);
   let { token } = useAuth();
-  console.log(Math.floor(totalRecords / perPage),page)
+  console.log(Math.floor(totalRecords / perPage), page);
   let fetchData = async () => {
     setLoading(true);
     try {
@@ -55,8 +55,8 @@ const FavouriteHackathons = () => {
       if (res.status === 200) {
         const data = await res.json();
         setTotalRecords(data.meta.total_records);
-        console.log(totalRecords)
-        console.log(data)
+        console.log(totalRecords);
+        console.log(data);
         setHackathons(data.data);
         setError(null);
       } else {
@@ -96,7 +96,7 @@ const FavouriteHackathons = () => {
             <AlertTitle>Error! </AlertTitle>
             <AlertDescription>{error.message}</AlertDescription>
           </Alert>
-        ) : (
+        ) : hackathons.length > 0 ? (
           hackathons.map(hackathon => (
             <HackathonCard
               key={hackathon.hackathon_details['_id']}
@@ -111,8 +111,19 @@ const FavouriteHackathons = () => {
               end={hackathon.hackathon_details.end}
               mode={hackathon.hackathon_details.mode}
               interested={true}
+              interestButtonDisabled={true}
             />
           ))
+        ) : (
+          <Alert status="info">
+            <AlertIcon />
+            <AlertTitle>Nthing here T_T</AlertTitle>
+            <AlertDescription>
+              <Text fontSize="lg" fontFamily={`'Source Code Pro', sans-serif`}>
+                Hit the heart button to see them here
+              </Text>
+            </AlertDescription>
+          </Alert>
         )}
       </Flex>
       <Flex justifyContent={'flex-end'} m={5}>
@@ -127,7 +138,7 @@ const FavouriteHackathons = () => {
           <IconButton
             icon={<FaArrowRight />}
             disabled={
-              Math.floor(totalRecords / perPage) === page-1 ? true : false
+              Math.floor(totalRecords / perPage) === page - 1 ? true : false
             }
             onClick={() => setPage(page + 1)}
           >
