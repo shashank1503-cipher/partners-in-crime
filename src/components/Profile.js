@@ -181,7 +181,7 @@ const Profile = () => {
             }
 
             for (const key in data) {
-                if ((data[key] === '' || data[key].length === 0) && !(['batch', 'socials', 'mobile', 'bio'].includes(key))) {
+                if ((data[key] === '' || data[key]?.length === 0 ) && !(['batch', 'socials', 'mobile', 'bio'].includes(key))) {
                     toast({
                         position: 'bottom-right',
                         title: `${key.charAt(0).toUpperCase() + key.slice(1) + ' cannot be empty!'}`,
