@@ -12,7 +12,9 @@ import {
     Box,
     IconButton,
     Select,
-    Textarea
+    Textarea,
+    InputLeftAddon,
+    InputGroup
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import useAuth from '../context/AuthContext';
@@ -181,7 +183,7 @@ const Profile = () => {
             }
 
             for (const key in data) {
-                if ((data[key] === '' || data[key]?.length === 0 ) && !(['batch', 'socials', 'mobile', 'bio'].includes(key))) {
+                if ((data[key] === '' || data[key].length === 0 || data[key] === undefined) && !(['batch', 'socials', 'mobile', 'bio'].includes(key))) {
                     toast({
                         position: 'bottom-right',
                         title: `${key.charAt(0).toUpperCase() + key.slice(1) + ' cannot be empty!'}`,
@@ -461,7 +463,6 @@ const Profile = () => {
                               setQuery(e.target.value);
                             }}
                         />
-                        
                     </FormControl>
                     <Flex
                         w={'80%'}
@@ -533,28 +534,45 @@ const Profile = () => {
                 <Flex direction = {['column','row']} w = {'100%'}>
                     <FormControl textAlign = {'center'}>
                         <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Github Profile</Text>
-                        <Input
-                            placeholder="Your Github Profile Link"
-                            size={['sm', 'md', 'lg', 'lg']}
-                            value={github ?? ""}
-                            onChange={e => setGithub(e.target.value)}
-                            width = {'80%'}
-                            required = {true}
-                            textAlign = {['center', 'left']}
-                            fontSize = {'lg'}
-                        />
+                        <InputGroup
+                            size = {['sm', 'md', 'lg', 'lg']}
+                            justifyContent = {'center'}
+                        >
+                            <InputLeftAddon 
+                                children = "github/"
+                            />
+                            <Input
+                                placeholder="Your Github Profile"
+                                size={['sm', 'md', 'lg', 'lg']}
+                                value={github ?? ""}
+                                width = {'60%'}
+                                onChange={e => setGithub(e.target.value)}
+                                required = {true}
+                                textAlign = {['center', 'left']}
+                                fontSize = {'lg'}
+                            />
+                        </InputGroup>
                     </FormControl>
                     <FormControl textAlign = {'center'}>
-                    <Text fontSize = {['lg', 'lg']} mb = {['3', '1']} mt = {['3', '0']}>LinkedIn Profile</Text>
-                        <Input
-                            placeholder="Your LinkedIn Profile Link"
-                            size={['sm', 'md', 'lg', 'lg']}
-                            value={linkedIn ?? ""}
-                            onChange={e => setLinkedIn(e.target.value)}
-                            width = {'80%'}
-                            textAlign = {['center', 'left']}
-                            fontSize = {'lg'}
-                        />
+                        <Text fontSize = {['lg', 'lg']} mb = {['3', '1']} mt = {['3', '0']}>LinkedIn Profile</Text>
+                        <InputGroup
+                            size = {['sm', 'md', 'lg', 'lg']}
+                            justifyContent = {'center'}
+                        >
+                            <InputLeftAddon 
+                                children = "linkedIn/"
+                            />
+                            <Input
+                                placeholder="Your LinkedIn Profile Link"
+                                size={['sm', 'md', 'lg', 'lg']}
+                                value={linkedIn ?? ""}
+                                onChange={e => setLinkedIn(e.target.value)}
+                                required = {true}
+                                width = {'60%'}
+                                textAlign = {['center', 'left']}
+                                fontSize = {'lg'}
+                            />
+                        </InputGroup>
                     </FormControl>
                 </Flex>
             </Flex>
