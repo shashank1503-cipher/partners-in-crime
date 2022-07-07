@@ -78,7 +78,7 @@ function ChatMessage({messages, userData}) {
 
         let messs = chatMes
         messs = messs.trim()
-        if(messs.length === 0)
+        if(messs.length <= 1)
             return
         
         setChatMes("");
