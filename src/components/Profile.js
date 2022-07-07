@@ -72,7 +72,7 @@ const Profile = () => {
                     setBatch(data['batch'])
                     setBio(data['bio'])
                     setGithub('socials' in data ? data['socials'][0] : '');
-                    setLinkedIn('socials' in data ? data['socials'][1] : "");        
+                    setLinkedIn('socials' in data ? data['socials'][1] : '');        
                     setSkills(data['skills'])
                 }
             } catch (error) {
@@ -176,14 +176,41 @@ const Profile = () => {
                 'photo': imageUrl,
                 'skills': skills,
                 'batch': batch,
-                'socials': [github, linkedIn],
+                'socials': [github ?? "", linkedIn ?? ""],
                 'mobile': mobile,
                 'pronoun': pronouns,
                 'bio': bio
             }
 
+            // socials link check
+            if(data['socials'][0]?.length !== 0){
+                if(!data['socials'][0].includes('https')){
+                    data['socials'][0] = "https://github.com/" + data['socials'][0]; 
+                }
+            }
+
+            if(data['socials'][1]?.length !== 0){
+                if(!data['socials'][1].includes('https')){
+                    data['socials'][1] = "https://www.linkedin.com/in/" + data['socials'][1]; 
+                }
+            }
+
+            // required fields check and mobile number
             for (const key in data) {
-                if ((data[key] === '' || data[key].length === 0 || data[key] === undefined) && !(['batch', 'socials', 'mobile', 'bio'].includes(key))) {
+
+                if(key === 'mobile' && data[key].length !== 10){
+                    console.log("hello");
+                    toast({
+                        position: 'bottom-right',
+                        title: 'Mobile No. has to be of 10 digits',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                    });
+                    return;
+                }
+
+                if ((data[key]?.length === 0 || data[key] === undefined) && !(['batch', 'socials', 'mobile', 'bio'].includes(key))) {
                     toast({
                         position: 'bottom-right',
                         title: `${key.charAt(0).toUpperCase() + key.slice(1) + ' cannot be empty!'}`,
@@ -206,7 +233,7 @@ const Profile = () => {
 
             toast({
                 position: "bottom-right",
-                title: 'Profile Updated',
+                title: `${res.status === 200 ? "Profile updated" : "Error in profile updation"}`,
                 status: `${res.status === 200 ? "success" : "error"}`,
                 duration: 9000,
                 isClosable: true,
@@ -354,9 +381,10 @@ const Profile = () => {
                             value={mobile ?? ""}
                             onChange={e => setMobile(e.target.value)}
                             width = {'80%'}
-                            required = {true}
                             textAlign = {['center', 'left']}
                             fontSize = {'lg'}
+                            minLength = {10}
+                            maxLength = {10}
                         />
                     </FormControl>
                     <FormControl textAlign = {'center'}>
@@ -542,12 +570,11 @@ const Profile = () => {
                                 children = "github/"
                             />
                             <Input
-                                placeholder="Your Github Profile"
+                                placeholder="github.com/{profile}"
                                 size={['sm', 'md', 'lg', 'lg']}
                                 value={github ?? ""}
                                 width = {'60%'}
                                 onChange={e => setGithub(e.target.value)}
-                                required = {true}
                                 textAlign = {['center', 'left']}
                                 fontSize = {'lg'}
                             />
@@ -563,11 +590,10 @@ const Profile = () => {
                                 children = "linkedIn/"
                             />
                             <Input
-                                placeholder="Your LinkedIn Profile Link"
+                                placeholder="linkedin.com/in/{profile}"
                                 size={['sm', 'md', 'lg', 'lg']}
                                 value={linkedIn ?? ""}
                                 onChange={e => setLinkedIn(e.target.value)}
-                                required = {true}
                                 width = {'60%'}
                                 textAlign = {['center', 'left']}
                                 fontSize = {'lg'}
