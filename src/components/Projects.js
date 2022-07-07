@@ -40,13 +40,12 @@ const Projects = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [page, setPage] = useState(1);
   let { token } = useAuth();
-  console.log(token);
   let fetchData = async () => {
     // console.log(perPage);
     setLoading(true);
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/fetchprojects?q=${query}&page=${page}&per_page=${perPage}&`,
+        `https://partners-in-crime-backend.herokuapp.com/fetchprojects?q=${query}&page=${page}&per_page=${perPage}&`,
         {
           headers: {
             'Content-Type': 'application/json',

@@ -43,7 +43,7 @@ const MyProjects = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/fetchuserprojects?q=${query}&page=${page}&per_page=${perPage}&`,
+        `https://partners-in-crime-backend.herokuapp.com/fetchuserprojects?q=${query}&page=${page}&per_page=${perPage}&`,
         {
           headers: {
             'Content-Type': 'application/json',

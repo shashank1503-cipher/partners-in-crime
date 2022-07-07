@@ -33,7 +33,7 @@ function Display() {
   const getBandas = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/search?q=${q}`);
+      const res = await fetch(`https://partners-in-crime-backend.herokuapp.com/search?q=${q}`);
       if (res.status === 200) {
         const data = await res.json();
         console.log(data);
