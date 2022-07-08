@@ -30,7 +30,7 @@ export const AppProvider = ({children}) => {
         {
             myq = query(colRef, where("users", 'array-contains', user?.g_id), orderBy('timeStamp'))
             onSnapshot(myq, snapshot => {
-                console.log("Hekki")
+                // console.log("Hekki")
                 let mess = {}
                 snapshot.docs.forEach((doc) => {
                     const doc_id = doc.id
@@ -119,7 +119,8 @@ export const AppProvider = ({children}) => {
                                 ...data.user
                             }
                     }
-                    setMessagesUserData(prev => [...prev, userData])
+                    setMessagesUserData(prev => [...new Map(Array.from([...prev, userData]).map(m => [m['g_id'], m])).values()])
+                    // setMessagesUserData(prev => [...prev, userData])
                 }
             }
             setMessagesLoading(false)
