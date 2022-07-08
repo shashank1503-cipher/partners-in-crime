@@ -12,7 +12,10 @@ import {
     Box,
     IconButton,
     Select,
-    Textarea
+    Textarea,
+    InputLeftAddon,
+    InputGroup,
+    InputRightAddon
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import useAuth from '../context/AuthContext';
@@ -21,8 +24,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 const Profile = () => {
 
     const { token } = useAuth();
-
-    let color = useColorModeValue('gray.900', 'gray.50');
+    
     const [image, setImage] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [uploading, setUploading] = useState(false);
@@ -69,8 +71,8 @@ const Profile = () => {
                     setCollg('IIIT Kottayam');
                     setBatch(data['batch'])
                     setBio(data['bio'])
-                    setGithub('socials' in data ? data['socials'][0] : '');
-                    setLinkedIn('socials' in data ? data['socials'][1] : "");        
+                    setGithub('socials' in data ? data['socials'][0].split("/")[data['socials'][0].split("/").length - 1] : '');
+                    setLinkedIn('socials' in data ? data['socials'][1].split("/")[data['socials'][1].split("/").length - 1] : '');        
                     setSkills(data['skills'])
                 }
             } catch (error) {
@@ -156,6 +158,12 @@ const Profile = () => {
             if(res.status === 200){
                 const Data = await res.json();
                 setData(Data.data);
+                // if(Data.data?.length !== 0){
+                //     setDis(true);
+                // }
+                // else{
+                //     setDis(false);
+                // }
             } 
             else{
                 const Data = await res.json();
@@ -174,14 +182,41 @@ const Profile = () => {
                 'photo': imageUrl,
                 'skills': skills,
                 'batch': batch,
-                'socials': [github, linkedIn],
+                'socials': [github ?? "", linkedIn ?? ""],
                 'mobile': mobile,
                 'pronoun': pronouns,
                 'bio': bio
             }
 
+            // socials link check
+            if(data['socials'][0]?.length !== 0){
+                if(!data['socials'][0].includes('https')){
+                    data['socials'][0] = "https://github.com/" + data['socials'][0]; 
+                }
+            }
+
+            if(data['socials'][1]?.length !== 0){
+                if(!data['socials'][1].includes('https')){
+                    data['socials'][1] = "https://www.linkedin.com/in/" + data['socials'][1]; 
+                }
+            }
+
+            // required fields check and mobile number
             for (const key in data) {
-                if ((data[key] === '' || data[key]?.length === 0 ) && !(['batch', 'socials', 'mobile', 'bio'].includes(key))) {
+
+                if(key === 'mobile' && data[key].length !== 10 && data[key]?.length !== 0){
+                    console.log("hello");
+                    toast({
+                        position: 'bottom-right',
+                        title: 'Mobile No. should be of 10 digits',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                    });
+                    return;
+                }
+
+                if ((data[key]?.length === 0 || data[key] === undefined) && !(['batch', 'socials', 'mobile', 'bio'].includes(key))) {
                     toast({
                         position: 'bottom-right',
                         title: `${key.charAt(0).toUpperCase() + key.slice(1) + ' cannot be empty!'}`,
@@ -204,7 +239,7 @@ const Profile = () => {
 
             toast({
                 position: "bottom-right",
-                title: 'Profile Updated',
+                title: `${res.status === 200 ? "Profile updated" : "Error in profile updation"}`,
                 status: `${res.status === 200 ? "success" : "error"}`,
                 duration: 9000,
                 isClosable: true,
@@ -216,6 +251,13 @@ const Profile = () => {
             setUploading(false)
         }
     };
+
+    const updateSkill = (newSkill) => {
+        if((query?.length !== 0)){
+            setSkills((prev) => Array.from(new Set([...prev, newSkill])));
+            setQuery('');
+        }
+    }
 
     return (
         <Box>
@@ -308,20 +350,21 @@ const Profile = () => {
                         <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Name<span style = {{color: 'red'}}>{''}*</span></Text>
                         <Input
                             placeholder="Your First Name"
-                            size={['sm', 'md', 'lg', 'lg']}
+                            size={['lg', 'lg', 'lg', 'lg']}
                             value={name ?? ""}
                             onChange={e => setName(e.target.value)}
                             width = {'80%'}
                             required = {true}
                             textAlign = {['center', 'left']}
                             fontSize = {'lg'}
+                            maxLength = {40}
                         />
                     </FormControl>
                     <FormControl textAlign = {'center'}>
                     <Text fontSize = {['lg', 'lg']} mb = {['3', '1']} mt = {['3', '0']}>Email Id<span style = {{color: 'red'}}>{''}*</span></Text>
                         <Input
                             placeholder="Your College Email Id"
-                            size={['sm', 'md', 'lg', 'lg']}
+                            size={['lg', 'lg', 'lg', 'lg']}
                             value={email ?? ""}
                             onChange={e => setEmail(e.target.value)}
                             width = {'80%'}
@@ -348,20 +391,21 @@ const Profile = () => {
                         <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Mobile</Text>
                         <Input
                             placeholder="Your Mobile Number"
-                            size={['sm', 'md', 'lg', 'lg']}
+                            size={['lg', 'lg', 'lg', 'lg']}
                             value={mobile ?? ""}
                             onChange={e => setMobile(e.target.value)}
                             width = {'80%'}
-                            required = {true}
                             textAlign = {['center', 'left']}
                             fontSize = {'lg'}
+                            minLength = {10}
+                            maxLength = {10}
                         />
                     </FormControl>
                     <FormControl textAlign = {'center'}>
                     <Text fontSize = {['lg', 'lg']} mb = {['3', '1']} mt = {['3', '0']}>College/Institution</Text>
                         <Input
                             placeholder="Your College/Institution's Name"
-                            size={['sm', 'md', 'lg', 'lg']}
+                            size={['lg', 'lg', 'lg', 'lg']}
                             value={collg ?? ""}
                             onChange={e => setCollg(e.target.value)}
                             width = {'80%'}
@@ -416,7 +460,7 @@ const Profile = () => {
                     <Flex 
                         direction = {'row'}
                         flexWrap = {'wrap'}
-                        w = {'80%'}
+                        w = {['90%', '90%', '90%', '80%']}
                         my = {[0, 0, 0, 4]}
                     >{
                         skills.map((skill, index) => {
@@ -449,19 +493,35 @@ const Profile = () => {
                         })
                     }</Flex>
                     <FormControl textAlign = {'center'}>
-                        <Input
-                            type="text"
-                            size={['sm', 'md', 'lg', 'lg']}
-                            maxWidth = {'80%'}
-                            textAlign = {['center', 'left']}
-                            fontSize = {'lg'}
-                            placeholder="Include skills you're familiar with"
-                            value={query ?? ""}
-                            onChange={e => {
-                              setQuery(e.target.value);
-                            }}
-                        />
-                        
+                        <InputGroup
+                            size = {['lg', 'lg', 'lg', 'lg']}
+                            justifyContent = {'center'}
+                        >
+                            <Input
+                                type="text"
+                                size={['lg', 'lg', 'lg', 'lg']}
+                                maxWidth = {'75%'}
+                                textAlign = {['center', 'left']}
+                                fontSize = {'lg'}
+                                placeholder="Include skills you're familiar with"
+                                value={query ?? ""}
+                                onChange={e => {
+                                  setQuery(e.target.value);
+                                }}
+                            />
+                            <button 
+                                onClick = {() => {
+                                    return updateSkill(query);
+                                }}
+                                disabled = {query?.length === 0}
+                            ><InputRightAddon
+                                children = "Add"
+                                backgroundColor = {useColorModeValue('#cccfcc', '#21232c')} 
+                                _hover = {!(query?.length === 0) ? {'backgroundColor': '#81E6D9', 'color': 'black'} : {'backgroundColor': '#21232c', 'color': 'white'}}
+                                transition={'all 0.3s ease-in-out'}
+                                cursor = {(query?.length === 0) && 'not-allowed'}
+                            /></button>
+                        </InputGroup>
                     </FormControl>
                     <Flex
                         w={'80%'}
@@ -481,7 +541,7 @@ const Profile = () => {
                                     key = {index} 
                                     mr = {[0, 0, 0, 4]}
                                     onClick={(e) => {
-                                       return setSkills((prev) => Array.from(new Set([...prev, resu.name])));
+                                       return updateSkill(resu.name);
                                     }}
                                     my = {[2, 2, 2, 2]}
                                 >
@@ -502,7 +562,7 @@ const Profile = () => {
                 p={8}
                 direction={['column', 'row']}
                 w = {['85%']}
-                minH = {'300'}
+                minH = {'250'}
             >
                 <Flex direction = {['column', 'row']} w = {'100%'}>
                     <FormControl textAlign = {'center'}>
@@ -513,7 +573,8 @@ const Profile = () => {
                                 placeholder = 'Something about yourself' 
                                 value = {bio ?? ""} 
                                 onChange = {(e) => setBio(e.target.value)}
-                                rows = {8}
+                                rows = {7}
+                                maxLength = {500}
                             />
                         </Flex>
                     </FormControl>    
@@ -533,28 +594,47 @@ const Profile = () => {
                 <Flex direction = {['column','row']} w = {'100%'}>
                     <FormControl textAlign = {'center'}>
                         <Text fontSize = {['lg', 'lg']} mb = {['3', '1']}>Github Profile</Text>
-                        <Input
-                            placeholder="Your Github Profile Link"
-                            size={['sm', 'md', 'lg', 'lg']}
-                            value={github ?? ""}
-                            onChange={e => setGithub(e.target.value)}
-                            width = {'80%'}
-                            required = {true}
-                            textAlign = {['center', 'left']}
-                            fontSize = {'lg'}
-                        />
+                        <InputGroup
+                            size = {['lg', 'lg', 'lg', 'lg']}
+                            justifyContent = {'center'}
+                        >
+                            <InputLeftAddon 
+                                children = "github/"
+                                backgroundColor = {useColorModeValue('#cccfcc', '#21232c')}
+                            />
+                            <Input
+                                placeholder="github.com/{profile}"
+                                size={['lg', 'lg', 'lg', 'lg']}
+                                value={github ?? ""}
+                                width = {'60%'}
+                                onChange={e => setGithub(e.target.value)}
+                                textAlign = {['center', 'left']}
+                                fontSize = {'lg'}
+                                maxLength = {30}
+                            />
+                        </InputGroup>
                     </FormControl>
                     <FormControl textAlign = {'center'}>
-                    <Text fontSize = {['lg', 'lg']} mb = {['3', '1']} mt = {['3', '0']}>LinkedIn Profile</Text>
-                        <Input
-                            placeholder="Your LinkedIn Profile Link"
-                            size={['sm', 'md', 'lg', 'lg']}
-                            value={linkedIn ?? ""}
-                            onChange={e => setLinkedIn(e.target.value)}
-                            width = {'80%'}
-                            textAlign = {['center', 'left']}
-                            fontSize = {'lg'}
-                        />
+                        <Text fontSize = {['lg', 'lg']} mb = {['3', '1']} mt = {['3', '0']}>LinkedIn Profile</Text>
+                        <InputGroup
+                            size = {['lg', 'lg', 'lg', 'lg']}
+                            justifyContent = {'center'}
+                        >
+                            <InputLeftAddon 
+                                children = "linkedIn/"
+                                backgroundColor = {useColorModeValue('#cccfcc','#21232c')}
+                            />
+                            <Input
+                                placeholder="linkedin.com/in/{profile}"
+                                size={['lg', 'lg', 'lg', 'lg']}
+                                value={linkedIn ?? ""}
+                                onChange={e => setLinkedIn(e.target.value)}
+                                width = {'60%'}
+                                textAlign = {['center', 'left']}
+                                fontSize = {'lg'}
+                                maxLength = {40}
+                            />
+                        </InputGroup>
                     </FormControl>
                 </Flex>
             </Flex>
