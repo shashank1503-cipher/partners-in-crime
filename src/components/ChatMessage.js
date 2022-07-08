@@ -99,8 +99,11 @@ function ChatMessage({messages, userData}) {
         if(message.length > 0);
 
             message.map(m => {
-                if(m.visited === false)
+                
+                if(m.visited === false && m.who === 0)
                 {
+                    // console.log("Yes")
+                    // console.log(m.sender === userData.g_id)
                     updateMes(m.id)
                 }
             })

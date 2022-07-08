@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
           if(user.email.split('@')[1] !== 'iiitkottayam.ac.in')
             return logout()
-          console.log(user)
+          // console.log(user)
 
           setLoadingInitial(true);
           // console.log(user);
