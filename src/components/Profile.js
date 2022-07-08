@@ -252,6 +252,13 @@ const Profile = () => {
         }
     };
 
+    const updateSkill = (newSkill) => {
+        if((query?.length !== 0)){
+            setSkills((prev) => Array.from(new Set([...prev, newSkill])));
+            setQuery('');
+        }
+    }
+
     return (
         <Box>
         <Flex direction={'column'}>
@@ -503,7 +510,9 @@ const Profile = () => {
                                 }}
                             />
                             <button 
-                                onClick = {() => {return (query?.length !== 0) && setSkills((prev) => Array.from(new Set([...prev, query])))}}
+                                onClick = {() => {
+                                    return updateSkill(query);
+                                }}
                                 disabled = {query?.length === 0}
                             ><InputRightAddon
                                 children = "Add"
@@ -532,7 +541,7 @@ const Profile = () => {
                                     key = {index} 
                                     mr = {[0, 0, 0, 4]}
                                     onClick={(e) => {
-                                       return setSkills((prev) => Array.from(new Set([...prev, resu.name])));
+                                       return updateSkill(resu.name);
                                     }}
                                     my = {[2, 2, 2, 2]}
                                 >
