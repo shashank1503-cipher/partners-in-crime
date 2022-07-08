@@ -7,6 +7,12 @@ import {
     FormControl,
     FormLabel,
     Heading,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuItemOption,
+    MenuGroup,
+    MenuList,
     Input,
     InputGroup,
     InputLeftElement,
@@ -17,7 +23,7 @@ import {
     Icon,
     Textarea
 } from '@chakra-ui/react';
-import { addDoc, collection, doc, setDoc, Timestamp } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, setDoc, Timestamp, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import {FaEllipsisV, FaPaperPlane} from 'react-icons/fa'
 import useApp from '../context/AppContext';
@@ -43,7 +49,7 @@ const Mes = ({message, who}) => {
             
         >
             <Text>{message}</Text>
-            <Box
+            {/* <Box
                 opacity={0}
                 zIndex={-1}
                 _groupHover={{
@@ -56,7 +62,7 @@ const Mes = ({message, who}) => {
                 cursor={'pointer'}
                 fontSize={10}
             />
-            </Box>
+            </Box> */}
         </Flex>
     )
 
@@ -73,6 +79,34 @@ function ChatMessage({messages, userData}) {
         setTimeout(() => scroll(), 0)
     }, [messages])
 
+    // const deleteChat = async () => {
+        
+    //     messages.map(m => {
+    //         deleteDoc(doc(db, 'chats',m.id))
+    //     })
+
+
+    // }
+
+    useEffect(() => {
+
+        const updateMes = async (id) => {
+            console.log(id)
+            const ref = doc(collection(db, 'chats'), id)
+            const res = await updateDoc(ref, {visited: true})
+        }
+
+        if(message.length > 0);
+
+            message.map(m => {
+                if(m.visited === false)
+                {
+                    updateMes(m.id)
+                }
+            })
+
+    }, [message])
+
     
     const postMessage = async () => {
 
@@ -86,18 +120,21 @@ function ChatMessage({messages, userData}) {
             message: messs,
             sender: user.g_id,
             users: [userData[0].g_id, user.g_id],
-            timeStamp: new Date()
+            timeStamp: new Date(),
+            visited: false
         }
 
         await addDoc(collection(db, 'chats'), {
             ...mes
-        }) 
+        })
+
+
     }
 
     const scroll = () => {
         const m = document.getElementById('messageBox')
         console.log("Running...")
-        m.scrollTo({
+        m?.scrollTo({
             top: (m.scrollHeight),
             behavior: 'smooth'
         })
@@ -119,7 +156,16 @@ function ChatMessage({messages, userData}) {
             >
                 <Avatar src={userData[0]?.photo || null}/>
                 <Text fontSize={16} flex={1}>{userData[0]?.name}</Text>
-                <FaEllipsisV cursor={'pointer'}/>
+                {/* <Menu>
+                    <MenuButton
+                    >
+                        <FaEllipsisV cursor={'pointer'}/>
+                    </MenuButton>
+
+                    <MenuList>
+                        <MenuItem onClick={() => deleteChat(userData[0].g_id)}>Delete</MenuItem>
+                    </MenuList>
+                </Menu> */}
                 
             </Flex>
 
