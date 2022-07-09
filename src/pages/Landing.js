@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   Container,
   Divider,
   Flex,
@@ -38,103 +39,285 @@ function Landing() {
     });
   }
   return (
-    <Flex direction="column">
-      <Flex
-      direction={['column', 'column', 'column', 'row']}
-        alignItems={'center'}
-        justifyContent={'space-between'}
-        p={[0,0,0,5]}
-        boxShadow={'xl'}
-        bg={useColorModeValue('gray.100', 'gray.900')}
-      >
-        <NavLink to = '/'><Flex direction={'column'}>
-          <Heading
-            fontFamily={`'Source Code Pro', sans-serif`}
-            color={useColorModeValue('cyan.600', 'cyan')}
-            fontSize={['20px', '24px', '28px', '30px']}
-          >
-            {' '}
-            &lt;partnersInCrime&gt;
-          </Heading>{' '}
-        </Flex></NavLink>
-        <Flex justifyContent={'flex-end'} gap={3}>
-          <IconButton
-            icon={<FiGithub />}
-            variant={'ghost'}
-            onClick={() =>
-              window.open(
-                'https://github.com/shashank1503-cipher/partners-in-crime',
-                '_blank'
-              )
-            }
-          />
-          <Button
-            onClick={signInPopup}
-            w={'full'}
-            maxW={'md'}
-            variant={'outline'}
-            leftIcon={<FcGoogle />}
-            isLoading={loading}
-          >
-            <Center>
-              <Text>Sign in with Google</Text>
-            </Center>
-          </Button>
+    <Flex direction={'column'}>
+      <Flex direction="column" bgGradient="linear(to-tr, #D4418E,#0652C5 )">
+        <Flex
+          direction={['column', 'column', 'column', 'row']}
+          alignItems={'center'}
+          justifyContent={'space-between'}
+          p={[0, 0, 0, 5]}
+          h={['10vh', '10vh', '10vh', 'auto']}
 
-          <ColorModeSwitcher />
-        </Flex>
-      </Flex>
-
-      <Flex
-        direction={'column'}
-        justifyContent={'center'}
-        textAlign={'center'}
-        minH={'75vh'}
-      >
-        <Stack minH={'100vh'} direction={{ base: 'column-reverse', md: 'row' }}>
-          <Flex p={8} flex={1} align={'center'} justify={'center'}>
-            <Stack spacing={10} w={'full'} maxW={'lg'}>
+          // sboxShadow={'xl'}
+          // bg={useColorModeValue('gray.100', 'gray.900')}
+        >
+          <NavLink to="/">
+            <Flex direction={'column'}>
               <Heading
                 fontFamily={`'Source Code Pro', sans-serif`}
-                color={useColorModeValue('cyan.600', 'cyan')}
-                fontSize={['4xl', '4xl', '5xl', '5xl']}
-                textAlign={'center'}
+                color={useColorModeValue('white', 'white')}
+                fontSize={['20px', '24px', '28px', '30px']}
               >
                 {' '}
                 &lt;partnersInCrime&gt;
               </Heading>{' '}
-              <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
-                Let's Do Something Fishy
-              </Text>
-              <Stack
-                direction={{ base: 'column', md: 'row' }}
-                spacing={4}
-                justifyContent={'center'}
-              >
-                <Button
-                  onClick={signInPopup}
-                  size={'lg'}
-                  rounded={'full'}
-                  colorScheme={'cyan'}
-                >
-                  Get Started
-                </Button>
-              </Stack>
-            </Stack>
-          </Flex>
-
-          <Flex flex={1} p={10}>
-            <Image
-              alt={'Landing Image'}
-              objectFit={'cover'}
-              src={
-                'https://res.cloudinary.com/dpjf6btln/image/upload/v1656518823/Developer_activity-bro_btrgar.png'
+            </Flex>
+          </NavLink>
+          <Flex justifyContent={'flex-end'} gap={3}>
+            <IconButton
+              icon={<FiGithub />}
+              variant={'ghost'}
+              color={'white'}
+              _hover={{
+                bg: 'gray.100',
+                color: 'gray.800',
+              }}
+              onClick={() =>
+                window.open(
+                  'https://github.com/shashank1503-cipher/partners-in-crime',
+                  '_blank'
+                )
               }
             />
+            <Button
+              onClick={signInPopup}
+              w={'full'}
+              maxW={'md'}
+              variant={'outline'}
+              leftIcon={<FcGoogle />}
+              color={'white'}
+              _hover={{
+                bg: 'gray.100',
+                color: 'gray.800',
+              }}
+              borderColor={'whiteAlpha.300'}
+              isLoading={loading}
+            >
+              <Center>
+                <Text display={['none', 'none', 'flex', 'flex']}>
+                  Sign in with Google
+                </Text>
+              </Center>
+            </Button>
+
+            <ColorModeSwitcher
+              color={'white'}
+              _hover={{
+                bg: 'gray.100',
+                color: 'gray.800',
+              }}
+            />
           </Flex>
-        </Stack>
-        <Footer />
+        </Flex>
+
+        <Flex direction={'column'} justifyContent={'center'}>
+          <Flex
+            minH={'90vh'}
+            justifyContent={'center'}
+            align={'center'}
+            direction={'column'}
+          >
+            <Heading
+              fontFamily={`'Poppins', sans-serif;`}
+              // color={useColorModeValue('cyan.600', 'cyan')}
+              fontSize={['30px', '40px', '60px', '80px']}
+              // textTransform={'uppercase'}
+              display={'flex'}
+              color={'white'}
+            >
+              $ sudo wanna collab?
+            </Heading>
+            <Text
+              mt={5}
+              fontSize={['16px', '16px', '18px', '20px']}
+              w={'75%'}
+              textAlign={'center'}
+              fontFamily={`'Ubuntu', sans-serif;`}
+              fontWeight={'medium'}
+              color={'white'}
+            >
+              &gt;_ or wanna create something of your own and need some cool
+              devs for that?
+            </Text>
+            <ButtonGroup spacing={10} mt={5}>
+              <Button
+                variant={'solid'}
+                bg={'cyan.500'}
+                variantColor={'white'}
+                color={'white'}
+                borderColor={'whiteAlpha.300'}
+                size={'lg'}
+                borderRadius={'full'}
+                _hover={{
+                  bg: 'cyan.600',
+                }}
+                onClick={signInPopup}
+              >
+                {' '}
+                Get Started
+              </Button>
+              <Button
+                variant={'ghost'}
+                size={'lg'}
+                borderRadius={'full'}
+                color={'white'}
+                _hover={{
+                  bg: 'cyan.500',
+                }}
+              >
+                Learn More
+              </Button>
+            </ButtonGroup>
+          </Flex>
+        </Flex>
       </Flex>
+      <Flex
+        direction={['column', 'column', 'column', 'row']}
+        bg={useColorModeValue('cyan.50', 'blackAlpha.500')}
+        id={'about'}
+      >
+        <Flex flex={1} mx={10} minW={'440px'}>
+          <Image
+            alt={'Landing Image'}
+            objectFit={'cover'}
+            src={
+              'https://res.cloudinary.com/dpjf6btln/image/upload/v1657374238/Code_typing-pana_oj8lmh.png'
+            }
+          />
+        </Flex>
+        <Flex direction={'column'} justifyContent={'center'} align={'center'}>
+          <Heading
+            fontSize={['25px', '30px', '45px', '45px']}
+            fontFamily={`'Poppins', sans-serif;`}
+            w={'75%'}
+          >
+            {' '}
+            Find and interact with developers
+          </Heading>
+          <Text w={'75%'} my={5}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+            facilisis quam ac gravida molestie. Fusce.
+          </Text>
+        </Flex>
+      </Flex>{' '}
+      <Flex
+        direction={['column', 'column', 'column', 'row-reverse']}
+        bg={useColorModeValue('whiteAlpha', 'blackAlpha.100')}
+      >
+        <Flex flex={1} mx={10} minW={'440px'}>
+          <Image
+            alt={'Landing Image'}
+            objectFit={'cover'}
+            src={
+              'https://res.cloudinary.com/dpjf6btln/image/upload/v1657374238/Collab-cuate_zkel1t.png'
+            }
+          />
+        </Flex>
+        <Flex direction={'column'} justifyContent={'center'} align={'center'}>
+          <Heading
+            fontSize={['25px', '30px', '45px', '45px']}
+            fontFamily={`'Poppins', sans-serif;`}
+            w={'75%'}
+          >
+            {' '}
+            Get latest updates about hackathons
+          </Heading>
+          <Text w={'75%'} my={5}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+            facilisis quam ac gravida molestie. Fusce.
+          </Text>
+        </Flex>
+      </Flex>
+      <Flex
+        direction={['column', 'column', 'column', 'row']}
+        bg={useColorModeValue('cyan.50', 'blackAlpha.500')}
+      >
+        <Flex flex={1} mx={10} minW={'440px'}>
+          <Image
+            alt={'Landing Image'}
+            objectFit={'cover'}
+            src={
+              'https://res.cloudinary.com/dpjf6btln/image/upload/v1657374239/Collab-bro_tcdii1.png'
+            }
+          />
+        </Flex>
+        <Flex direction={'column'} justifyContent={'center'} align={'center'}>
+          <Heading
+            fontSize={['25px', '30px', '45px', '45px']}
+            fontFamily={`'Poppins', sans-serif;`}
+            w={'75%'}
+          >
+            {' '}
+            Share your ideas with your college mates
+          </Heading>
+          <Text w={'75%'} my={5}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+            facilisis quam ac gravida molestie. Fusce.
+          </Text>
+        </Flex>
+      </Flex>{' '}
+      <Flex
+        direction={'column'}
+        bg={useColorModeValue('whiteAlpha', 'blackAlpha.100')}
+      >
+        <Flex direction={'column'} justifyContent={'center'} align={'center'}>
+          <Heading
+            fontSize={['25px', '30px', '45px', '45px']}
+            fontFamily={`'Poppins', sans-serif;`}
+            my={20}
+          >
+            {' '}
+            And Build Together
+          </Heading>
+        </Flex>
+        <Flex
+          minW={'440px'}
+          // w={'75%'}
+          justifyContent={'center'}
+          align={'center'}
+        >
+          <Image
+            alt={'Landing Image'}
+            objectFit={'cover'}
+            src={
+              'http://res.cloudinary.com/dpjf6btln/image/upload/v1657383944/JavaScript_frameworks-cuate_w1rjh6.png'
+            }
+            w={'75%'}
+          />
+        </Flex>
+        <Flex
+          justifyContent={'center'}
+          align={'center'}
+          direction={'column'}
+          my={10}
+        >
+          <Heading
+            fontSize={['20px', '25px', '25px', '30px']}
+            fontFamily={`'Poppins', sans-serif;`}
+            mb={10}
+          >
+            {' '}
+            Ready for some mischeif?
+          </Heading>
+          <Button
+            variant={'solid'}
+            bg={'cyan.500'}
+            variantColor={'white'}
+            color={'white'}
+            borderColor={'whiteAlpha.300'}
+            size={'lg'}
+            borderRadius={'full'}
+            _hover={{
+              bg: 'cyan.600',
+            }}
+            onClick={signInPopup}
+          >
+            {' '}
+            Join Us Now
+          </Button>
+        </Flex>
+      </Flex>
+      <Footer />
     </Flex>
   );
 }

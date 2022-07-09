@@ -2,6 +2,8 @@ import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import '@fontsource/source-code-pro/700.css';
 import '@fontsource/roboto/400.css';
+import '@fontsource/poppins/700.css';
+import '@fontsource/ubuntu/400.css';
 import { Routes, Route } from 'react-router-dom';
 import Main from './pages/Main';
 
@@ -11,7 +13,7 @@ import MessagesPage from './pages/MessagesPage';
 import NotificationsPage from './pages/NotificationsPage';
 import Landing from './pages/Landing';
 import Profile from './pages/ProfilePage';
-import useAuth from './context/AuthContext';
+
 import AboutUs from './components/AboutUs';
 import PrivateRoute from './utils/PrivateRoute';
 
