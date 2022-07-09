@@ -40,7 +40,7 @@ function Landing() {
   }
   return (
     <Flex direction={'column'}>
-      <Flex direction="column" bgGradient="linear(to-tr, #D4418E,#0652C5 )">
+      <Flex direction="column">
         <Flex
           direction={['column', 'column', 'column', 'row']}
           alignItems={'center'}
@@ -55,7 +55,6 @@ function Landing() {
             <Flex direction={'column'}>
               <Heading
                 fontFamily={`'Source Code Pro', sans-serif`}
-                color={useColorModeValue('white', 'white')}
                 fontSize={['20px', '24px', '28px', '30px']}
               >
                 {' '}
@@ -67,11 +66,6 @@ function Landing() {
             <IconButton
               icon={<FiGithub />}
               variant={'ghost'}
-              color={'white'}
-              _hover={{
-                bg: 'gray.100',
-                color: 'gray.800',
-              }}
               onClick={() =>
                 window.open(
                   'https://github.com/shashank1503-cipher/partners-in-crime',
@@ -85,12 +79,6 @@ function Landing() {
               maxW={'md'}
               variant={'outline'}
               leftIcon={<FcGoogle />}
-              color={'white'}
-              _hover={{
-                bg: 'gray.100',
-                color: 'gray.800',
-              }}
-              borderColor={'whiteAlpha.300'}
               isLoading={loading}
             >
               <Center>
@@ -100,13 +88,7 @@ function Landing() {
               </Center>
             </Button>
 
-            <ColorModeSwitcher
-              color={'white'}
-              _hover={{
-                bg: 'gray.100',
-                color: 'gray.800',
-              }}
-            />
+            <ColorModeSwitcher />
           </Flex>
         </Flex>
 
@@ -123,7 +105,6 @@ function Landing() {
               fontSize={['30px', '40px', '60px', '80px']}
               // textTransform={'uppercase'}
               display={'flex'}
-              color={'white'}
             >
               $ sudo wanna collab?
             </Heading>
@@ -134,7 +115,6 @@ function Landing() {
               textAlign={'center'}
               fontFamily={`'Ubuntu', sans-serif;`}
               fontWeight={'medium'}
-              color={'white'}
             >
               &gt;_ or wanna create something of your own and need some cool
               devs for that?
@@ -142,15 +122,9 @@ function Landing() {
             <ButtonGroup spacing={10} mt={5}>
               <Button
                 variant={'solid'}
-                bg={'cyan.500'}
-                variantColor={'white'}
-                color={'white'}
-                borderColor={'whiteAlpha.300'}
                 size={'lg'}
+                colorScheme={'cyan'}
                 borderRadius={'full'}
-                _hover={{
-                  bg: 'cyan.600',
-                }}
                 onClick={signInPopup}
               >
                 {' '}
@@ -159,11 +133,8 @@ function Landing() {
               <Button
                 variant={'ghost'}
                 size={'lg'}
+                colorScheme={'cyan'}
                 borderRadius={'full'}
-                color={'white'}
-                _hover={{
-                  bg: 'cyan.500',
-                }}
                 onClick={() => {
                   let scrollAmt = Math.round(window.innerHeight * 1.05);
                   console.log(scrollAmt);
@@ -183,7 +154,7 @@ function Landing() {
         bg={useColorModeValue('cyan.50', 'blackAlpha.500')}
         id={'about'}
       >
-        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'} >
+        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'}>
           <Image
             alt={'Landing Image'}
             objectFit={'cover'}
@@ -211,7 +182,7 @@ function Landing() {
         direction={['column', 'column', 'column', 'row-reverse']}
         bg={useColorModeValue('whiteAlpha', 'blackAlpha.100')}
       >
-        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'} >
+        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'}>
           <Image
             alt={'Landing Image'}
             objectFit={'cover'}
@@ -239,7 +210,7 @@ function Landing() {
         direction={['column', 'column', 'column', 'row']}
         bg={useColorModeValue('cyan.50', 'blackAlpha.500')}
       >
-        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'} >
+        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'}>
           <Image
             alt={'Landing Image'}
             objectFit={'cover'}
@@ -278,7 +249,7 @@ function Landing() {
           </Heading>
         </Flex>
         <Flex
-          minW={'350px'} 
+          minW={'350px'}
           // w={'75%'}
           justifyContent={'center'}
           align={'center'}
