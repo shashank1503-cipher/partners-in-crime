@@ -164,6 +164,13 @@ function Landing() {
                 _hover={{
                   bg: 'cyan.500',
                 }}
+                onClick={() => {
+                  let scrollAmt = Math.round(window.innerHeight * 1.05);
+                  console.log(scrollAmt);
+                  window.scrollTo({
+                    top: scrollAmt,
+                  });
+                }}
               >
                 Learn More
               </Button>
@@ -176,7 +183,7 @@ function Landing() {
         bg={useColorModeValue('cyan.50', 'blackAlpha.500')}
         id={'about'}
       >
-        <Flex flex={1} mx={10} minW={'440px'}>
+        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'} >
           <Image
             alt={'Landing Image'}
             objectFit={'cover'}
@@ -204,7 +211,7 @@ function Landing() {
         direction={['column', 'column', 'column', 'row-reverse']}
         bg={useColorModeValue('whiteAlpha', 'blackAlpha.100')}
       >
-        <Flex flex={1} mx={10} minW={'440px'}>
+        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'} >
           <Image
             alt={'Landing Image'}
             objectFit={'cover'}
@@ -232,7 +239,7 @@ function Landing() {
         direction={['column', 'column', 'column', 'row']}
         bg={useColorModeValue('cyan.50', 'blackAlpha.500')}
       >
-        <Flex flex={1} mx={10} minW={'440px'}>
+        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'} >
           <Image
             alt={'Landing Image'}
             objectFit={'cover'}
@@ -271,7 +278,7 @@ function Landing() {
           </Heading>
         </Flex>
         <Flex
-          minW={'440px'}
+          minW={'350px'} 
           // w={'75%'}
           justifyContent={'center'}
           align={'center'}
@@ -311,6 +318,7 @@ function Landing() {
               bg: 'cyan.600',
             }}
             onClick={signInPopup}
+            mb={10}
           >
             {' '}
             Join Us Now

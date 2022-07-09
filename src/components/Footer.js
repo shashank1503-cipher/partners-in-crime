@@ -1,18 +1,12 @@
 import {
   Box,
-  chakra,
   Container,
-  Link,
-  Flex,
   Heading,
   Stack,
-  Text,
   useColorModeValue,
-  VisuallyHidden,
   Button,
 } from '@chakra-ui/react';
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
-import { ReactNode } from 'react';
+
 import Logo from './Logo';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,7 +44,7 @@ export default function Footer() {
             <Heading
               fontFamily={`'Poppins', sans-serif`}
               // color={useColorModeValue('cyan.600', 'cyan')}
-              fontSize={['10px', '14px', '18px', '20px']}
+              fontSize={['14px', '14px', '18px', '20px']}
             >
               {' '}
               Made with 🫀 by
@@ -75,7 +69,7 @@ export default function Footer() {
               <Heading
                 fontFamily={`'Poppins', sans-serif`}
                 color={useColorModeValue('black.600', 'black')}
-                fontSize={['10px', '14px', '18px', '20px']}
+                fontSize={['14px', '14px', '18px', '20px']}
               >
                 {' '}
                 The Team
@@ -84,7 +78,7 @@ export default function Footer() {
             <Heading
               fontFamily={`'Source Code Pro', sans-serif`}
               color={useColorModeValue('cyan.600', 'cyan')}
-              fontSize={['10px', '14px', '18px', '20px']}
+              fontSize={['14px', '14px', '18px', '20px']}
             >
               {' '}
               &lt;partnersInCrime&gt;
