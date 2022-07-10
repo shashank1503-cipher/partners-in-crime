@@ -173,8 +173,7 @@ function Landing() {
             Find and interact with developers
           </Heading>
           <Text w={'75%'} my={5}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-            facilisis quam ac gravida molestie. Fusce.
+           “ I just want to create, and socializing is part of the experience. ” – Waris Ahluwalia
           </Text>
         </Flex>
       </Flex>{' '}
@@ -201,8 +200,7 @@ function Landing() {
             Get latest updates about hackathons
           </Heading>
           <Text w={'75%'} my={5}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-            facilisis quam ac gravida molestie. Fusce.
+            Yesss!! All hackathons are just few clicks away!!
           </Text>
         </Flex>
       </Flex>
@@ -229,8 +227,7 @@ function Landing() {
             Share your ideas with your college mates
           </Heading>
           <Text w={'75%'} my={5}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-            facilisis quam ac gravida molestie. Fusce.
+            “ Encourage, lift and strengthen one another. For the positive energy spread to one will be felt by us all. For we are connected, one and all. ” –  Deborah Day
           </Text>
         </Flex>
       </Flex>{' '}
