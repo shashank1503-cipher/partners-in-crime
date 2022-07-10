@@ -154,7 +154,7 @@ function Landing() {
         bg={useColorModeValue('cyan.50', 'blackAlpha.500')}
         id={'about'}
       >
-        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'}>
+        <Flex mx={[0, 0, 5, 10]} minW={'350px'} flexBasis={'50%'} flexGrow={1}>
           <Image
             alt={'Landing Image'}
             objectFit={'cover'}
@@ -173,7 +173,9 @@ function Landing() {
             Find and interact with developers
           </Heading>
           <Text w={'75%'} my={5}>
-           “ I just want to create, and socializing is part of the experience. ” – Waris Ahluwalia
+            They say the best method to learn is to by do, that's even better
+            when you have a college mate with you. Find your college-dev-mates,
+            collaborate and build your own projects.
           </Text>
         </Flex>
       </Flex>{' '}
@@ -181,7 +183,13 @@ function Landing() {
         direction={['column', 'column', 'column', 'row-reverse']}
         bg={useColorModeValue('whiteAlpha', 'blackAlpha.100')}
       >
-        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'}>
+        <Flex
+          flex={1}
+          mx={[0, 0, 5, 10]}
+          minW={'350px'}
+          flexBasis={'50%'}
+          flexGrow={1}
+        >
           <Image
             alt={'Landing Image'}
             objectFit={'cover'}
@@ -200,7 +208,8 @@ function Landing() {
             Get latest updates about hackathons
           </Heading>
           <Text w={'75%'} my={5}>
-            Yesss!! All hackathons are just few clicks away!!
+            Your search for hackathons is over. Find the latest updates about
+            hackathons from different websites.
           </Text>
         </Flex>
       </Flex>
@@ -208,12 +217,19 @@ function Landing() {
         direction={['column', 'column', 'column', 'row']}
         bg={useColorModeValue('cyan.50', 'blackAlpha.500')}
       >
-        <Flex flex={1} mx={[0, 0, 5, 10]} minW={'350px'}>
+        <Flex
+          flex={1}
+          mx={[0, 0, 5, 10]}
+          minW={'350px'}
+          // maxH={'500px'}
+          flexBasis={'50%'}
+          flex={1}
+        >
           <Image
             alt={'Landing Image'}
             objectFit={'cover'}
             src={
-              'https://res.cloudinary.com/dpjf6btln/image/upload/v1657374239/Collab-bro_tcdii1.png'
+              'https://res.cloudinary.com/dpjf6btln/image/upload/v1657469132/Collaboration-cuate_syacsj.png'
             }
           />
         </Flex>
@@ -224,10 +240,11 @@ function Landing() {
             w={'75%'}
           >
             {' '}
-            Share your ideas with your college mates
+            Share your ideas
           </Heading>
           <Text w={'75%'} my={5}>
-            “ Encourage, lift and strengthen one another. For the positive energy spread to one will be felt by us all. For we are connected, one and all. ” –  Deborah Day
+            Ideas are contagious, the best ones spread. Share your ideas with
+            your friends and make them come to life.
           </Text>
         </Flex>
       </Flex>{' '}
