@@ -69,7 +69,7 @@ function FindPartner() {
             />
             <Input
               type="text"
-              placeholder="What/Who are you looking for?"
+              placeholder="What are you looking for in a partner"
               size={'lg'}
               onFocus={() => setIsActive(true)}
               value={query}

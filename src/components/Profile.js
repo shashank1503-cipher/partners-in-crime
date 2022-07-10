@@ -264,7 +264,7 @@ const Profile = () => {
         <Flex direction={'column'}>
             <Flex justifyContent = {'space-evenly'} direction = {['column', 'row']} align = {'center'} my = {["0", "2"]}>
                 <Heading fontFamily={`'Source Code Pro',sans-serif`} size = {["2xl", "2xl"]} my = {["7", "0"]}>
-                    Who are you? 🤔	
+                    Tell us about yourself 🤓
                 </Heading>
                 <label htmlFor = "picId"><Box
                     position = {'relative'}
