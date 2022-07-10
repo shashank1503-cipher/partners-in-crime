@@ -243,8 +243,8 @@ function Landing() {
             Share your ideas
           </Heading>
           <Text w={'75%'} my={5}>
-            Ideas are contagious, the best ones spread. Share your ideas with
-            your friends and make them come to life.
+            Ideas are contagious, the best ones spread. Share ideas with your
+            friends and make them come to life.
           </Text>
         </Flex>
       </Flex>{' '}
