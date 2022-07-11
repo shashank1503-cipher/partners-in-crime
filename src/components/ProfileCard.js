@@ -56,7 +56,11 @@ export default function ProfileCard(props) {
           p={1}
           pt={2}
         >
-          <Heading fontSize={'2xl'} fontFamily={'body'}>
+          <Heading
+            fontSize={'2xl'}
+            fontFamily={'body'}
+            textTransform={'capitalize'}
+          >
             {name}
           </Heading>
           <Text fontWeight={600} color={'gray.500'} size="sm" mb={4}>
