@@ -95,7 +95,7 @@ function Display() {
             gId = {banda.g_id}
           />
         ))
-      )}
+      ))}
     </Flex>
   );
 }
