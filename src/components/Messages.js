@@ -13,6 +13,7 @@ import {
   Text,
   Image,
   useColorModeValue,
+  useMediaQuery,
   useDisclosure,
   Icon
 } from '@chakra-ui/react';
@@ -37,7 +38,8 @@ const Message = ({name, photo, lastMessage,lastMessageSender,id, select, navi, n
       <Flex 
         alignItems={"center"}
         gap={5}
-
+        w={'full'}
+        minW={250}
         _dark={{
           _hover:{
             background: "gray.700"
@@ -53,7 +55,6 @@ const Message = ({name, photo, lastMessage,lastMessageSender,id, select, navi, n
           background: b?"gray.100":null
         }}
         pl={5}
-        w={250}
         py={3}
         cursor="pointer"
         position={'relative'}
@@ -110,6 +111,7 @@ const Messages = () => {
   const [messageWhileFetching, setMessageWhileFetching] = useState(1)
   const Ref = useRef(null)
 
+  const [width] = useMediaQuery('(max-width: 769px)')
   const [selected, setSelected] = useState(-1)
 
   const color = useColorModeValue("gray.200",'gray.700')
@@ -287,21 +289,21 @@ const Messages = () => {
         height={"calc(100vh - 80px)"}
         overflow={"hidden"}
         position={'relative'}
-        marginLeft={-4}
-        marginTop={-4}
-        marginRight={-4}
-        marginBottom={-4}
         flexDirection={"row"}
         borderBottom="1px"
         borderColor={color}
       >
 
+        {selected === -1 || !width?
         <Flex direction={'column'}
           height={'full'}
           position={'relative'}
           borderRight='1px'
           borderColor={color}
-          
+          // transition={'all 0.25s ease'}
+          // w={{base:"100vw", md:'full'}}
+          w={width?'full':'auto'}
+
         >
           <Flex direction={"row"} alignItems={"center"}
                 px={3}  
@@ -403,24 +405,32 @@ const Messages = () => {
           
 
         </Flex>
+        :<></>}
 
+        
+        {!width || selected !== -1?
         <Flex 
 
           justifyContent={loading?'center':""} 
           alignItems={loading?'center':""} 
           w={'full'}
           h={'full'}
+
+          // background={'red'}
         >
               {loading?<Logo fontSize={'7xl'}></Logo>
               :<></>
-            }
-            {selected === -1 || loading? <></>:
+              }
+              {selected === -1 || loading? <></>:
               <ChatMessage 
               messages={messages[selected]?messages[selected]:{messagesArray:[]}}
               userData={messagesUserData.filter(m => m.g_id === selected)}
+              setSelected={setSelected}
               />
-            }
+              }
         </Flex>
+        :
+        <></>}
 
       </Flex>
 
