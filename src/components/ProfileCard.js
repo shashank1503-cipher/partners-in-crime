@@ -82,7 +82,7 @@ export default function ProfileCard(props) {
           >
             {skills.map(skill => (
               <Badge px={2} py={1} bg={badgeBG} fontWeight={'400'} m={1}>
-                {skill}
+                {skill.length > 30 ? skill.substring(0, 30) + '...' : skill}
               </Badge>
             ))}
             {skillsAddOn && (
