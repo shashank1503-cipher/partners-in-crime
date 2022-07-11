@@ -25,7 +25,8 @@ import {
 } from '@chakra-ui/react';
 import { addDoc, collection, deleteDoc, doc, setDoc, Timestamp, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import {FaEllipsisV, FaPaperPlane} from 'react-icons/fa'
+import {FaEllipsisV, FaPaperPlane, FaBackward, FaBackspace, FaAngleLeft} from 'react-icons/fa'
+import { useNavigate } from 'react-router';
 import useApp from '../context/AppContext';
 import useAuth from '../context/AuthContext'
 import { db } from '../firebase';
@@ -68,9 +69,10 @@ const Mes = ({message, who}) => {
 
 }
 
-function ChatMessage({messages, userData}) {
+function ChatMessage({messages, userData, setSelected}) {
 
     const {user} = useAuth()
+    const navigate = useNavigate()
     const [chatMes, setChatMes] = useState("")
     const [message, setMessage] = useState([])
    
@@ -157,6 +159,13 @@ function ChatMessage({messages, userData}) {
                 py={1}
                 boxShadow={'xl'}
             >
+                <Box onClick={() => {navigate('/messages'); setSelected(-1)}}
+                    cursor={'pointer'}
+                    px={1}
+                    py={2}
+                >
+                    <FaAngleLeft/>
+                </Box>
                 <Avatar src={userData[0]?.photo || null}/>
                 <Text fontSize={16} flex={1}>{userData[0]?.name}</Text>
                 {/* <Menu>

@@ -26,7 +26,7 @@ function useQuery() {
 function Display() {
   let query = useQuery();
   let q = query.get('id');
-  console.log(q);
+  // console.log(q);
   const [bandas, setBandas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

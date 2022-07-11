@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import Logo from '../components/Logo';
 import Messages from '../components/Messages';
@@ -15,6 +16,11 @@ const MessagesPage = () => {
   }, [messagesLoading])
 
   return (
+      <Box
+        position={'relative'}
+        w={'full'}
+      >
+
     <SidebarWithHeader>
 
     
@@ -25,14 +31,15 @@ const MessagesPage = () => {
       textAlign="center"
       top="10vh"
       verticalAlign="center"
-    />
-    
-    :
-
+      />
+      
+      :
+      
       <Messages/>
-
+      
     }
     </SidebarWithHeader>
+    </Box>
   );
 };
 
