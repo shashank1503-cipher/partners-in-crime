@@ -143,12 +143,13 @@ const Messages = () => {
 
     else
     {
-      res = await fetch(`https://partners-in-crime-backend.herokuapp.com/users/data?search=${search}`,{
+      res = await fetch(`https://partners-in-crime-backend.herokuapp.com/searchmessage?q=${search}`,{
         headers:{
           authentication: `Bearer ${token}`
         }
       })
       res = await res.json()
+      // console.log(res)
       let usersData = await res.data.filter(p => p.g_id !== user.g_id)
       setSearchAddUserData([...usersData])
       setFetchLoading(false)
@@ -218,6 +219,7 @@ const Messages = () => {
   }, [messages])
 
   const NaviToChat = (id) => {
+    setSearch("")
     setConDrawer(false)
     navigate({
       pathname: "/messages",
@@ -313,6 +315,7 @@ const Messages = () => {
                   placeholder="Search"
                   borderRadius={0}
                   focusBorderColor="none"
+                  value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
 
