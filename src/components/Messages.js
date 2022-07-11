@@ -178,7 +178,7 @@ const Messages = () => {
       {
           let new_data = []
           messagesUserData.map(d => {
-            if(d.name.toLowerCase().includes(search))
+            if(d.name.toLowerCase().includes(search.toLowerCase()))
               new_data.push(d)
           })
 
