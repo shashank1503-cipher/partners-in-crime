@@ -33,7 +33,9 @@ function Display() {
   const getBandas = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`https://partners-in-crime-backend.herokuapp.com/search?q=${q}`);
+      const res = await fetch(
+        `https://partners-in-crime-backend.herokuapp.com/search?q=${q}`
+      );
       if (res.status === 200) {
         const data = await res.json();
         console.log(data);
@@ -69,20 +71,20 @@ function Display() {
           <AlertTitle>Error! </AlertTitle>
           <AlertDescription>{error.message}</AlertDescription>
         </Alert>
-      ) : 
-        bandas.length === 0 ? (
-          <Flex
-            direction={'column'}
-            justifyContent={'space-evenly'}
-            minH={'xs'}
-            textAlign={'center'}
-          >
-            <Heading>Uh oh! Nothing to see here T_T</Heading>
-            <Text fontSize="lg" fontFamily={`'Source Code Pro', sans-serif`}>
-              No Users Found for your search query. Try Searching for a new skill or person.
-            </Text>
-          </Flex>
-        ) : (
+      ) : bandas.length === 0 ? (
+        <Flex
+          direction={'column'}
+          justifyContent={'space-evenly'}
+          minH={'xs'}
+          textAlign={'center'}
+        >
+          <Heading>Uh oh! Nothing to see here T_T</Heading>
+          <Text fontSize="lg" fontFamily={`'Source Code Pro', sans-serif`}>
+            No Users Found for your search query. Try Searching for a new skill
+            or person.
+          </Text>
+        </Flex>
+      ) : (
         bandas.map(banda => (
           <ProfileCard
             key={banda.id}
@@ -92,10 +94,10 @@ function Display() {
             skills={banda.skills}
             email={banda.email}
             bio={banda.bio}
-            gId = {banda.g_id}
+            gId={banda.g_id}
           />
         ))
-      ))}
+      )}
     </Flex>
   );
 }
