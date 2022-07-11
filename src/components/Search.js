@@ -69,7 +69,7 @@ function Display() {
           <AlertTitle>Error! </AlertTitle>
           <AlertDescription>{error.message}</AlertDescription>
         </Alert>
-      ) : (
+      ) : 
         bandas.length === 0 ? (
           <Flex
             direction={'column'}

@@ -126,6 +126,7 @@ function Landing() {
                 colorScheme={'cyan'}
                 borderRadius={'full'}
                 onClick={signInPopup}
+                isLoading={loading}
               >
                 {' '}
                 Get Started

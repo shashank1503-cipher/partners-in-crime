@@ -22,11 +22,13 @@ import MyProjectsPage from './pages/MyProjectsPage';
 import FavouriteHackathonsPage from './pages/FavouriteHackathonsPage';
 import SpecificProjectPage from './pages/SpecificProjectPage';
 import ProfileDetailPage from './pages/ProfileDetailPage';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
     <ChakraProvider>
       <Routes>
+        <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Landing />} />
         <Route
           path="/project/:id"
@@ -92,7 +94,6 @@ function App() {
             </PrivateRoute>
           }
         />
-
         <Route
           path="/search"
           element={
@@ -117,7 +118,6 @@ function App() {
             </PrivateRoute>
           }
         />
-
         <Route path="/aboutus" element={<AboutUs />}></Route>
       </Routes>
     </ChakraProvider>
