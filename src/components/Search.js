@@ -69,7 +69,20 @@ function Display() {
           <AlertTitle>Error! </AlertTitle>
           <AlertDescription>{error.message}</AlertDescription>
         </Alert>
-      ) : (
+      ) : 
+        bandas.length === 0 ? (
+          <Flex
+            direction={'column'}
+            justifyContent={'space-evenly'}
+            minH={'xs'}
+            textAlign={'center'}
+          >
+            <Heading>Uh oh! Nothing to see here T_T</Heading>
+            <Text fontSize="lg" fontFamily={`'Source Code Pro', sans-serif`}>
+              No Users Found for your search query. Try Searching for a new skill or person.
+            </Text>
+          </Flex>
+        ) : (
         bandas.map(banda => (
           <ProfileCard
             key={banda.id}
@@ -82,7 +95,7 @@ function Display() {
             gId = {banda.g_id}
           />
         ))
-      )}
+      ))}
     </Flex>
   );
 }

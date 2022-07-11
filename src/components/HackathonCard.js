@@ -144,7 +144,12 @@ export default function HackathonCard(props) {
         overflow={'hidden'}
       >
         <Box bg={'gray.100'} mt={-6} mx={-6} mb={12} pos={'relative'}>
-          <Image src={heroImage} maxH={'200px'} />
+          <Image
+            src={heroImage}
+            maxH={'200px'}
+            mx={'auto'}
+            objectFit={'fill'}
+          />
         </Box>
         <Flex justify={'flex-start'} mt={-12}>
           <Avatar size={'lg'} borderColor={'gray.200'} mt={-6} src={logo} />
@@ -169,15 +174,24 @@ export default function HackathonCard(props) {
           </Heading>
           <Flex align={'center'}>
             <Text color={'gray.400'}>
-              <Text fontWeight={'bold'} color={'gray.100'}>
+              <Text
+                fontWeight={'bold'}
+                color={useColorModeValue('gray.700', 'gray.100')}
+              >
                 Date
               </Text>
               {startDate} - {endDate}
-              <Text fontWeight={'bold'} color={'gray.100'}>
+              <Text
+                fontWeight={'bold'}
+                color={useColorModeValue('gray.700', 'gray.100')}
+              >
                 Location
               </Text>
               {Location}
-              <Text fontWeight={'bold'} color={'gray.100'}>
+              <Text
+                fontWeight={'bold'}
+                color={useColorModeValue('gray.700', 'gray.100')}
+              >
                 Mode
               </Text>
               {mode}

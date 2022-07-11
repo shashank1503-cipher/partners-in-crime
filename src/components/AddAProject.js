@@ -412,7 +412,7 @@ const AddAProject = () => {
               maxWidth={'80%'}
               textAlign={['center', 'left']}
               fontSize={'lg'}
-              placeholder="Include skills you're familiar with"
+              placeholder="Skills required"
               value={query ?? ''}
               onChange={e => {
                 setQuery(e.target.value);

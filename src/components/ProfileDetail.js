@@ -34,13 +34,16 @@ const ProfileDetail = ({ id }) => {
   let fetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`https://partners-in-crime-backend.herokuapp.com/profile/${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await fetch(
+        `https://partners-in-crime-backend.herokuapp.com/profile/${id}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (res.status === 200) {
         let json = await res.json();
         setData(json.data);
@@ -188,21 +191,31 @@ const ProfileDetail = ({ id }) => {
                   <Text>{data.bio}</Text>
                 </>
               ) : null}
-
-              <Heading fontFamily={`'Source Code Pro',sans-serif`} m={4}>
-                Skills I possess
-              </Heading>
-              <Flex
-                direction={'row'}
-                wrap={'wrap'}
-                justifyContent={['center', 'center', 'center', 'flex-start']}
-              >
-                {data.skills.map(skill => (
-                  <Box bg={badgeBG} size={'lg'} m={1} p={3} rounded={'md'}>
-                    {skill}
-                  </Box>
-                ))}
-              </Flex>
+              {data.skills ? (
+                <>
+                  <Heading fontFamily={`'Source Code Pro',sans-serif`} m={4}>
+                    Skills I possess
+                  </Heading>
+                  <Flex
+                    direction={'row'}
+                    wrap={'wrap'}
+                    justifyContent={[
+                      'center',
+                      'center',
+                      'center',
+                      'flex-start',
+                    ]}
+                  >
+                    {data.skills.map(skill => (
+                      <Box bg={badgeBG} size={'lg'} m={1} p={3} rounded={'md'}>
+                        {skill}
+                      </Box>
+                    ))}
+                  </Flex>
+                </>
+              ) : (
+                <></>
+              )}
             </Flex>
             <Flex direction={'column'} p={10}>
               <Heading fontSize={'xl'} m={2}>
