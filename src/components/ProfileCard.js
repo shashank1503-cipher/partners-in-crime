@@ -20,7 +20,12 @@ export default function ProfileCard(props) {
   let email = props.email;
   let bio = props.bio;
   bio = bio ? (bio.length > 30 ? bio.substring(0, 30) + '...' : bio) : '';
+
   let skills = props.skills;
+  let skillsAddOn =
+    skills.length > 5 ? ' + ' + (props.skills.length - 5) + ' more' : '';
+
+  skills = skills.length > 5 ? skills.slice(0, 5) : skills;
   let gId = props.gId;
   let navigate = useNavigate();
   return (
@@ -76,6 +81,11 @@ export default function ProfileCard(props) {
                 {skill}
               </Badge>
             ))}
+            {skillsAddOn && (
+              <Badge px={2} py={1} bg={badgeBG} fontWeight={'400'} m={1}>
+                {skillsAddOn}
+              </Badge>
+            )}
           </Flex>
 
           <Stack

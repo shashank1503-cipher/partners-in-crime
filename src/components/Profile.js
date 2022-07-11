@@ -233,7 +233,7 @@ const Profile = () => {
 
         if (
           (data[key]?.length === 0 || data[key] === undefined) &&
-          !['batch', 'socials', 'mobile', 'bio'].includes(key)
+          !['batch', 'socials', 'mobile', 'bio','newSkills'].includes(key)
         ) {
           toast({
             position: 'bottom-right',
