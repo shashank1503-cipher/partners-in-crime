@@ -173,7 +173,7 @@ function Landing() {
             Find and interact with developers
           </Heading>
           <Text w={'75%'} my={5}>
-            They say the best method to learn is to by do, that's even better
+            They say the best method to learn is by doing, that's even better
             when you have a college mate with you. Find your college-dev-mates,
             collaborate and build your own projects.
           </Text>
