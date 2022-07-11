@@ -111,6 +111,7 @@ const MyProjects = () => {
               idea={project['idea']}
               userName={project['name']}
               interested={true}
+              isDisabled = {true}
             />
           ))
         )}

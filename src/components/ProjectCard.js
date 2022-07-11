@@ -29,6 +29,7 @@ export default function ProjectCard(props) {
       ? shortDescription.substring(0, 30) + '...'
       : shortDescription;
   let interested = props.interested;
+  let disabled = props.disabled || false;
 
   let userName = props.userName;
   const bg = useColorModeValue('white', 'gray.900');
@@ -157,6 +158,7 @@ export default function ProjectCard(props) {
                   addInterested();
                 }
               }}
+              disabled={disabled}
             />
             <IconButton
               variant={'outline'}
