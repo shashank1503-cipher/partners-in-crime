@@ -338,7 +338,13 @@ const SpecificProject = ({ id }) => {
                   referrerPolicy="no-referrer"
                 />
                 <VStack alignItems="flex-start" spacing="1px" ml="2">
-                  <Link color={linkColor} fontSize="sm">
+                  <Link
+                    color={linkColor}
+                    fontSize="sm"
+                    onClick={() => {
+                      navigate(`/profile/${data.user_id}`);
+                    }}
+                  >
                     {data.name}
                   </Link>
                 </VStack>
