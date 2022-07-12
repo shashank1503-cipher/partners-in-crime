@@ -38,15 +38,11 @@ const AddAProject = () => {
     const queryData = async () => {
       setQueryLoading(true);
       const res = await fetch(
-        `https://partners-in-crime-backend.herokuapp.com/suggestions?q=${query}`
+        `https://partners-in-crime-backend.herokuapp.com/skillssuggestions?q=${query}`
       );
       if (res.status === 200) {
         const Data = await res.json();
-        let filteredData = [
-          ...new Map(Data.data.map((item, key) => [item[key], item])).values(),
-        ];
-
-        setData(filteredData);
+        setData(Data.data);
       } else {
         const Data = await res.json();
         console.log(Data.detail);
