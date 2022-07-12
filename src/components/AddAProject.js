@@ -37,10 +37,16 @@ const AddAProject = () => {
   useEffect(() => {
     const queryData = async () => {
       setQueryLoading(true);
-      const res = await fetch(`https://partners-in-crime-backend.herokuapp.com/suggestions?q=${query}`);
+      const res = await fetch(
+        `https://partners-in-crime-backend.herokuapp.com/suggestions?q=${query}`
+      );
       if (res.status === 200) {
         const Data = await res.json();
-        setData(Data.data);
+        let filteredData = [
+          ...new Map(Data.data.map((item, key) => [item[key], item])).values(),
+        ];
+
+        setData(filteredData);
       } else {
         const Data = await res.json();
         console.log(Data.detail);
@@ -126,14 +132,17 @@ const AddAProject = () => {
       skills: skills,
     };
     try {
-      const res = await fetch('https://partners-in-crime-backend.herokuapp.com/addproject', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      });
+      const res = await fetch(
+        'https://partners-in-crime-backend.herokuapp.com/addproject',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        }
+      );
       if (res.status === 200) {
         toast({
           title: 'Project Added Successfully',

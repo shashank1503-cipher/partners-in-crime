@@ -164,11 +164,14 @@ const Profile = () => {
     const queryData = async () => {
       setloading(true);
       const res = await fetch(
-        `https://partners-in-crime-backend.herokuapp.com/suggestions?q=${query}`
+        `https://partners-in-crime-backend.herokuapp.com/skillssuggestions?q=${query}`
       );
       if (res.status === 200) {
         const Data = await res.json();
-        setData(Data.data);
+        let filteredData = [
+          ...new Map(Data.data.map((item, key) => [item[key], item])).values(),
+        ];
+        setData(filteredData);
         // if(Data.data?.length !== 0){
         //     setDis(true);
         // }
