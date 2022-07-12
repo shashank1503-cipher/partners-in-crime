@@ -23,6 +23,7 @@ import FavouriteHackathonsPage from './pages/FavouriteHackathonsPage';
 import SpecificProjectPage from './pages/SpecificProjectPage';
 import ProfileDetailPage from './pages/ProfileDetailPage';
 import NotFound from './pages/NotFound';
+import EditProjectPage from './pages/EditProjectPage';
 
 function App() {
   return (
@@ -35,6 +36,14 @@ function App() {
           element={
             <PrivateRoute>
               <SpecificProjectPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/editproject/:id"
+          element={
+            <PrivateRoute>
+              <EditProjectPage />
             </PrivateRoute>
           }
         />

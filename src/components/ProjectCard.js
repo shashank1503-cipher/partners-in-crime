@@ -20,7 +20,7 @@ import useAuth from '../context/AuthContext';
 
 export default function ProjectCard(props) {
   let id = props.id;
-  let heroImage = props.heroImage || 'https://via.placeholder.com/400x200';
+  let heroImage = props.heroImage || 'https://res.cloudinary.com/dpjf6btln/image/upload/v1657569778/Placeholder_j6vr12.png';
   let logo = props.logo;
   let title = props.title;
   let shortDescription = props.shortDescription || 'No description';

@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
-import { FiHeart, FiMail } from 'react-icons/fi';
+import { FiEdit, FiHeart, FiMail, FiTrash } from 'react-icons/fi';
 import { useNavigate } from 'react-router';
 import useAuth from '../context/AuthContext';
 import Logo from './Logo';
@@ -28,8 +28,10 @@ import Logo from './Logo';
 const SpecificProject = ({ id }) => {
   const [data, setData] = useState({});
   const [isUserInterested, setIsUserInterested] = useState(false);
+  const [isUserOwner, setIsUserOwner] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   let { token } = useAuth();
   let toast = useToast();
   let navigate = useNavigate();
@@ -49,9 +51,9 @@ const SpecificProject = ({ id }) => {
       if (res.status === 200) {
         let json = await res.json();
         setData(json.data);
-        // console.log(data);
-        // console.log(json.data.is_user_interested)
         setIsUserInterested(json.data.is_user_interested);
+        console.log(json.data.is_owner);
+        setIsUserOwner(json.data.is_owner);
         setError(null);
       } else {
         const json = await res.json();
@@ -138,6 +140,51 @@ const SpecificProject = ({ id }) => {
       });
     }
   };
+  let deleteProject = async () => {
+    setIsDeleteLoading(true);
+    try {
+      let response = await fetch(
+        `https://partners-in-crime-backend.herokuapp.com/project/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        let json = await response.json();
+        toast({
+          title: 'Success',
+          description: `${json.detail} - ${response.status}`,
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+        navigate('/');
+      } else {
+        let json = await response.json();
+        toast({
+          title: 'Error',
+          description: `${json.detail} - ${response.status}`,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (e) {
+      toast({
+        title: 'Error',
+        description: `Something went wrong - ${e}`,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setIsDeleteLoading(false);
+    }
+  };
   let linkColor = useColorModeValue('cyan.600', 'cyan');
   let badgeBG = useColorModeValue('gray.50', 'gray.600');
   return (
@@ -162,16 +209,21 @@ const SpecificProject = ({ id }) => {
           >
             <Box pos={'relative'} flex={1}>
               <Image
-                src={data.hero_image}
+                src={
+                  data.hero_image
+                    ? data.hero_image
+                    : 'https://res.cloudinary.com/dpjf6btln/image/upload/v1657569778/Placeholder_j6vr12.png'
+                }
                 maxH={'lg'}
                 roundedTopLeft={'md'}
                 roundedBottomLeft={'md'}
+                mx={'auto'}
               />
             </Box>
             <Flex
               direction={'column'}
               flex={1}
-              minH={['md', 'md', 'md', 'md']}
+              minH={['sm', 'sm', 'sm', 'sm']}
               p={5}
               justifyContent={'space-evenly'}
             >
@@ -179,7 +231,6 @@ const SpecificProject = ({ id }) => {
                 textAlign={'center'}
                 fontFamily={`'Source Code Pro',sans-serif`}
                 color={linkColor}
-                m={2}
               >
                 {data.title}
               </Heading>
@@ -227,19 +278,47 @@ const SpecificProject = ({ id }) => {
               direction={'column'}
               p={5}
               textAlign={['center', 'center', 'center', 'left']}
-              justifyContent={'space-evenly'}
+              justifyContent={'flex-start'}
             >
-              <Heading fontFamily={`'Source Code Pro',sans-serif`} m={2}>
+              {isUserOwner && (
+                <Flex
+                  justifyContent={['center', 'center', 'center', 'flex-end']}
+                  mt={10}
+                >
+                  <ButtonGroup>
+                    <Button
+                      colorScheme={'cyan'}
+                      variant={'outline'}
+                      leftIcon={<FiEdit />}
+                      onClick={() => {
+                        navigate(`/editproject/${id}`, { state: { data } });
+                      }}
+                    >
+                      Edit Project
+                    </Button>
+                    <Button
+                      colorScheme={'cyan'}
+                      variant={'outline'}
+                      leftIcon={<FiTrash />}
+                      onClick={deleteProject}
+                    >
+                      Delete Project
+                    </Button>
+                  </ButtonGroup>
+                </Flex>
+              )}
+              <Heading fontFamily={`'Source Code Pro',sans-serif`} m={10}>
                 About Project
               </Heading>
-              <Text>{data.idea}</Text>
-              <Heading fontFamily={`'Source Code Pro',sans-serif`} m={2}>
+              <Text ml={[0, 0, 0, 10]}>{data.idea}</Text>
+              <Heading fontFamily={`'Source Code Pro',sans-serif`} m={10}>
                 Required Skills
               </Heading>
               <Flex
                 direction={'row'}
                 wrap={'wrap'}
                 justifyContent={['center', 'center', 'center', 'flex-start']}
+                ml={[0, 0, 0, 10]}
               >
                 {data.required_skills.map(skill => (
                   <Badge bg={badgeBG} fontWeight={'400'} m={1}>

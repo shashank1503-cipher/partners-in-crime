@@ -6,7 +6,7 @@ import SpecificProject from '../components/SpecificProject';
 
 const SpecificProjectPage = () => {
   let { id } = useParams();
-  console.log(id);
+ 
   return (
     <SidebarWithHeader>
       <SpecificProject id={id} />
