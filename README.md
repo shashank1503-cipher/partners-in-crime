@@ -77,7 +77,7 @@ Setup PartnersInCrime on your local machine using these simple steps:
    npm install
    ```
 >For Backend
-- Visit [partners-in-crime-backend][https://github.com/shashank1503-cipher/partners-in-crime-backend] for backend repository
+- Visit [partners-in-crime-backend](https://github.com/shashank1503-cipher/partners-in-crime-backend) for backend repository
 
 <!-- CONTRIBUTING -->
 
