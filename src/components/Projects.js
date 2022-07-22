@@ -45,7 +45,7 @@ const Projects = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://partners-in-crime-backend.herokuapp.com/fetchprojects?q=${query}&page=${page}&per_page=${perPage}&`,
+        `https://partners-in-crime.herokuapp.com/fetchprojects?q=${query}&page=${page}&per_page=${perPage}&`,
         {
           headers: {
             'Content-Type': 'application/json',

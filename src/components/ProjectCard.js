@@ -39,7 +39,7 @@ export default function ProjectCard(props) {
   let toast = useToast();
   let { token } = useAuth();
   let addInterested = async () => {
-    let url = `https://partners-in-crime-backend.herokuapp.com/addfavourite`;
+    let url = `https://partners-in-crime.herokuapp.com/addfavourite`;
     let data = {
       project_id: id,
     };
@@ -78,7 +78,7 @@ export default function ProjectCard(props) {
     }
   };
   let removeInterested = async () => {
-    let url = `https://partners-in-crime-backend.herokuapp.com/deleteFavourite/${id}?is_project=${true}`;
+    let url = `https://partners-in-crime.herokuapp.com/deleteFavourite/${id}?is_project=${true}`;
     try {
       let response = await fetch(url, {
         method: 'DELETE',

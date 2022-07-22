@@ -24,7 +24,7 @@ const Notifications = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('https://partners-in-crime-backend.herokuapp.com/notifications', {
+      const res = await fetch('https://partners-in-crime.herokuapp.com/notifications', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

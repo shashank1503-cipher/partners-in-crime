@@ -44,7 +44,7 @@ const FavouriteHackathons = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://partners-in-crime-backend.herokuapp.com/fetchuserhackathons?q=${query}&page=${page}&per_page=${perPage}&`,
+        `https://partners-in-crime.herokuapp.com/fetchuserhackathons?q=${query}&page=${page}&per_page=${perPage}&`,
         {
           headers: {
             'Content-Type': 'application/json',
