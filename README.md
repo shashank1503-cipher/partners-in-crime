@@ -36,6 +36,23 @@
 
 &lt;partnersInCrime&gt; is a web platform specially designed for IIIT-K students which aims at facilitating smooth interaction between the college-mates regarding all the collaborative projects and hackathons held on various platforms.
 
+### Screenshots
+
+![image](https://user-images.githubusercontent.com/54381338/181453334-de6509ab-12ce-462c-96fa-f7e2bb7182a9.png)
+
+![image](https://user-images.githubusercontent.com/54381338/181453449-24ba4b55-925a-43a9-8e4c-06f83b3b1b06.png)
+
+![image](https://user-images.githubusercontent.com/54381338/181453517-446c6f2f-d05e-48d3-8f80-9fc39fc0defc.png)
+
+![image](https://user-images.githubusercontent.com/54381338/181453603-13bcb750-2fbb-40d1-a554-6004912927ec.png)
+
+![image](https://user-images.githubusercontent.com/54381338/181453770-ed9f16f4-9fad-4778-b579-23aec42e4256.png)
+
+![image](https://user-images.githubusercontent.com/54381338/181453858-2385f0f4-45c1-403b-9334-928d3f379704.png)
+
+![image](https://user-images.githubusercontent.com/54381338/181453967-afeff934-ed7a-41c3-bc3e-faf9a86019fa.png)
+
+
 
 ### Built With
 
