@@ -53,7 +53,7 @@ export default function HackathonCard(props) {
   let toast = useToast();
   let { token } = useAuth();
   let addInterested = async () => {
-    let url = `https://partners-in-crime.herokuapp.com/addfavourite`;
+    let url = `https://partners-in-crime-backend-production.up.railway.app/addfavourite`;
     let data = {
       hackathon_id: id,
       name: name,
@@ -101,7 +101,7 @@ export default function HackathonCard(props) {
     }
   };
   let removeInterested = async () => {
-    let url = `https://partners-in-crime.herokuapp.com/deleteFavourite/${id}?is_project=${false}`;
+    let url = `https://partners-in-crime-backend-production.up.railway.app/deleteFavourite/${id}?is_project=${false}`;
     try {
       let response = await fetch(url, {
         method: 'DELETE',

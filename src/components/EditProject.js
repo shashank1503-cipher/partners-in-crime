@@ -43,7 +43,7 @@ const EditProject = ({ id, initialData }) => {
     setInitialLoading(true);
     try {
       const res = await fetch(
-        `https://partners-in-crime.herokuapp.com/projects/${id}`,
+        `https://partners-in-crime-backend-production.up.railway.app/projects/${id}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ const EditProject = ({ id, initialData }) => {
     const queryData = async () => {
       setQueryLoading(true);
       const res = await fetch(
-        `https://partners-in-crime.herokuapp.com/skillssuggestions?q=${query}`
+        `https://partners-in-crime-backend-production.up.railway.app/skillssuggestions?q=${query}`
       );
       if (res.status === 200) {
         const Data = await res.json();
@@ -180,7 +180,7 @@ const EditProject = ({ id, initialData }) => {
     };
     try {
       const res = await fetch(
-        'https://partners-in-crime.herokuapp.com/project/' + id,
+        'https://partners-in-crime-backend-production.up.railway.app/project/' + id,
         {
           method: 'PUT',
           headers: {

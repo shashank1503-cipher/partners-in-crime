@@ -24,7 +24,7 @@ const MainContent = () => {
   let { token } = useAuth();
   let fetchFirstTimeLogin = async () => {
     try {
-      const res = await fetch(`https://partners-in-crime.herokuapp.com/firsttimelogin`, {
+      const res = await fetch(`https://partners-in-crime-backend-production.up.railway.app/firsttimelogin`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

@@ -29,7 +29,7 @@ function FindPartner() {
   let fetchdata = async () => {
     setloading(true);
 
-    const res = await fetch(`https://partners-in-crime.herokuapp.com/suggestions?q=${query}`);
+    const res = await fetch(`https://partners-in-crime-backend-production.up.railway.app/suggestions?q=${query}`);
     if (res.status === 200) {
       const Data = await res.json();
 
