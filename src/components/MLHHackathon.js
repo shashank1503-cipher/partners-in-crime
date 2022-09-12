@@ -41,7 +41,7 @@ const MLHHackathon = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://hackathon-api.up.railway.app//mlh?q=${query}&page=${page}&per_page=${perPage}&`
+        `https://hackathon-api.up.railway.app/mlh?q=${query}&page=${page}&per_page=${perPage}&`
       );
       if (res.status === 200) {
         const data = await res.json();
