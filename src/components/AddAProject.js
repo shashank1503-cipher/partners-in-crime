@@ -38,7 +38,7 @@ const AddAProject = () => {
     const queryData = async () => {
       setQueryLoading(true);
       const res = await fetch(
-        `https://partners-in-crime-backend-production.up.railway.app/skillssuggestions?q=${query}`
+        `https://partners-in-crime-backend.herokuapp.com/skillssuggestions?q=${query}`
       );
       if (res.status === 200) {
         const Data = await res.json();
@@ -129,7 +129,7 @@ const AddAProject = () => {
     };
     try {
       const res = await fetch(
-        'https://partners-in-crime-backend-production.up.railway.app/addproject',
+        'https://partners-in-crime-backend.herokuapp.com/addproject',
         {
           method: 'POST',
           headers: {

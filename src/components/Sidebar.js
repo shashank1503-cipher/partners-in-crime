@@ -79,7 +79,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
   useEffect(() => {
     let fetchNewNotification = async () => {
       try {
-        let res = await fetch(`https://partners-in-crime-backend-production.up.railway.app/isNewnotification`, {
+        let res = await fetch(`https://partners-in-crime-backend.herokuapp.com/isNewnotification`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -181,7 +181,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
 
   useEffect(() => {
     const fetchProfilePhoto = async () => {
-      const res = await fetch("https://partners-in-crime-backend-production.up.railway.app/fetchuserpic", {
+      const res = await fetch("https://partners-in-crime-backend.herokuapp.com/fetchuserpic", {
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
