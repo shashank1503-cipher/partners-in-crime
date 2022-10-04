@@ -41,7 +41,7 @@ const DevfolioHackathon = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://hackathon-api.up.railway.app/devfolio?q=${query}&page=${page}&per_page=${perPage}&`
+        `https://hackathon-api-v2.herokuapp.com/devfolio?q=${query}&page=${page}&per_page=${perPage}&`
       );
       
       if (res.status === 200) {

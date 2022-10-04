@@ -34,7 +34,7 @@ function Display() {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://partners-in-crime-backend-production.up.railway.app/search?q=${q}`
+        `https://partners-in-crime-backend.herokuapp.com/search?q=${q}`
       );
       if (res.status === 200) {
         const data = await res.json();

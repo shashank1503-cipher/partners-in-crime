@@ -50,7 +50,7 @@ const Profile = () => {
     const userData = async () => {
       try {
         const res = await fetch(
-          'https://partners-in-crime-backend-production.up.railway.app/fetchuserprofile',
+          'https://partners-in-crime-backend.herokuapp.com/fetchuserprofile',
           {
             headers: {
               'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ const Profile = () => {
 
             try {
               res = await fetch(
-                'https://partners-in-crime-backend-production.up.railway.app/updateuserpic',
+                'https://partners-in-crime-backend.herokuapp.com/updateuserpic',
                 {
                   method: 'PUT',
                   headers: {
@@ -164,7 +164,7 @@ const Profile = () => {
     const queryData = async () => {
       setloading(true);
       const res = await fetch(
-        `https://partners-in-crime-backend-production.up.railway.app/skillssuggestions?q=${query}`
+        `https://partners-in-crime-backend.herokuapp.com/skillssuggestions?q=${query}`
       );
       if (res.status === 200) {
         const Data = await res.json();
@@ -252,7 +252,7 @@ const Profile = () => {
       }
 
       const res = await fetch(
-        'https://partners-in-crime-backend-production.up.railway.app/updateuserprofile',
+        'https://partners-in-crime-backend.herokuapp.com/updateuserprofile',
         {
           method: 'PUT',
           headers: {

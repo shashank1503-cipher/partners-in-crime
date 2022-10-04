@@ -39,7 +39,7 @@ const SpecificProject = ({ id }) => {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `https://partners-in-crime-backend-production.up.railway.app/project/${id}`,
+        `https://partners-in-crime-backend.herokuapp.com/project/${id}`,
         {
           method: 'GET',
           headers: {
@@ -69,7 +69,7 @@ const SpecificProject = ({ id }) => {
     fetchData();
   }, []);
   let addInterested = async () => {
-    let url = `https://partners-in-crime-backend-production.up.railway.app/addfavourite`;
+    let url = `https://partners-in-crime-backend.herokuapp.com/addfavourite`;
     let data = {
       project_id: id,
     };
@@ -108,7 +108,7 @@ const SpecificProject = ({ id }) => {
     }
   };
   let removeInterested = async () => {
-    let url = `https://partners-in-crime-backend-production.up.railway.app/deleteFavourite/${id}?is_project=${true}`;
+    let url = `https://partners-in-crime-backend.herokuapp.com/deleteFavourite/${id}?is_project=${true}`;
     try {
       let response = await fetch(url, {
         method: 'DELETE',
@@ -144,7 +144,7 @@ const SpecificProject = ({ id }) => {
     setIsDeleteLoading(true);
     try {
       let response = await fetch(
-        `https://partners-in-crime-backend-production.up.railway.app/project/${id}`,
+        `https://partners-in-crime-backend.herokuapp.com/project/${id}`,
         {
           method: 'DELETE',
           headers: {
