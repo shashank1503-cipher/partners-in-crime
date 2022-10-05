@@ -261,8 +261,8 @@ const MobileNav = ({ onOpen, ...rest }) => {
               >
                 My Projects
               </MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={logout}>Sign out</MenuItem>
+              <MenuDivider  borderColor={useColorModeValue('gray.200', 'gray.600')} />
+              <MenuItem onClick={logout} color='tomato'>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
