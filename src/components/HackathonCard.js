@@ -11,6 +11,7 @@ import {
   Button,
   IconButton,
   useToast,
+  Tooltip,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FaHeart, FaLink, FaUserSecret } from 'react-icons/fa';
@@ -198,34 +199,43 @@ export default function HackathonCard(props) {
             </Text>
           </Flex>
           <Flex justifyContent={'space-between'}>
-            <IconButton
-              variant={isInterested ? 'solid' : 'outline'}
-              colorScheme="red"
-              aria-label="Interested"
-              disabled={props.interestButtonDisabled}
-              icon={isInterested ? <FaHeart /> : <FiHeart />}
-              onClick={() => {
-                if (isInterested) {
-                  removeInterested();
-                } else {
-                  addInterested();
-                }
-              }}
-            />
-            <IconButton
-              variant={'outline'}
-              colorScheme="teal"
-              aria-label="visit"
-              icon={<FaLink />}
-              onClick={() => window.open(link, '_blank')}
-            />
-            <IconButton
-              variant={'solid'}
-              colorScheme="teal"
-              aria-label="find-partners"
-              icon={<FaUserSecret />}
-              onClick={() => navigate('/find')}
-            />
+            <Tooltip bgColor={useColorModeValue('gray.100','gray.700')} color={useColorModeValue('blackAlpha.800','whiteAlpha.800')} p={2} boxShadow={'2xl'} fontSize={'13'}
+              hasArrow rounded={'md'} label="Add to Favourites" >
+              <IconButton
+                variant={isInterested ? 'solid' : 'outline'}
+                colorScheme="red"
+                aria-label="Interested"
+                disabled={props.interestButtonDisabled}
+                icon={isInterested ? <FaHeart /> : <FiHeart />}
+                onClick={() => {
+                  if (isInterested) {
+                    removeInterested();
+                  } else {
+                    addInterested();
+                  }
+                }}
+              />
+            </Tooltip>
+            <Tooltip bgColor={useColorModeValue('gray.100','gray.700')} color={useColorModeValue('blackAlpha.800','whiteAlpha.800')} p={2} boxShadow={'2xl'} fontSize={'13'}
+              hasArrow rounded={'md'} label="Visit Hackathon Page" >
+              <IconButton
+                variant={'outline'}
+                colorScheme="teal"
+                aria-label="visit"
+                icon={<FaLink />}
+                onClick={() => window.open(link, '_blank')}
+              />
+            </Tooltip>
+            <Tooltip bgColor={useColorModeValue('gray.100','gray.700')} color={useColorModeValue('blackAlpha.800','whiteAlpha.800')} p={2} boxShadow={'2xl'} fontSize={'13'}
+              hasArrow rounded={'md'} label="Find Partners">
+              <IconButton
+                variant={'solid'}
+                colorScheme="teal"
+                aria-label="find-partners"
+                icon={<FaUserSecret />}
+                onClick={() => navigate('/find')}
+              />
+            </Tooltip>
           </Flex>
         </Stack>
       </Box>
