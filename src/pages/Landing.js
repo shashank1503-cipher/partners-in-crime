@@ -174,7 +174,7 @@ function Landing() {
             Find and interact with developers
           </Heading>
           <Text w={'75%'} my={5}
-          fontSize='1.35em'>
+          fontSize={['15px', '22px', '27px', '27px']}>
             They say the best method to learn is by doing, that's even better
             when you have a college mate with you. Find your college-dev-mates,
             collaborate and build your own projects.
@@ -210,7 +210,7 @@ function Landing() {
             Get latest updates about hackathons
           </Heading>
           <Text w={'75%'} my={5}
-          fontSize='1.35em'>
+          fontSize={['15px', '22px', '27px', '27px']}>
             Your search for hackathons is over. Find the latest updates about
             hackathons from different websites.
           </Text>
@@ -246,7 +246,7 @@ function Landing() {
             Share your ideas
           </Heading>
           <Text w={'75%'} my={5}
-          fontSize='1.35em'>
+          fontSize={['15px', '22px', '27px', '27px']}>
             Ideas are contagious, the best ones spread. Share ideas with your
             friends and make them come to life.
           </Text>
