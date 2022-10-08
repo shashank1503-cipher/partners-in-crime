@@ -293,7 +293,7 @@ function Landing() {
             mb={10}
           >
             {' '}
-            Ready for some mischeif?
+            Ready for some mischief?
           </Heading>
           <Button
             variant={'solid'}
