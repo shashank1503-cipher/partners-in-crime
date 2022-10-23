@@ -35,7 +35,7 @@ const ProfileDetail = ({ id }) => {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `https://partners-in-crime-backend.herokuapp.com/profile/${id}`,
+        `https://partners-in-crime-backup.herokuapp.com/profile/${id}`,
         {
           method: 'GET',
           headers: {

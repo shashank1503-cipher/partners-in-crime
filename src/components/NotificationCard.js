@@ -11,7 +11,7 @@ export default function NotificationCard(props) {
   let { token } = useAuth();
   let markAsRead = async () => {
     setLoading(true);
-    let response = await fetch(`https://partners-in-crime-backend.herokuapp.com/notifications/${_id}`, {
+    let response = await fetch(`https://partners-in-crime-backup.herokuapp.com/notifications/${_id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
