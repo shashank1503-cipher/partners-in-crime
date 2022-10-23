@@ -11,6 +11,7 @@ import {
   Button,
   IconButton,
   useToast,
+  Tooltip,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FaHeart, FaLink, FaUserSecret } from 'react-icons/fa';
@@ -146,6 +147,8 @@ export default function ProjectCard(props) {
             </Text>
           </Flex>
           <Flex justifyContent={'space-between'}>
+          <Tooltip bgColor={useColorModeValue('gray.100','gray.700')} color={useColorModeValue('blackAlpha.800','whiteAlpha.800')} p={2} boxShadow={'2xl'} fontSize={'13'}
+              hasArrow rounded={'md'} label="Find Partners">
             <IconButton
               variant={isInterested ? 'solid' : 'outline'}
               colorScheme="red"
@@ -160,6 +163,9 @@ export default function ProjectCard(props) {
               }}
               disabled={disabled}
             />
+            </Tooltip>
+            <Tooltip bgColor={useColorModeValue('gray.100','gray.700')} color={useColorModeValue('blackAlpha.800','whiteAlpha.800')} p={2} boxShadow={'2xl'} fontSize={'13'}
+              hasArrow rounded={'md'} label="Find Partners">
             <IconButton
               variant={'outline'}
               colorScheme="teal"
@@ -169,6 +175,9 @@ export default function ProjectCard(props) {
                 navigate(`/project/${id}`);
               }}
             />
+            </Tooltip>
+            <Tooltip bgColor={useColorModeValue('gray.100','gray.700')} color={useColorModeValue('blackAlpha.800','whiteAlpha.800')} p={2} boxShadow={'2xl'} fontSize={'13'}
+              hasArrow rounded={'md'} label="Find Partners">
             <IconButton
               variant={'solid'}
               colorScheme="teal"
@@ -176,6 +185,7 @@ export default function ProjectCard(props) {
               icon={<FaUserSecret />}
               onClick={() => navigate('/find')}
             />
+            </Tooltip>
           </Flex>
         </Stack>
       </Box>
