@@ -79,7 +79,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
   useEffect(() => {
     let fetchNewNotification = async () => {
       try {
-        let res = await fetch(`https://partners-in-crime-backend.herokuapp.com/isNewnotification`, {
+        let res = await fetch(`https://partners-in-crime-backup.herokuapp.com/isNewnotification`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -175,13 +175,14 @@ const NavItem = ({ url, icon, badge, children, ...rest }) => {
 
 const MobileNav = ({ onOpen, ...rest }) => {
   const [imageURL, setImageURL] = useState();
+  const [name, set_name] = useState();
   let { user, logout, token } = useAuth();
-  let name = user.name.split(' ')[0];
+  // let name = user.name.split(' ')[0];
   let navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfilePhoto = async () => {
-      const res = await fetch("https://partners-in-crime-backend.herokuapp.com/fetchuserpic", {
+      const res = await fetch("https://partners-in-crime-backup.herokuapp.com/fetchuserprofile", {
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -189,7 +190,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
       });
 
       const data = await res.json();
+      console.log(data)
       setImageURL(data["photo"])
+      set_name(data['name'])
     }
     fetchProfilePhoto();
   }, [token])
@@ -220,7 +223,8 @@ const MobileNav = ({ onOpen, ...rest }) => {
         color={useColorModeValue('cyan.600', 'cyan')}
         fontWeight="bold"
       >
-        <Name />
+     
+        {/* <Name /> */}
       </Text>
 
       <HStack spacing={{ base: '0', md: '6' }}>
@@ -261,8 +265,8 @@ const MobileNav = ({ onOpen, ...rest }) => {
               >
                 My Projects
               </MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={logout}>Sign out</MenuItem>
+              <MenuDivider  borderColor={useColorModeValue('gray.200', 'gray.600')} />
+              <MenuItem onClick={logout} color='tomato'>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
