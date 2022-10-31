@@ -40,7 +40,7 @@ export default function ProjectCard(props) {
   let toast = useToast();
   let { token } = useAuth();
   let addInterested = async () => {
-    let url = `https://partners-in-crime-backend.herokuapp.com/addfavourite`;
+    let url = `https://partners-in-crime-backup.herokuapp.com/addfavourite`;
     let data = {
       project_id: id,
     };
@@ -79,7 +79,7 @@ export default function ProjectCard(props) {
     }
   };
   let removeInterested = async () => {
-    let url = `https://partners-in-crime-backend.herokuapp.com/deleteFavourite/${id}?is_project=${true}`;
+    let url = `https://partners-in-crime-backup.herokuapp.com/deleteFavourite/${id}?is_project=${true}`;
     try {
       let response = await fetch(url, {
         method: 'DELETE',
@@ -148,7 +148,7 @@ export default function ProjectCard(props) {
           </Flex>
           <Flex justifyContent={'space-between'}>
           <Tooltip bgColor={useColorModeValue('gray.100','gray.700')} color={useColorModeValue('blackAlpha.800','whiteAlpha.800')} p={2} boxShadow={'2xl'} fontSize={'13'}
-              hasArrow rounded={'md'} label="Find Partners">
+              hasArrow rounded={'md'} label="Add to Favourites">
             <IconButton
               variant={isInterested ? 'solid' : 'outline'}
               colorScheme="red"
@@ -165,7 +165,7 @@ export default function ProjectCard(props) {
             />
             </Tooltip>
             <Tooltip bgColor={useColorModeValue('gray.100','gray.700')} color={useColorModeValue('blackAlpha.800','whiteAlpha.800')} p={2} boxShadow={'2xl'} fontSize={'13'}
-              hasArrow rounded={'md'} label="Find Partners">
+              hasArrow rounded={'md'} label="Visit Hackathon Page">
             <IconButton
               variant={'outline'}
               colorScheme="teal"

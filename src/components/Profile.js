@@ -17,7 +17,7 @@ import {
   InputGroup,
   InputRightAddon,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useAuth from '../context/AuthContext';
 import { FaPencilAlt } from 'react-icons/fa';
 
@@ -46,11 +46,13 @@ const Profile = () => {
   const [newSkills, setNewSkills] = useState([]);
   const toast = useToast();
 
+  const ref = useRef(null)
+
   useEffect(() => {
     const userData = async () => {
       try {
         const res = await fetch(
-          'https://partners-in-crime-backend.herokuapp.com/fetchuserprofile',
+          'https://partners-in-crime-backup.herokuapp.com/fetchuserprofile',
           {
             headers: {
               'Content-Type': 'application/json',
@@ -120,7 +122,7 @@ const Profile = () => {
 
             try {
               res = await fetch(
-                'https://partners-in-crime-backend.herokuapp.com/updateuserpic',
+                'https://partners-in-crime-backup.herokuapp.com/updateuserpic',
                 {
                   method: 'PUT',
                   headers: {
@@ -164,7 +166,7 @@ const Profile = () => {
     const queryData = async () => {
       setloading(true);
       const res = await fetch(
-        `https://partners-in-crime-backend.herokuapp.com/skillssuggestions?q=${query}`
+        `https://partners-in-crime-backup.herokuapp.com/skillssuggestions?q=${query}`
       );
       if (res.status === 200) {
         const Data = await res.json();
@@ -252,7 +254,7 @@ const Profile = () => {
       }
 
       const res = await fetch(
-        'https://partners-in-crime-backend.herokuapp.com/updateuserprofile',
+        'https://partners-in-crime-backup.herokuapp.com/updateuserprofile',
         {
           method: 'PUT',
           headers: {
@@ -280,10 +282,12 @@ const Profile = () => {
   };
 
   const updateSkill = newSkill => {
+
     if (query?.length !== 0) {
       setNewSkills(prev => Array.from(new Set([...prev, newSkill])));
       setSkills(prev => Array.from(new Set([...prev, newSkill])));
       setQuery('');
+      ref.current.focus();
     }
   };
   return (
@@ -581,16 +585,26 @@ const Profile = () => {
                   onChange={e => {
                     setQuery(e.target.value);
                   }}
+                  onKeyPress={e=> {
+                    if (e.key === 'Enter') {
+                      return updateSkill(query);
+                    }
+                 }}
+                 
+                 ref={ref}
                 />
                 <button
                   onClick={() => {
                     return updateSkill(query);
+                    
                   }}
+                                    
                   disabled={query?.length === 0}
                 >
                   <InputRightAddon
                     children="Add"
                     backgroundColor={useColorModeValue('#cccfcc', '#21232c')}
+                    p={5}
                     _hover={
                       !(query?.length === 0)
                         ? { backgroundColor: '#81E6D9', color: 'black' }
