@@ -68,6 +68,7 @@ const FavouriteHackathons = () => {
       setError(error);
     } finally {
       setLoading(false);
+      console.log('false')
     }
   };
   useEffect(() => {
