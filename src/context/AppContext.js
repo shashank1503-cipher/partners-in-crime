@@ -96,7 +96,7 @@ export const AppProvider = ({children}) => {
                 }
                 else
                 {
-                    let data = await fetch(`https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/auth/getUser`, {
+                    let data = await fetch(`https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/auth/getUser`, {
                         method: 'POST',
                         headers: {
                           'Content-Type': 'application/json',

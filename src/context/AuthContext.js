@@ -21,7 +21,7 @@ provider.setCustomParameters({
   hd: 'iiitkottayam.ac.in',
 });
 
-const URL = 'https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws';
+const URL = 'https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev';
 
 const AuthContext = createContext({});
 
@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }) => {
 
   const getUserDataFromMongo = async (token, results) => {
     let User = results;
-
+    console.log(User)
     // console.log("TOKEN : ", token)
     // console.log(User)
     let data = await fetch(`${URL}/auth/adduser`, {

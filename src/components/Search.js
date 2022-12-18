@@ -36,7 +36,7 @@ function Display() {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/search?q=${q}`
+        `https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/search?q=${q}`
       );
       if (res.status === 200) {
         const data = await res.json();

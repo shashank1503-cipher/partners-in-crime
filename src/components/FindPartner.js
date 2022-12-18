@@ -29,7 +29,7 @@ function FindPartner() {
   let fetchdata = async () => {
     setloading(true);
 
-    const res = await fetch(`https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/suggestions?q=${query}`);
+    const res = await fetch(`https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/suggestions?q=${query}`);
     if (res.status === 200) {
       const Data = await res.json();
 

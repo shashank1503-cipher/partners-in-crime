@@ -54,7 +54,7 @@ export default function HackathonCard(props) {
   let toast = useToast();
   let { token } = useAuth();
   let addInterested = async () => {
-    let url = `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/addfavourite`;
+    let url = `https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/addfavourite`;
     let data = {
       hackathon_id: id,
       name: name,
@@ -102,7 +102,7 @@ export default function HackathonCard(props) {
     }
   };
   let removeInterested = async () => {
-    let url = `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/deleteFavourite/${id}?is_project=${false}`;
+    let url = `https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/deleteFavourite/${id}?is_project=${false}`;
     try {
       let response = await fetch(url, {
         method: 'DELETE',

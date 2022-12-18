@@ -24,7 +24,7 @@ const Notifications = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/notifications', {
+      const res = await fetch('https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/notifications', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -40,7 +40,7 @@ export default function ProjectCard(props) {
   let toast = useToast();
   let { token } = useAuth();
   let addInterested = async () => {
-    let url = `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/addfavourite`;
+    let url = `https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/addfavourite`;
     let data = {
       project_id: id,
     };
@@ -79,7 +79,7 @@ export default function ProjectCard(props) {
     }
   };
   let removeInterested = async () => {
-    let url = `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/deleteFavourite/${id}?is_project=${true}`;
+    let url = `https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/deleteFavourite/${id}?is_project=${true}`;
     try {
       let response = await fetch(url, {
         method: 'DELETE',

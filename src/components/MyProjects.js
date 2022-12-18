@@ -43,7 +43,7 @@ const MyProjects = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/fetchuserprojects?q=${query}&page=${page}&per_page=${perPage}&`,
+        `https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/fetchuserprojects?q=${query}&page=${page}&per_page=${perPage}&`,
         {
           headers: {
             'Content-Type': 'application/json',

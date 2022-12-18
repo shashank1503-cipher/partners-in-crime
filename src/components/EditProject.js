@@ -43,7 +43,7 @@ const EditProject = ({ id, initialData }) => {
     setInitialLoading(true);
     try {
       const res = await fetch(
-        `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/projects/${id}`,
+        `https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/projects/${id}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ const EditProject = ({ id, initialData }) => {
     const queryData = async () => {
       setQueryLoading(true);
       const res = await fetch(
-        `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/skillssuggestions?q=${query}`
+        `https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/skillssuggestions?q=${query}`
       );
       if (res.status === 200) {
         const Data = await res.json();
@@ -180,7 +180,7 @@ const EditProject = ({ id, initialData }) => {
     };
     try {
       const res = await fetch(
-        'https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/project/' + id,
+        'https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/project/' + id,
         {
           method: 'PUT',
           headers: {

@@ -79,7 +79,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
   useEffect(() => {
     let fetchNewNotification = async () => {
       try {
-        let res = await fetch(`https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/isNewnotification`, {
+        let res = await fetch(`https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/isNewnotification`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -182,7 +182,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
 
   useEffect(() => {
     const fetchProfilePhoto = async () => {
-      const res = await fetch("https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/fetchuserprofile", {
+      const res = await fetch("https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/fetchuserprofile", {
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,

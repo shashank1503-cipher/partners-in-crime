@@ -35,7 +35,7 @@ const ProfileDetail = ({ id }) => {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/profile/${id}`,
+        `https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/profile/${id}`,
         {
           method: 'GET',
           headers: {

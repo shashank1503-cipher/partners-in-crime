@@ -24,7 +24,7 @@ const MainContent = () => {
   let { token } = useAuth();
   let fetchFirstTimeLogin = async () => {
     try {
-      const res = await fetch(`https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/firsttimelogin`, {
+      const res = await fetch(`https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/firsttimelogin`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

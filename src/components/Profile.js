@@ -52,7 +52,7 @@ const Profile = () => {
     const userData = async () => {
       try {
         const res = await fetch(
-          'https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/fetchuserprofile',
+          'https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/fetchuserprofile',
           {
             headers: {
               'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ const Profile = () => {
 
             try {
               res = await fetch(
-                'https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/updateuserpic',
+                'https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/updateuserpic',
                 {
                   method: 'PUT',
                   headers: {
@@ -166,7 +166,7 @@ const Profile = () => {
     const queryData = async () => {
       setloading(true);
       const res = await fetch(
-        `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/skillssuggestions?q=${query}`
+        `https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/skillssuggestions?q=${query}`
       );
       if (res.status === 200) {
         const Data = await res.json();
@@ -254,7 +254,7 @@ const Profile = () => {
       }
 
       const res = await fetch(
-        'https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/updateuserprofile',
+        'https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/updateuserprofile',
         {
           method: 'PUT',
           headers: {
