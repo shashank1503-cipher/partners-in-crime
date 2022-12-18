@@ -148,7 +148,7 @@ export default function ProjectCard(props) {
           </Flex>
           <Flex justifyContent={'space-between'}>
           <Tooltip bgColor={useColorModeValue('gray.100','gray.700')} color={useColorModeValue('blackAlpha.800','whiteAlpha.800')} p={2} boxShadow={'2xl'} fontSize={'13'}
-              hasArrow rounded={'md'} label="Find Partners">
+              hasArrow rounded={'md'} label="Add to Favourites">
             <IconButton
               variant={isInterested ? 'solid' : 'outline'}
               colorScheme="red"
@@ -165,7 +165,7 @@ export default function ProjectCard(props) {
             />
             </Tooltip>
             <Tooltip bgColor={useColorModeValue('gray.100','gray.700')} color={useColorModeValue('blackAlpha.800','whiteAlpha.800')} p={2} boxShadow={'2xl'} fontSize={'13'}
-              hasArrow rounded={'md'} label="Find Partners">
+              hasArrow rounded={'md'} label="Visit Hackathon Page">
             <IconButton
               variant={'outline'}
               colorScheme="teal"
