@@ -50,7 +50,7 @@ const Profile = () => {
     const userData = async () => {
       try {
         const res = await fetch(
-          'https://partners-in-crime-backup.herokuapp.com/fetchuserprofile',
+          'https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/fetchuserprofile',
           {
             headers: {
               'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ const Profile = () => {
 
             try {
               res = await fetch(
-                'https://partners-in-crime-backup.herokuapp.com/updateuserpic',
+                'https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/updateuserpic',
                 {
                   method: 'PUT',
                   headers: {
@@ -164,7 +164,7 @@ const Profile = () => {
     const queryData = async () => {
       setloading(true);
       const res = await fetch(
-        `https://partners-in-crime-backup.herokuapp.com/skillssuggestions?q=${query}`
+        `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/skillssuggestions?q=${query}`
       );
       if (res.status === 200) {
         const Data = await res.json();
@@ -252,7 +252,7 @@ const Profile = () => {
       }
 
       const res = await fetch(
-        'https://partners-in-crime-backup.herokuapp.com/updateuserprofile',
+        'https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/updateuserprofile',
         {
           method: 'PUT',
           headers: {

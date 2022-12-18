@@ -21,7 +21,7 @@ provider.setCustomParameters({
   hd: 'iiitkottayam.ac.in',
 });
 
-const URL = 'https://partners-in-crime-backup.herokuapp.com/';
+const URL = 'https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws';
 
 const AuthContext = createContext({});
 

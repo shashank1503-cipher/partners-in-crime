@@ -24,7 +24,7 @@ const MainContent = () => {
   let { token } = useAuth();
   let fetchFirstTimeLogin = async () => {
     try {
-      const res = await fetch(`https://partners-in-crime-backup.herokuapp.com/firsttimelogin`, {
+      const res = await fetch(`https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/firsttimelogin`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

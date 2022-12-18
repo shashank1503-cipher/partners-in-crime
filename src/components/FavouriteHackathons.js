@@ -44,7 +44,7 @@ const FavouriteHackathons = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://partners-in-crime-backup.herokuapp.com/fetchuserhackathons?q=${query}&page=${page}&per_page=${perPage}&`,
+        `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/fetchuserhackathons?q=${query}&page=${page}&per_page=${perPage}&`,
         {
           headers: {
             'Content-Type': 'application/json',

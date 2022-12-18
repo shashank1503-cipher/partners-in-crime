@@ -38,7 +38,7 @@ const AddAProject = () => {
     const queryData = async () => {
       setQueryLoading(true);
       const res = await fetch(
-        `https://partners-in-crime-backup.herokuapp.com/skillssuggestions?q=${query}`
+        `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/skillssuggestions?q=${query}`
       );
       if (res.status === 200) {
         const Data = await res.json();
@@ -129,7 +129,7 @@ const AddAProject = () => {
     };
     try {
       const res = await fetch(
-        'https://partners-in-crime-backup.herokuapp.com/addproject',
+        'https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/addproject',
         {
           method: 'POST',
           headers: {

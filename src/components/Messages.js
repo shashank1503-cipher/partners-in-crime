@@ -123,7 +123,7 @@ const Messages = () => {
     
     if(search === "" && fetchBool)
     {
-      res = await fetch(`https://partners-in-crime-backup.herokuapp.com/users/data?skip=${skip}`, {
+      res = await fetch(`https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/users/data?skip=${skip}`, {
         headers:{
           authentication: `Bearer ${token}`
         }
@@ -145,7 +145,7 @@ const Messages = () => {
 
     else
     {
-      res = await fetch(`https://partners-in-crime-backup.herokuapp.com/searchmessage?q=${search}`,{
+      res = await fetch(`https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/searchmessage?q=${search}`,{
         headers:{
           authentication: `Bearer ${token}`
         }
@@ -262,7 +262,7 @@ const Messages = () => {
   const UpdateMessagesUserData = async (id) => {
     setLoading(true)
     let userData = {}
-    let data = await fetch("https://partners-in-crime-backup.herokuapp.com/auth/getUser", {
+    let data = await fetch("https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/auth/getUser", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -36,7 +36,7 @@ function Display() {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://partners-in-crime-backup.herokuapp.com/search?q=${q}`
+        `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/search?q=${q}`
       );
       if (res.status === 200) {
         const data = await res.json();

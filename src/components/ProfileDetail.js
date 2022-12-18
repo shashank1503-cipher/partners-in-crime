@@ -35,7 +35,7 @@ const ProfileDetail = ({ id }) => {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `https://partners-in-crime-backup.herokuapp.com/profile/${id}`,
+        `https://lxuwymtrux3fuvgvqxvackkcvq0alfqf.lambda-url.ap-south-1.on.aws/profile/${id}`,
         {
           method: 'GET',
           headers: {
