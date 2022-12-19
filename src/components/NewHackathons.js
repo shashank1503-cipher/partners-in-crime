@@ -44,7 +44,7 @@ const NewHackathons = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://hackathon-api-v2.herokuapp.com/new?q=${query}&page=${page}&per_page=${perPage}&ongoing=${ongoing}`
+        `https://4hnk5enbn4qgine6mykbfwk66y0lkljd.lambda-url.ap-south-1.on.aws/new?q=${query}&page=${page}&per_page=${perPage}&ongoing=${ongoing}`
       );
       if (res.status === 200) {
         const data = await res.json();
