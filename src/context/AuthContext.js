@@ -73,7 +73,9 @@ export const AuthProvider = ({ children }) => {
         await getUserDataFromMongo(token, user);
 
         if (href.split('/')[3] === '') navigate('/main');
-        else navigate(`/${href.split('/')[3]}`);
+        else{
+          let url = href.split('/').slice(3).join('/') 
+          navigate(`/${url}`);}
       }
     };
 
