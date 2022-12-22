@@ -40,6 +40,9 @@ const NewHackathons = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [ongoing, setOnGoing] = useState(false);
   const [page, setPage] = useState(0);
+
+  const thisSection = React.useRef(null);
+  
   let fetchData = async () => {
     setLoading(true);
     try {
@@ -65,9 +68,17 @@ const NewHackathons = () => {
   useEffect(() => {
     fetchData();
   }, [perPage, page]);
+
+
+  useEffect(() => {
+    if (perPage > 3){
+    setTimeout(function () {
+      window.scrollTo({ top: thisSection.current.offsetTop - 100, behavior: 'smooth' });
+    }, 20);}
+  }, [page]);
   return (
     <>
-      <Flex justifyContent={'flex-end'}>
+      <Flex justifyContent={'flex-end'} ref={thisSection}>
         <IconButton icon={<FaFilter />} onClick={onOpen} />
       </Flex>
       <Flex

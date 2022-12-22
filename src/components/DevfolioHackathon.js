@@ -36,17 +36,19 @@ const DevfolioHackathon = () => {
   const [query, setQuery] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [page, setPage] = useState(0);
+
+  const thisSection = React.useRef(null);
   let fetchData = async () => {
-    
+
     setLoading(true);
     try {
       const res = await fetch(
         `https://4hnk5enbn4qgine6mykbfwk66y0lkljd.lambda-url.ap-south-1.on.aws/devfolio?q=${query}&page=${page}&per_page=${perPage}&`
       );
-      
+
       if (res.status === 200) {
         const data = await res.json();
-        
+
         setTotalRecords(data.meta.total);
         setHackathons(data.data);
         setError(null);
@@ -63,10 +65,18 @@ const DevfolioHackathon = () => {
   };
   useEffect(() => {
     fetchData();
-  }, [perPage,page]);
+  }, [perPage, page]);
+
+  useEffect(() => {
+    if (perPage > 3) {
+      setTimeout(function () {
+        window.scrollTo({ top: thisSection.current.offsetTop - 100, behavior: 'smooth' });
+      }, 20);
+    }
+  }, [page]);
   return (
     <>
-      <Flex justifyContent={'flex-end'}>
+      <Flex justifyContent={'flex-end'} ref={thisSection}>
         <IconButton icon={<FaFilter />} onClick={onOpen} />
       </Flex>
       <Flex
@@ -87,7 +97,7 @@ const DevfolioHackathon = () => {
           hackathons.map(hackathon => (
             <HackathonCard
               key={hackathon['_id']}
-              id = {hackathon['_id']}
+              id={hackathon['_id']}
               name={hackathon.name}
               logo={hackathon.image}
               heroImage={hackathon.heroImage}
