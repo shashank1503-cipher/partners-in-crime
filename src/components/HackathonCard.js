@@ -26,7 +26,7 @@ export default function HackathonCard(props) {
     DEVPOST:
       'https://res.cloudinary.com/hackbot/image/upload/v1610604172/Hackbot%20Web/Devpost_hpiydu.jpg',
     DEVFOLIO:
-      'https://www.hackoff.tech/v2.0/html/event_organizer/images/brands/devfolio.png',
+      'https://devfolio.co/blog/content/images/2021/04/Artboard-7.png',
   };
   const logoImageMap = {
     'mlh.io':
