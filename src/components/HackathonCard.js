@@ -147,6 +147,9 @@ export default function HackathonCard(props) {
         <Box bg={'gray.100'} mt={-6} mx={-6} mb={12} pos={'relative'}>
           <Image
             src={heroImage}
+            onError={(e) => {
+              e.target.src = heroImageMap[website];
+            }}
             maxH={'200px'}
             mx={'auto'}
             objectFit={'fill'}
