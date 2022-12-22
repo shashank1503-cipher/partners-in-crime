@@ -156,7 +156,10 @@ export default function HackathonCard(props) {
           />
         </Box>
         <Flex justify={'flex-start'} mt={-12}>
-          <Avatar size={'lg'} borderColor={'gray.200'} mt={-6} src={logo} />
+          <Avatar size={'lg'} borderColor={'gray.200'} mt={-6} src={logo} onError={(e) => {
+              e.target.src = logoImageMap[website];
+
+            }} />
         </Flex>
         <Stack>
           <Text
