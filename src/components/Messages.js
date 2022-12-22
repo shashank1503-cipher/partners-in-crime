@@ -111,7 +111,7 @@ const Messages = () => {
   const [messageWhileFetching, setMessageWhileFetching] = useState(1)
   const Ref = useRef(null)
 
-  const [width] = useMediaQuery('(max-width: 769px)')
+  const [width] = useMediaQuery('(max-width: 768px)')
   const [selected, setSelected] = useState(-1)
 
   const color = useColorModeValue("gray.200",'gray.700')
@@ -323,7 +323,7 @@ const Messages = () => {
 
           </Flex>
 
-          <Button m={2} onClick={() => setConDrawer(!conDrawer)}>{conDrawer?<Box py={2}><FaArrowLeft fontSize={'20px'}/></Box>:"Start a Conversation"}</Button>
+          <Button m={2} minH={10} onClick={() => setConDrawer(!conDrawer)}>{conDrawer?<Box py={2}><FaArrowLeft fontSize={'20px'}/></Box>:"Start a Conversation"}</Button>
 
           <Flex
             direction={"column"}
@@ -341,12 +341,12 @@ const Messages = () => {
               },
             }}
 
-            ref={Ref}
-            onScroll={e => search.length === 0?
-              parseInt(e.target.scrollHeight)-10 <= parseInt(parseInt(e.target.scrollTop)+parseInt(e.target.clientHeight))?fetchSuggestions("", addUserData.length+1)
-              :null
-              :console.log(search.length)
-            }
+            // ref={Ref}
+            // onScroll={e => search.length === 0?
+            //   parseInt(e.target.scrollHeight)-10 <= parseInt(parseInt(e.target.scrollTop)+parseInt(e.target.clientHeight))?fetchSuggestions("", addUserData.length+1)
+            //   :null
+            //   :console.log(search.length)
+            // }
             // onScroll = {e => console.log(e.target.scrollHeight)}
           > 
               
@@ -385,10 +385,10 @@ const Messages = () => {
                   navi={NaviToChat}
                 />
                 ))
-                :console.log(search.length)
+                :""
               }
 
-              {fetchLoading && conDrawer?<Box
+              {conDrawer?fetchLoading?<Box
                 w={"full"}
                 minW={250}
                 h={'40px'}
@@ -398,12 +398,20 @@ const Messages = () => {
                 // background={'cyan.700'}
               >
                 {messageWhileFetching===1?<Logo fontSize={"2xl"}/>:""}
-              </Box>:<></>}
-
+              </Box>:<Button
+                w={"full"}
+                minW={250}
+                h={'40px'}
+                fontSize={"18px"}
+                m="auto"
+                py={5}
+                borderRadius={0}
+                textAlign={'center'}
+                onClick={() => fetchSuggestions("", addUserData.length+1)}
+              >Get More Users</Button>:""}
 
           </Flex>
           
-
         </Flex>
         :<></>}
 
