@@ -58,7 +58,6 @@ const Projects = () => {
       );
       if (res.status === 200) {
         const data = await res.json();
-
         setTotalRecords(data.meta.total_records);
         setProjects(data.data);
         setError(null);
@@ -87,7 +86,7 @@ const Projects = () => {
   }, [page]);
   return (
     <>
-      <Flex justifyContent={'flex-end'} ref={thisSection}>
+      <Flex justifyContent={'flex-end'} m={5} mr={10}>
         <IconButton icon={<FaFilter />} onClick={onOpen} />
       </Flex>
       <Flex

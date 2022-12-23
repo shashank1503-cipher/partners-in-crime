@@ -503,6 +503,7 @@ const Profile = () => {
                   textAlign={['center', 'left']}
                   onChange={e => setBatch(e.target.value)}
                 >
+                  <option value="2022">Batch 2022</option>
                   <option value="2021">Batch 2021</option>
                   <option value="2020">Batch 2020</option>
                   <option value="2019">Batch 2019</option>

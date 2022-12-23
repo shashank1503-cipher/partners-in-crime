@@ -75,7 +75,7 @@ const MyProjects = () => {
   return (
     <>
     
-      <Flex justifyContent={'flex-end'}>
+      <Flex justifyContent={'flex-end'} m={5} mr={10}>
         <IconButton icon={<FaFilter />} onClick={onOpen} />
       </Flex>
       <Flex

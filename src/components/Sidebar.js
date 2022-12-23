@@ -88,10 +88,11 @@ const SidebarContent = ({ onClose, ...rest }) => {
   
         let data = await res.json();
         if (res.status === 200) {
-          // console.log(data);
-          // console.log(data.data);
+          console.log(data);
+          console.log(data.data);
           if (data.data) {
-            // console.log('new notification');
+            
+            console.log('new notification');
             LinkItems[4].new = true;
           } else {
             LinkItems[4].new = false;
