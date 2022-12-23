@@ -54,7 +54,7 @@ function Display() {
     setLoading(true);
     try {
       const res = await fetch(
-        ` http://127.0.0.1:8000/search?q=${q}&page=${page}&per_page=${perPage}&batch=${batch}`,
+        `https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev/search?q=${q}&page=${page}&per_page=${perPage}&batch=${batch}`,
         {
           headers: {
             'Content-Type': 'application/json',
