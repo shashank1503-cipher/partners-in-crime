@@ -327,7 +327,7 @@ const Messages = () => {
 
           <Flex
             direction={"column"}
-            overflow={"overlay"}
+            overflow={"auto"}
             w={'full'}
               
             sx={{
