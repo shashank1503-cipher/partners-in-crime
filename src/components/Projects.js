@@ -60,6 +60,7 @@ const Projects = () => {
         const data = await res.json();
         setTotalRecords(data.meta.total_records);
         setProjects(data.data);
+        console.log(data.data)
         setError(null);
       } else {
         const data = await res.json();
@@ -121,7 +122,7 @@ const Projects = () => {
               idea={project['idea']}
               shortDescription={project['description']}
               userName={project['name']}
-              interested={project['interested']}
+              interested={project['is_user_interested']}
             />
           ))
         ) : (

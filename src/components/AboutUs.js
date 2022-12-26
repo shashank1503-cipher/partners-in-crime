@@ -20,6 +20,7 @@ import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { FaUserSecret } from 'react-icons/fa';
 import Footer from './Footer';
 import { FiGithub } from 'react-icons/fi';
+import { Link as NavLink } from 'react-router-dom';
 export default function SocialProfileWithImage() {
   let { signInPopup, error, loading } = useAuth();
   return (
@@ -32,17 +33,18 @@ export default function SocialProfileWithImage() {
         boxShadow={'xl'}
         bg={useColorModeValue('gray.100', 'gray.900')}
       >
-        <Flex direction={'column'}>
-          <Heading
-            fontFamily={`'Source Code Pro', sans-serif`}
-            color={useColorModeValue('cyan.600', 'cyan')}
-            fontSize={['20px', '24px', '28px', '30px']}
-          >
-            {' '}
-            &lt;partnersInCrime&gt;
-          </Heading>{' '}
-        </Flex>
-
+        <NavLink to="/">
+          <Flex direction={'column'}>
+            <Heading
+              fontFamily={`'Source Code Pro', sans-serif`}
+              color={useColorModeValue('cyan.600', 'cyan')}
+              fontSize={['20px', '24px', '28px', '30px']}
+            >
+              {' '}
+              &lt;partnersInCrime&gt;
+            </Heading>{' '}
+          </Flex>
+        </NavLink>
         <Flex justifyContent={'flex-end'} gap={3}>
           <IconButton
             icon={<FiGithub />}
