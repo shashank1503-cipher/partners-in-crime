@@ -39,9 +39,10 @@ export const AuthProvider = ({ children }) => {
     () =>
       onAuthStateChanged(auth, async user => {
         setLoadingInitial(false);
+        let exceptions = ['anujsrivastava980@gmail.com']
         if (user) {
 
-          if(user.email.split('@')[1] !== 'iiitkottayam.ac.in')
+          if(user.email.split('@')[1] !== 'iiitkottayam.ac.in' && !exceptions.includes(user.email))
             return logout()
           // console.log(user)
 
