@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     () =>
       onAuthStateChanged(auth, async user => {
         setLoadingInitial(false);
-        let exceptions = ['anujsrivastava980@gmail.com','shashank.srivastava25sks@gmail.com']
+        let exceptions = ['anujsrivastava980@gmail.com','shashank.srivastava25sks@gmail.com','pcm.sudhanshu18@gmail.com','animeshkumar2611@gmail.com']
         if (user) {
 
           if(user.email.split('@')[1] !== 'iiitkottayam.ac.in' && !exceptions.includes(user.email))
