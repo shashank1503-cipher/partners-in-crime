@@ -17,9 +17,9 @@ import useLocalStorage from 'use-local-storage';
 import { useNavigate } from 'react-router';
 
 const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
-  hd: 'iiitkottayam.ac.in',
-});
+// provider.setCustomParameters({
+//   hd: 'iiitkottayam.ac.in',
+// });
 
 const URL = 'https://anplt2s03b.execute-api.ap-south-1.amazonaws.com/dev';
 
