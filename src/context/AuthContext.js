@@ -39,10 +39,10 @@ export const AuthProvider = ({ children }) => {
     () =>
       onAuthStateChanged(auth, async user => {
         setLoadingInitial(false);
-        let exceptions = ['anujsrivastava980@gmail.com','shashank.srivastava25sks@gmail.com','pcm.sudhanshu18@gmail.com','animeshkumar2611@gmail.com']
+        let exceptions = ['anujsrivastava980@gmail.com', 'shashank.srivastava25sks@gmail.com', 'pcm.sudhanshu18@gmail.com', 'animeshkumar2611@gmail.com', '201b089@juetguna.in','201b090@juetguna.in','201b091@juetguna.in']
         if (user) {
 
-          if(user.email.split('@')[1] !== 'iiitkottayam.ac.in' && !exceptions.includes(user.email))
+          if (user.email.split('@')[1] !== 'iiitkottayam.ac.in' && !exceptions.includes(user.email))
             return logout()
           // console.log(user)
 
@@ -74,9 +74,10 @@ export const AuthProvider = ({ children }) => {
         await getUserDataFromMongo(token, user);
 
         if (href.split('/')[3] === '') navigate('/main');
-        else{
-          let url = href.split('/').slice(3).join('/') 
-          navigate(`/${url}`);}
+        else {
+          let url = href.split('/').slice(3).join('/')
+          navigate(`/${url}`);
+        }
       }
     };
 
